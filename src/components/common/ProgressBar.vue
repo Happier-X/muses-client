@@ -1,4 +1,4 @@
 <template>
-  <n-slider size="small" />
+    <n-slider />
 </template>
 <script setup lang="ts"></script>
