@@ -76,7 +76,7 @@ const menuOptions = ref([
         { default: () => '歌单' }
       ),
     key: 'playlists',
-    icon: () => h(NIcon,{class:'i-mingcute-playlist-2-line'})
+    icon: () => h(NIcon,{class:'i-mingcute-album-2-line'})
   },
   {
     label: () =>

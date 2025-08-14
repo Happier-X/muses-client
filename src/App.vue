@@ -1,6 +1,6 @@
 <template>
-<RouterView />
-<n-message-provider>
+    <RouterView />
+    <n-message-provider>
         <Content />
     </n-message-provider>
 </template>
