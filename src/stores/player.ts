@@ -2,6 +2,7 @@ import { getSongStream } from '@/api/methods/songs'
 import { Howl } from 'howler'
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
+import { shuffle } from '@/utils/shuffle'
 
 export const usePlayerStore = defineStore('player', () => {
     // 音频播放器实例
@@ -14,10 +15,10 @@ export const usePlayerStore = defineStore('player', () => {
     const currentPlayIndex = ref(0)
     // 是否正在播放
     const isPlaying = ref(false)
-    // 循环模式，0：列表循环，1：单曲循环
-    const loopMode = ref(0)
-    // 播放模式，0：顺序播放，1：随机播放
-    const playMode = ref(0)
+    // 循环模式，listLoop：列表循环，singleLoop：单曲循环
+    const loopMode = ref('listLoop')
+    // 播放模式，orderPlay：顺序播放，randomPlay：随机播放
+    const playMode = ref('orderPlay')
     // 音频总时长
     const duration = ref(0)
     // 当前播放时间
@@ -26,6 +27,8 @@ export const usePlayerStore = defineStore('player', () => {
     const currentLyricLine = ref(0)
     // 歌词数组
     const lyricLines: any = ref([])
+    // BlogUrl
+    const activeBlobUrl = ref<string | null>(null)
     // 歌词解析器
     // let lrc = new Lyric({
     //     onPlay: (line) => {
@@ -46,19 +49,11 @@ export const usePlayerStore = defineStore('player', () => {
     /**
      * 设置播放队列
      */
-    // function setPlayQueue(list: any) {
-    //     if (playMode.value === 1) {
-    //         playQueue.value = shuffle(list)
-    //         currentPlayIndex.value = playQueue.value.findIndex(
-    //             (item) => item.id === currentSongInfo.value?.id
-    //         )
-    //     } else {
-    //         playQueue.value = list
-    //         currentPlayIndex.value = playQueue.value.findIndex(
-    //             (item) => item.id === currentSongInfo.value?.id
-    //         )
-    //     }
-    // }
+    function setPlayQueue(list: any[]) {
+        playQueue.value =
+            playMode.value === 'randomPlay' ? shuffle([...list]) : list
+        updateCurrentPlayIndex()
+    }
     /**
      * 更新播放进度的步进函数
      */
@@ -78,11 +73,17 @@ export const usePlayerStore = defineStore('player', () => {
         currentTime.value = 0
         currentSongInfo.value = song
         sound.value?.unload()
+        if (playQueue.value.length !== 0) {
+            updateCurrentPlayIndex()
+        }
         try {
-            const res = await getSongStream(song.id)
-            let playUrl = URL.createObjectURL(res as Blob)
+            if (activeBlobUrl.value) {
+                URL.revokeObjectURL(activeBlobUrl.value)
+            }
+            const blob = await getSongStream(song.id)
+            activeBlobUrl.value = URL.createObjectURL(blob as Blob)
             sound.value = new Howl({
-                src: [playUrl],
+                src: [activeBlobUrl.value],
                 format: ['mp3', 'flac'],
                 html5: true,
                 onload: () => {
@@ -93,18 +94,22 @@ export const usePlayerStore = defineStore('player', () => {
                     // 开始更新进度
                     requestAnimationFrame(step)
                 },
+                onpause: () => {
+                    isPlaying.value = false
+                },
                 onseek: () => {
                     // 手动调整进度后继续更新
                     requestAnimationFrame(step)
+                },
+                onend: async () => {
+                    isPlaying.value = false
+                    if (loopMode.value === 'listLoop') {
+                        playNext()
+                    } else if (loopMode.value === 'singleLoop') {
+                        await loadSong(playQueue.value[currentPlayIndex.value])
+                        play()
+                    }
                 }
-                // onend: async () => {
-                //     if (loopMode.value === 0) {
-                //         playNext()
-                //     } else {
-                //         await loadSong(playQueue.value[currentPlayIndex.value])
-                //         play()
-                //     }
-                // }
             })
         } catch (error) {
             console.log(error)
@@ -123,7 +128,6 @@ export const usePlayerStore = defineStore('player', () => {
      * 播放下一首
      */
     async function playNext() {
-        isPlaying.value = false
         if (currentPlayIndex.value < playQueue.value.length - 1) {
             currentPlayIndex.value++
         } else {
@@ -137,7 +141,6 @@ export const usePlayerStore = defineStore('player', () => {
      * 播放上一首
      */
     async function playPrevious() {
-        isPlaying.value = false
         if (currentPlayIndex.value > 0) {
             currentPlayIndex.value--
         } else {
@@ -153,7 +156,6 @@ export const usePlayerStore = defineStore('player', () => {
     function pause() {
         sound.value?.pause()
         // lrc.pause()
-        isPlaying.value = false
     }
 
     /**
@@ -161,7 +163,6 @@ export const usePlayerStore = defineStore('player', () => {
      */
     function resume() {
         sound.value?.play()
-        isPlaying.value = true
     }
 
     /**
@@ -172,11 +173,11 @@ export const usePlayerStore = defineStore('player', () => {
     }
 
     /**
-     * 设置播放模式，0：顺序播放，1：随机播放
+     * 设置播放模式
      */
-    function setPlayMode(mode: any) {
+    function setPlayMode(mode: 'orderPlay' | 'randomPlay') {
         playMode.value = mode
-        // setPlayQueue(playQueue.value)
+        setPlayQueue(playQueue.value)
     }
 
     /**
@@ -185,7 +186,6 @@ export const usePlayerStore = defineStore('player', () => {
     function seek(time: number) {
         if (sound.value) {
             sound.value.seek(time)
-            // currentTime.value = time
             if (sound.value.playing()) {
                 requestAnimationFrame(step)
             }
@@ -220,9 +220,14 @@ export const usePlayerStore = defineStore('player', () => {
     //         currentPlayQueue: playQueue.value
     //     })
     // }
-
+    const updateCurrentPlayIndex = () => {
+        const index = playQueue.value.findIndex(
+            (item) => item.id === currentSongInfo.value?.id
+        )
+        currentPlayIndex.value = index !== -1 ? index : 0
+    }
     return {
-        // setPlayQueue,
+        setPlayQueue,
         loadSong,
         play,
         playNext,

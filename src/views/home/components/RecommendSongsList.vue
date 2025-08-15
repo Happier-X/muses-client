@@ -25,7 +25,7 @@
 import { NGrid, NGi, NFlex, NText } from 'naive-ui'
 import { usePlayerStore } from '@/stores/player'
 
-defineProps({
+const props = defineProps({
     list: {
         type: Array as () => any[],
         required: true
@@ -34,6 +34,9 @@ defineProps({
 const playerStore = usePlayerStore()
 const handlePlay = async (item) => {
     await playerStore.loadSong(item)
+    if (playerStore.playQueue.length === 0) {
+        playerStore.setPlayQueue(props.list)
+    }
     playerStore.play()
 }
 </script>
