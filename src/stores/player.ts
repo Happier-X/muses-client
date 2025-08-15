@@ -79,6 +79,7 @@ export const usePlayerStore = defineStore('player', () => {
         try {
             if (activeBlobUrl.value) {
                 URL.revokeObjectURL(activeBlobUrl.value)
+                activeBlobUrl.value = null
             }
             const blob = await getSongStream(song.id)
             activeBlobUrl.value = URL.createObjectURL(blob as Blob)
@@ -128,6 +129,7 @@ export const usePlayerStore = defineStore('player', () => {
      * 播放下一首
      */
     async function playNext() {
+        isPlaying.value = false
         if (currentPlayIndex.value < playQueue.value.length - 1) {
             currentPlayIndex.value++
         } else {
@@ -141,6 +143,7 @@ export const usePlayerStore = defineStore('player', () => {
      * 播放上一首
      */
     async function playPrevious() {
+        isPlaying.value = false
         if (currentPlayIndex.value > 0) {
             currentPlayIndex.value--
         } else {
