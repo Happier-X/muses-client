@@ -4,40 +4,49 @@ import vue from '@vitejs/plugin-vue'
 import UnoCSS from 'unocss/vite'
 
 export default defineConfig({
-  main: {
-    plugins: [externalizeDepsPlugin()],
-    build:{
-      rollupOptions:{
-        input:{
-          index:resolve(__dirname,'electron/main/index.ts')
+    main: {
+        plugins: [externalizeDepsPlugin()],
+        build: {
+            rollupOptions: {
+                input: {
+                    index: resolve(__dirname, 'electron/main/index.ts')
+                }
+            }
         }
-      }
-    }
-  },
-  preload: {
-    plugins: [externalizeDepsPlugin()],
-    build:{
-      rollupOptions:{
-        input:{
-          index:resolve(__dirname,'electron/preload/index.ts')
-        }
-      }
-    }
-  },
-  renderer: {
-    plugins: [vue(), UnoCSS()],
-    root:'.',
-    build:{
-      rollupOptions:{
-        input:{
-          index:resolve(__dirname,'index.html')
-        }
-      }
     },
-    resolve: {
-      alias: {
-        '@': resolve(__dirname,'src/')
-      }
+    preload: {
+        plugins: [externalizeDepsPlugin()],
+        build: {
+            rollupOptions: {
+                input: {
+                    index: resolve(__dirname, 'electron/preload/index.ts')
+                }
+            }
+        }
     },
-  }
+    renderer: {
+        plugins: [vue(), UnoCSS()],
+        root: '.',
+        build: {
+            rollupOptions: {
+                input: {
+                    index: resolve(__dirname, 'index.html')
+                }
+            }
+        },
+        resolve: {
+            alias: {
+                '@': resolve(__dirname, 'src/')
+            }
+        },
+        server: {
+            proxy: {
+                '/api': {
+                    target: 'http://localhost:3000',
+                    changeOrigin: true,
+                    rewrite: (path) => path.replace(/^\/api/, '')
+                }
+            }
+        }
+    }
 })

@@ -48,6 +48,18 @@ export const alova = createAlova({
     }
 })
 
+export const fileAlova = createAlova({
+    baseURL: `${import.meta.env.VITE_API_BASE_URL}`,
+    statesHook: VueHook,
+    requestAdapter: adapterFetch(),
+    responded: onResponseRefreshToken((response) => {
+        return response.blob()
+    }),
+    beforeRequest: (method) => {
+        method.config.headers.Authorization = `Bearer ${localStorage.getItem('access_token')}`
+    }
+})
+
 export const delayLoadingMiddleware =
     (delayTimer = 1000) =>
     async (ctx, next) => {

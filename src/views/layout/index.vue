@@ -8,7 +8,7 @@
                 <SideBar />
             </n-layout-sider>
             <n-layout-content
-                content-class="overflow-hidden"
+                content-class="overflow-hidden p-4"
                 :native-scrollbar="false">
                 <RouterView v-slot="{ Component }">
                     <KeepAlive>

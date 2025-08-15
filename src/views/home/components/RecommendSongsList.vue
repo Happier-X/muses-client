@@ -5,8 +5,10 @@
                 <n-image
                     class="aspect-square rounded-xl shadow-md"
                     object-fit="cover"
+                    preview-disabled
                     :src="item.cover"
-                    :alt="item.title" />
+                    :alt="item.title"
+                    @click="handlePlay(item)" />
                 <n-flex vertical :size="0">
                     <n-text strong class="font-size-4 line-clamp-1">
                         {{ item?.title ?? '未知歌曲' }}
@@ -21,10 +23,17 @@
 </template>
 <script setup lang="ts">
 import { NGrid, NGi, NFlex, NText } from 'naive-ui'
+import { usePlayerStore } from '@/stores/player'
+
 defineProps({
     list: {
         type: Array as () => any[],
         required: true
     }
 })
+const playerStore = usePlayerStore()
+const handlePlay = async (item) => {
+    await playerStore.loadSong(item)
+    playerStore.play()
+}
 </script>

@@ -1,4 +1,4 @@
-import { alova } from '..'
+import { alova, fileAlova } from '..'
 
 export const scanSongs = (scanAll?: boolean) => {
     return alova.Get('/songs/scan', {
@@ -13,9 +13,5 @@ export const getAllSongsList = () => {
 }
 
 export const getSongStream = (id: string) => {
-    return alova.Get('/songs/stream', {
-        params: {
-            id
-        }
-    })
+    return fileAlova.Get(`/songs/stream/${id}`)
 }
