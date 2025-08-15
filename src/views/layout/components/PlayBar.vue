@@ -30,9 +30,9 @@
     </n-flex>
 </template>
 <script setup lang="ts">
-import ProgressBar from '@/components/common/ProgressBar.vue'
-import PlayControls from '@/components/common/PlayControls.vue'
-import QueueControls from '@/components/common/QueueControls.vue'
+import ProgressBar from '@/components/ProgressBar.vue'
+import PlayControls from '@/components/PlayControls.vue'
+import QueueControls from '@/components/QueueControls.vue'
 import { usePlayerStore } from '@/stores/player'
 const playerStore = usePlayerStore()
 </script>

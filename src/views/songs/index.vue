@@ -110,10 +110,6 @@ const columns = ref([
     }
 ])
 </script> -->
-<template>
-    123
-</template>
-<script setup>
-</script>
-<style scoped>
-</style>
+<template>歌曲功能开发中...</template>
+<script setup></script>
+<style scoped></style>

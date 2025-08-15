@@ -8,6 +8,7 @@
                 <SideBar />
             </n-layout-sider>
             <n-layout-content
+                id="muses-layout-content"
                 content-class="overflow-hidden p-4"
                 :native-scrollbar="false">
                 <RouterView v-slot="{ Component }">

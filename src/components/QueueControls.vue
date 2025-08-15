@@ -40,14 +40,30 @@
                     "></n-icon>
             </template>
         </n-button>
-        <n-button quaternary circle :focusable="false">
-            <template #icon>
-                <n-icon class="i-mingcute-playlist-line"></n-icon>
-            </template>
-        </n-button>
+        <n-badge :value="playerStore.playQueue.length" type="success">
+            <n-button
+                quaternary
+                circle
+                :focusable="false"
+                @click="handleShowPlayQueue">
+                <template #icon>
+                    <n-icon class="i-mingcute-playlist-line"></n-icon>
+                </template>
+            </n-button>
+        </n-badge>
     </n-flex>
+    <PlayQueue ref="playQueueRef"></PlayQueue>
 </template>
 <script setup lang="ts">
 import { usePlayerStore } from '@/stores/player'
+import PlayQueue from './PlayQueue.vue'
+import { useTemplateRef } from 'vue'
+
 const playerStore = usePlayerStore()
+const playQueueRef = useTemplateRef('playQueueRef')
+const handleShowPlayQueue = () => {
+    if (playQueueRef.value) {
+        playQueueRef.value.showPlayQueue()
+    }
+}
 </script>
