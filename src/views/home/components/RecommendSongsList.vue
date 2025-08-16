@@ -33,10 +33,8 @@ const props = defineProps({
 })
 const playerStore = usePlayerStore()
 const handlePlay = async (item) => {
+    playerStore.setPlayQueue(props.list)
     await playerStore.loadSong(item)
-    if (playerStore.playQueue.length === 0) {
-        playerStore.setPlayQueue(props.list)
-    }
     playerStore.play()
 }
 </script>

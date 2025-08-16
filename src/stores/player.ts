@@ -1,8 +1,11 @@
-import { getSongStream } from '@/api/methods/songs'
+import {
+    addPlayCount,
+    getSongStream,
+    getMinPlayCountSong
+} from '@/api/methods/songs'
 import { Howl } from 'howler'
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
-import { shuffle } from '@/utils/shuffle'
 
 export const usePlayerStore = defineStore('player', () => {
     // 音频播放器实例
@@ -50,9 +53,7 @@ export const usePlayerStore = defineStore('player', () => {
      * 设置播放队列
      */
     function setPlayQueue(list: any[]) {
-        playQueue.value =
-            playMode.value === 'randomPlay' ? shuffle([...list]) : list
-        updateCurrentPlayIndex()
+        playQueue.value = list
     }
     /**
      * 更新播放进度的步进函数
@@ -73,9 +74,7 @@ export const usePlayerStore = defineStore('player', () => {
         currentTime.value = 0
         currentSongInfo.value = song
         sound.value?.unload()
-        if (playQueue.value.length !== 0) {
-            updateCurrentPlayIndex()
-        }
+        updateCurrentPlayIndex()
         try {
             if (activeBlobUrl.value) {
                 URL.revokeObjectURL(activeBlobUrl.value)
@@ -87,10 +86,11 @@ export const usePlayerStore = defineStore('player', () => {
                 src: [activeBlobUrl.value],
                 format: ['mp3', 'flac'],
                 html5: true,
-                onload: () => {
+                onload: async () => {
                     duration.value = sound.value?.duration() || 0
+                    await addPlayCount(song.id)
                 },
-                onplay: () => {
+                onplay: async () => {
                     isPlaying.value = true
                     // 开始更新进度
                     requestAnimationFrame(step)
@@ -130,12 +130,21 @@ export const usePlayerStore = defineStore('player', () => {
      */
     async function playNext() {
         isPlaying.value = false
-        if (currentPlayIndex.value < playQueue.value.length - 1) {
-            currentPlayIndex.value++
+        if (playMode.value === 'orderPlay') {
+            if (currentPlayIndex.value < playQueue.value.length - 1) {
+                currentPlayIndex.value++
+            } else {
+                currentPlayIndex.value = 0
+            }
+            await loadSong(playQueue.value[currentPlayIndex.value])
         } else {
-            currentPlayIndex.value = 0
+            const res = await getMinPlayCountSong(
+                playQueue.value.map((item) => item.id).join(',')
+            )
+            if (res) {
+                await loadSong(res)
+            }
         }
-        await loadSong(playQueue.value[currentPlayIndex.value])
         play()
     }
 
@@ -144,12 +153,21 @@ export const usePlayerStore = defineStore('player', () => {
      */
     async function playPrevious() {
         isPlaying.value = false
-        if (currentPlayIndex.value > 0) {
-            currentPlayIndex.value--
+        if (playMode.value === 'orderPlay') {
+            if (currentPlayIndex.value > 0) {
+                currentPlayIndex.value--
+            } else {
+                currentPlayIndex.value = playQueue.value.length - 1
+            }
+            await loadSong(playQueue.value[currentPlayIndex.value])
         } else {
-            currentPlayIndex.value = playQueue.value.length - 1
+            const res = await getMinPlayCountSong(
+                playQueue.value.map((item) => item.id).join(',')
+            )
+            if (res) {
+                await loadSong(res)
+            }
         }
-        await loadSong(playQueue.value[currentPlayIndex.value])
         play()
     }
 
@@ -169,18 +187,17 @@ export const usePlayerStore = defineStore('player', () => {
     }
 
     /**
-     * 设置循环模式，0：列表循环，1：单曲循环
+     * 设置循环模式，listLoop：列表循环，singleLoop：单曲循环
      */
     function setLoopMode(mode: any) {
         loopMode.value = mode
     }
 
     /**
-     * 设置播放模式
+     * 设置播放模式，orderPlay：顺序播放，randomPlay：随机播放
      */
     function setPlayMode(mode: 'orderPlay' | 'randomPlay') {
         playMode.value = mode
-        setPlayQueue(playQueue.value)
     }
 
     /**

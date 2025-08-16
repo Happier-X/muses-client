@@ -20,7 +20,11 @@
                 <n-list-item
                     v-for="item in playerStore.playQueue"
                     :key="item.id">
-                    <n-flex align="center" class="h-12 w-full" :wrap="false">
+                    <n-flex
+                        align="center"
+                        class="h-12 w-full"
+                        :wrap="false"
+                        @dblclick="play(item)">
                         <n-image
                             class="h-full aspect-square rounded-lg"
                             preview-disabled
@@ -55,4 +59,8 @@ const showPlayQueue = () => {
 defineExpose({
     showPlayQueue
 })
+const play = async (item) => {
+    await playerStore.loadSong(item)
+    playerStore.play()
+}
 </script>
