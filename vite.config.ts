@@ -19,7 +19,8 @@ export default defineConfig({
 			proxy,
 			tailwind: {
 				enable: true
-			}
+			},
+			clean:true
 		})
 	],
 
