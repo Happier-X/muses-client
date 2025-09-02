@@ -130,7 +130,11 @@ const hasChildren = computed(() => props.item.children != null && props.item.chi
 
 // 判断当前节点是否显示复选框
 const showCheckbox = computed(() => {
-	return ClTree?.checkable == true && ClTree?.multiple == true;
+	if (ClTree == null) {
+		return false;
+	}
+
+	return ClTree.checkable == true && ClTree.multiple == true;
 });
 
 // 计算当前节点应显示的图标（展开/收起）
@@ -163,8 +167,10 @@ function onTouchStart() {
 	hover.value = true;
 	toExpand();
 
-	if (ClTree?.checkable == true && ClTree?.multiple != true && props.item.disabled != true) {
-		toChecked();
+	if (ClTree != null) {
+		if (ClTree.checkable == true && ClTree.multiple != true && props.item.disabled != true) {
+			toChecked();
+		}
 	}
 }
 
