@@ -1,11 +1,22 @@
 <template>
 	<cl-page>
-        首页
-        <tabbar></tabbar>
+		<cl-topbar
+			fixed
+			:show-back="false"
+			safe-area-top
+			title="首页"
+			:pt="{
+				title: {
+					className: 'font-bold'
+				}
+			}"
+		>
+		</cl-topbar>
+        <cl-text>开发中...</cl-text>
+		<tabbar></tabbar>
 	</cl-page>
 </template>
 
 <script lang="ts" setup>
 import Tabbar from "@/components/tabbar.uvue";
-
 </script>

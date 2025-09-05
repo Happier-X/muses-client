@@ -1,11 +1,17 @@
 <template>
-	<cl-page>
-        音乐库
-        <tabbar></tabbar>
-	</cl-page>
+        <cl-page>
+                <cl-topbar fixed :show-back="false" safe-area-top title="音乐库" :pt="{
+                        title: {
+                                className: 'font-bold'
+                        }
+                }">
+                </cl-topbar>
+        <cl-text>开发中...</cl-text>
+
+                <tabbar></tabbar>
+        </cl-page>
 </template>
 
 <script lang="ts" setup>
 import Tabbar from "@/components/tabbar.uvue";
-
 </script>

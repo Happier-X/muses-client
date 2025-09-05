@@ -1,11 +1,10 @@
 import { router, useStore } from "@/cool";
 
 const ignoreToken = [
+	"/pages/auth/index",
 	"/pages/home/index",
 	"/pages/my/index",
-	"/pages/musicLibrary/index",
-	"/pages/user/login",
-	"/pages/user/doc"
+	"/pages/musicLibrary/index"
 ];
 
 router.beforeEach((to, next) => {

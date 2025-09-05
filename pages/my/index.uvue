@@ -1,7 +1,20 @@
 <template>
 	<cl-page>
-        我的
-        <tabbar></tabbar>
+		<cl-topbar
+			fixed
+			:show-back="false"
+			safe-area-top
+			title="我的"
+			:pt="{
+				title: {
+					className: 'font-bold'
+				}
+			}"
+		>
+		</cl-topbar>
+        <cl-text>开发中...</cl-text>
+
+		<tabbar></tabbar>
 	</cl-page>
 </template>
 

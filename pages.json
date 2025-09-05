@@ -17,6 +17,12 @@
 			"style": {
 				"navigationStyle": "custom"
 			}
+		},
+		{
+			"path": "pages/auth/index",
+			"style": {
+				"navigationStyle": "custom"
+			}
 		}
 	],
 	"subPackages": [
