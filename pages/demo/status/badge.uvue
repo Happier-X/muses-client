@@ -2,7 +2,7 @@
 	<cl-page>
 		<view class="p-3">
 			<demo-item :label="t('基础用法')">
-				<view class="flex flex-row">
+				<view class="flex flex-row overflow-visible">
 					<cl-badge type="primary" value="1" class="mr-2"></cl-badge>
 					<cl-badge type="success" value="12" class="mr-2"></cl-badge>
 					<cl-badge type="warn" value="31" class="mr-2"></cl-badge>
@@ -62,7 +62,7 @@
 			</demo-item>
 
 			<demo-item :label="t('自定义样式')">
-				<view class="flex flex-row">
+				<view class="flex flex-row overflow-visible">
 					<cl-badge
 						type="info"
 						:pt="{ className: '!rounded-bl-none' }"

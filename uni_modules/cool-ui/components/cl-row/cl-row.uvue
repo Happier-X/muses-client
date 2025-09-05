@@ -53,6 +53,6 @@ defineExpose({
 
 <style lang="scss" scoped>
 .cl-row {
-	@apply flex flex-row flex-wrap relative;
+	@apply flex flex-row flex-wrap relative overflow-visible;
 }
 </style>

@@ -50,7 +50,7 @@
 
 <script lang="ts" setup>
 import { computed, ref, watch } from "vue";
-import { isDark, parseClass, parsePt } from "@/cool";
+import { isAppIOS, isDark, parseClass, parsePt, rpx2px } from "@/cool";
 import type { PassThroughProps } from "../../types";
 import { vibrate } from "@/uni_modules/cool-vibrate";
 import { useForm } from "../../hooks";
@@ -145,7 +145,7 @@ const rect = computed<Rect>(() => {
 		width: width + "rpx",
 		size: size + "rpx",
 		left: left + "rpx",
-		translateX: translateX + "rpx"
+		translateX: isAppIOS() ? rpx2px(translateX) + "px" : `${translateX}rpx`
 	};
 });
 

@@ -1,9 +1,9 @@
 <template>
 	<view
 		class="cl-safe-area"
-		:class="[{ 'is-dark': isDark }, pt.className]"
+		:class="[pt.className]"
 		:style="{
-			height: height + 'px'
+			height
 		}"
 	>
 		<slot></slot>
@@ -11,7 +11,7 @@
 </template>
 
 <script setup lang="ts">
-import { getSafeAreaHeight, isDark, parsePt } from "@/cool";
+import { getSafeAreaHeight, parsePt } from "@/cool";
 import { computed, type PropType } from "vue";
 
 defineOptions({
@@ -26,6 +26,10 @@ const props = defineProps({
 	type: {
 		type: String as PropType<"top" | "bottom">,
 		default: "top"
+	},
+	transparent: {
+		type: Boolean,
+		default: false
 	}
 });
 
@@ -40,13 +44,3 @@ const height = computed(() => {
 	return getSafeAreaHeight(props.type) + "px";
 });
 </script>
-
-<style lang="scss" scoped>
-.cl-safe-area {
-	@apply bg-white;
-
-	&.is-dark {
-		@apply bg-surface-900;
-	}
-}
-</style>

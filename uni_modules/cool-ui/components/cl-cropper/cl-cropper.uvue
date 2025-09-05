@@ -10,9 +10,15 @@
 	>
 		<!-- 图片容器 - 可拖拽和缩放的图片区域 -->
 		<view class="cl-cropper__image">
+			<!-- @vue-ignore -->
 			<image
 				class="cl-cropper__image-inner"
-				:class="[pt.image?.className]"
+				:class="[
+					{
+						'no-dragging': !touch.isTouching
+					},
+					pt.image?.className
+				]"
 				:src="imageUrl"
 				:style="imageStyle"
 				@load="onImageLoaded"
@@ -317,17 +323,22 @@ const imageStyle = computed(() => {
 	const flipX = flipHorizontal.value ? "scaleX(-1)" : "scaleX(1)";
 	const flipY = flipVertical.value ? "scaleY(-1)" : "scaleY(1)";
 
+	let height = toPixel(imageSize.height);
+	let width = toPixel(imageSize.width);
+
+	// 解决 ios 端高和宽为0时不触发 load 事件
+	if (height == 0) {
+		height = 1;
+		width = 1;
+	}
+
 	// 创建基础样式对象
 	const style = {
 		transform: `translate(${toPixel(transform.translateX)}px, ${toPixel(transform.translateY)}px) ${flipX} ${flipY} rotate(${rotate.value}deg)`, // 设置图片位移和翻转变换
-		height: toPixel(imageSize.height) + "px", // 设置图片显示高度
-		width: toPixel(imageSize.width) + "px" // 设置图片显示宽度
+		height: height + "px", // 设置图片显示高度
+		width: width + "px", // 设置图片显示宽度
+		opacity: height == 0 ? 0 : 1 // 设置图片显示透明度
 	};
-
-	// 如果不在触摸状态，添加过渡动画
-	if (!touch.isTouching) {
-		style["transitionDuration"] = "0.3s"; // 设置过渡动画时长
-	}
 
 	// 返回样式对象
 	return style;
@@ -1192,7 +1203,17 @@ defineExpose({
 	z-index: 510;
 
 	&__image {
-		@apply absolute top-0 left-0 flex items-center justify-center w-full h-full pointer-events-none;
+		@apply absolute top-0 left-0 flex items-center justify-center w-full h-full;
+		@apply pointer-events-none;
+
+		&-inner {
+			@apply transition-none;
+
+			.no-dragging {
+				@apply duration-300;
+				transition-property: transform;
+			}
+		}
 	}
 
 	&__mask {

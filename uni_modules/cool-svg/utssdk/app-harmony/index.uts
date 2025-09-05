@@ -1,0 +1,5 @@
+import { BuilderNode } from "@kit.ArkUI";
+
+export class CoolSvg {
+	load(src: string, color: string) {}
+}

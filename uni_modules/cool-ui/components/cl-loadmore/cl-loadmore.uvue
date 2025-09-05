@@ -2,7 +2,7 @@
 	<view class="cl-loadmore-wrapper">
 		<view class="cl-loadmore">
 			<cl-loading
-				:size="30"
+				:size="28"
 				:pt="{
 					className: `mr-2 ${pt.icon?.className}`
 				}"
@@ -59,7 +59,7 @@ const props = defineProps({
 	// 是否显示底部安全区
 	safeAreaBottom: {
 		type: Boolean,
-		default: true
+		default: false
 	}
 });
 

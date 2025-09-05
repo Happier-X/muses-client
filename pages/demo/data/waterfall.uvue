@@ -36,7 +36,7 @@
 				</template>
 			</cl-waterfall>
 
-			<cl-loadmore :loading="true"></cl-loadmore>
+			<cl-loadmore :loading="true" safe-area-bottom></cl-loadmore>
 		</view>
 	</cl-page>
 </template>

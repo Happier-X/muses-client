@@ -60,33 +60,31 @@
 			</demo-item>
 
 			<demo-item :label="t('自定义')">
-				<view class="mb-3">
-					<cl-input
-						v-model="content"
-						:border="isBorder"
-						:suffix-icon="isRightIcon ? 'text' : ''"
-						:prefix-icon="isLeftIcon ? 'search-line' : ''"
-						:disabled="isDisabled"
-						:pt="{
+				<cl-input
+					v-model="content"
+					:border="isBorder"
+					:suffix-icon="isRightIcon ? 'text' : ''"
+					:prefix-icon="isLeftIcon ? 'search-line' : ''"
+					:disabled="isDisabled"
+					:pt="{
+						className: parseClass({
+							'!bg-sky-100': isColor,
+							'!border-sky-700': isColor
+						}),
+						inner: {
 							className: parseClass({
-								'!bg-sky-100': isColor,
-								'!border-sky-700': isColor
-							}),
-							inner: {
-								className: parseClass({
-									'!text-sky-700': isColor
-								})
-							},
-							prefixIcon: {
-								className: parseClass({
-									'!text-sky-700': isColor
-								})
-							}
-						}"
-					></cl-input>
-				</view>
+								'!text-sky-700': isColor
+							})
+						},
+						prefixIcon: {
+							className: parseClass({
+								'!text-sky-700': isColor
+							})
+						}
+					}"
+				></cl-input>
 
-				<cl-list border>
+				<cl-list border :pt="{ className: 'mt-5' }">
 					<cl-list-item :label="t('边框')">
 						<cl-switch v-model="isBorder"></cl-switch>
 					</cl-list-item>

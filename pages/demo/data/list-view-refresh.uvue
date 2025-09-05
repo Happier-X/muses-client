@@ -19,7 +19,11 @@
 
 			<template #bottom>
 				<view class="py-3">
-					<cl-loadmore :loading="loading" v-if="list.length > 0"></cl-loadmore>
+					<cl-loadmore
+						v-if="list.length > 0"
+						:loading="loading"
+						safe-area-bottom
+					></cl-loadmore>
 				</view>
 			</template>
 		</cl-list-view>

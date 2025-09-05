@@ -24,7 +24,7 @@ import {
 } from "vue";
 
 import { drawQrcode, type QrcodeOptions } from "./draw";
-import { canvasToPng, getPx, isHarmony, uuid } from "@/cool";
+import { canvasToPng, getPx, isAppIOS, isHarmony, uuid } from "@/cool";
 import type { ClQrcodeMode } from "../../types";
 
 defineOptions({
@@ -168,7 +168,7 @@ onMounted(() => {
 		() => {
 			drawer();
 		},
-		isHarmony() ? 50 : 0
+		isHarmony() || isAppIOS() ? 50 : 0
 	);
 });
 

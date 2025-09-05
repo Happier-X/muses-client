@@ -6,7 +6,7 @@
 			</demo-item>
 
 			<demo-item :label="t('不同位置')">
-				<view class="flex flex-row">
+				<view class="flex flex-row overflow-visible">
 					<cl-button type="light" @tap="open('top')">{{ t("顶部") }}</cl-button>
 					<cl-button type="light" @tap="open('center')">{{ t("中间") }}</cl-button>
 					<cl-button type="light" @tap="open('bottom')">{{ t("底部") }}</cl-button>
@@ -14,7 +14,7 @@
 			</demo-item>
 
 			<demo-item :label="t('不同类型')">
-				<view class="flex flex-row flex-wrap mb-2">
+				<view class="flex flex-row flex-wrap mb-2 overflow-visible">
 					<cl-button type="light" @tap="openType('success')">{{ t("成功") }}</cl-button>
 					<cl-button type="light" @tap="openType('error')">{{ t("失败") }}</cl-button>
 					<cl-button type="light" @tap="openType('warn')">{{ t("警告") }}</cl-button>
@@ -22,13 +22,13 @@
 					<cl-button type="light" @tap="openType('disabled')">{{ t("禁用") }}</cl-button>
 				</view>
 
-				<view class="flex flex-row flex-wrap">
+				<view class="flex flex-row flex-wrap overflow-visible">
 					<cl-button type="light" @tap="openType('stop')">{{ t("停止") }}</cl-button>
 				</view>
 			</demo-item>
 
 			<demo-item :label="t('自定义图标')">
-				<view class="flex flex-row">
+				<view class="flex flex-row overflow-visible">
 					<cl-button
 						type="light"
 						icon="star-line"

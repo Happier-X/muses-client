@@ -74,10 +74,10 @@
 		"distribute": {
 			"modules": {},
 			"icons": {
-				"hdpi": "static/logo2.png",
-				"xhdpi": "static/logo2.png",
-				"xxhdpi": "static/logo2.png",
-				"xxxhdpi": "static/logo2.png"
+				"hdpi": "docs/logo.png",
+				"xhdpi": "docs/logo.png",
+				"xxhdpi": "docs/logo.png",
+				"xxxhdpi": "docs/logo.png"
 			},
 			"splashScreens": {
 				"default": {}
@@ -88,7 +88,7 @@
 		"distribute": {
 			"modules": {},
 			"icons": {
-				"appstore": "static/logo2.png"
+				"appstore": "docs/logo.png"
 			},
 			"splashScreens": {}
 		}

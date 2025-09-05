@@ -17,7 +17,7 @@
 	>
 		<cl-text
 			:pt="{
-				className: parseClass(['cl-badge__text !text-white !text-sm', pt.text?.className])
+				className: parseClass(['cl-badge__text !text-white !text-xs', pt.text?.className])
 			}"
 			v-if="!dot"
 		>

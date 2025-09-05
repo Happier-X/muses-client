@@ -42,49 +42,89 @@
 
 			<view class="cl-keyboard-number__list">
 				<cl-row :gutter="10">
-					<cl-col :span="6" v-for="item in list" :key="item">
-						<view
-							class="cl-keyboard-number__item"
-							:class="[
-								`is-keycode-${item}`,
-								{
-									'is-dark': isDark,
-									'is-empty': item == ''
-								},
-								pt.item?.className
-							]"
-							hover-class="opacity-50"
-							:hover-stay-time="50"
-							@touchstart.stop="onCommand(item)"
-						>
-							<slot name="item" :item="item">
+					<cl-col :span="18">
+						<cl-row :gutter="10">
+							<cl-col :span="8" v-for="item in list" :key="item">
+								<view
+									class="cl-keyboard-number__item"
+									:class="[
+										`is-keycode-${item}`,
+										{
+											'is-dark': isDark,
+											'is-empty': item == ''
+										},
+										pt.item?.className
+									]"
+									hover-class="opacity-50"
+									:hover-stay-time="250"
+									@touchstart.stop="onCommand(item)"
+								>
+									<slot name="item" :item="item">
+										<cl-icon
+											v-if="item == 'delete'"
+											name="delete-back-2-line"
+											:size="36"
+										></cl-icon>
+
+										<view
+											v-else-if="item == 'confirm'"
+											class="cl-keyboard-number__item-confirm"
+										>
+											<cl-text
+												color="white"
+												:pt="{
+													className: '!text-lg'
+												}"
+												>{{ confirmText }}</cl-text
+											>
+										</view>
+
+										<view v-else-if="item == '_confirm'"></view>
+
+										<cl-text
+											v-else
+											:pt="{
+												className: '!text-lg'
+											}"
+											>{{ item }}</cl-text
+										>
+									</slot>
+								</view>
+							</cl-col>
+						</cl-row>
+					</cl-col>
+
+					<cl-col :span="6">
+						<view class="cl-keyboard-number__op">
+							<view
+								v-for="item in opList"
+								:key="item"
+								class="cl-keyboard-number__item"
+								:class="[
+									{
+										'is-dark': isDark
+									},
+									`is-keycode-${item}`
+								]"
+								hover-class="opacity-50"
+								:hover-stay-time="250"
+								@touchstart.stop="onCommand(item)"
+							>
 								<cl-icon
 									v-if="item == 'delete'"
 									name="delete-back-2-line"
 									:size="36"
 								></cl-icon>
 
-								<view
-									v-else-if="item == 'confirm'"
-									class="cl-keyboard-number__item-confirm"
-								>
-									<cl-text
-										color="white"
-										:pt="{
-											className: '!text-lg'
-										}"
-										>{{ confirmText }}</cl-text
-									>
-								</view>
-
 								<cl-text
-									v-else
+									v-if="item == 'confirm'"
+									color="white"
 									:pt="{
 										className: '!text-lg'
 									}"
-									>{{ item }}</cl-text
+									>{{ confirmText }}</cl-text
 								>
-							</slot>
+							</view>
 						</view>
 					</cl-col>
 				</cl-row>
@@ -99,7 +139,7 @@ import type { PassThroughProps } from "../../types";
 import type { ClPopupProps } from "../cl-popup/props";
 import { ref, computed, watch, type PropType } from "vue";
 import { $t, t } from "@/locale";
-import { isDark, parseClass, parsePt } from "@/cool";
+import { isAppIOS, isDark, parseClass, parsePt } from "@/cool";
 import { vibrate } from "@/uni_modules/cool-vibrate";
 
 defineOptions({
@@ -193,36 +233,24 @@ const maxlength = computed(() => {
 
 // 数字键盘的按键列表，包含数字、删除、00和小数点
 const list = computed(() => {
-	const arr = [
-		"1",
-		"2",
-		"3",
-		"delete",
-		"4",
-		"5",
-		"6",
-		"",
-		"7",
-		"8",
-		"9",
-		"",
-		"00",
-		"0",
-		"",
-		"confirm"
-	];
+	const arr = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "00", "0", ""];
 
 	// 数字键盘显示为小数点 "."
 	if (props.type == "digit") {
-		arr[14] = ".";
+		arr[11] = ".";
 	}
 
 	// 身份证键盘显示为 "X"
 	if (props.type == "idcard") {
-		arr[14] = "X";
+		arr[11] = "X";
 	}
 
 	return arr;
+});
+
+// 操作按钮列表
+const opList = computed(() => {
+	return ["delete", "confirm"];
 });
 
 // 打开键盘弹窗
@@ -238,10 +266,12 @@ function close() {
 // 处理键盘按键点击事件
 function onCommand(key: string) {
 	// 震动
-	vibrate(1);
+	try {
+		vibrate(1);
+	} catch (error) {}
 
 	// 确认按钮逻辑
-	if (key == "confirm") {
+	if (key == "confirm" || key == "_confirm") {
 		if (value.value == "") {
 			ui.showToast({
 				message: t("请输入内容")
@@ -364,14 +394,17 @@ defineExpose({
 	}
 
 	&__list {
-		@apply relative;
+		@apply relative overflow-visible;
+	}
+
+	&__op {
+		@apply flex flex-col h-full;
 	}
 
 	&__item {
-		@apply flex items-center justify-center rounded-xl bg-white;
+		@apply flex items-center justify-center rounded-xl bg-white overflow-visible;
 		height: 100rpx;
 		margin-top: 10rpx;
-		overflow: visible;
 
 		&.is-dark {
 			@apply bg-surface-800;
@@ -386,14 +419,8 @@ defineExpose({
 		}
 
 		&.is-keycode-confirm {
-			@apply bg-transparent relative;
-		}
-
-		&-confirm {
 			@apply flex flex-col items-center justify-center;
-			@apply bg-primary-500 absolute w-full rounded-xl;
-			height: 320rpx;
-			top: -220rpx;
+			@apply bg-primary-500 rounded-xl flex-1;
 		}
 
 		&.is-empty {

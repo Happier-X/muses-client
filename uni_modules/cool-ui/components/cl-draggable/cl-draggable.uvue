@@ -3,28 +3,35 @@
 		class="cl-draggable"
 		:class="[
 			{
-				'cl-draggable--grid': props.columns > 1
+				'cl-draggable--columns': props.columns > 1
 			},
 			pt.className
 		]"
 	>
+		<!-- @vue-ignore -->
 		<view
 			v-for="(item, index) in list"
 			:key="getItemKey(item, index)"
 			class="cl-draggable__item"
 			:class="[
 				{
-					'cl-draggable__item--disabled': disabled
-				},
-				dragging && dragIndex == index ? `opacity-80 ${pt.ghost?.className}` : ''
+					'cl-draggable__item--disabled': disabled,
+					'cl-draggable__item--dragging': dragging && dragIndex == index,
+					'cl-draggable__item--animating': dragging && dragIndex != index
+				}
 			]"
 			:style="getItemStyle(index)"
 			@touchstart="
 				(event: UniTouchEvent) => {
-					onTouchStart(event, index);
+					onTouchStart(event, index, 'touch');
 				}
 			"
-			@touchmove.stop.prevent="onTouchMove"
+			@longpress="
+				(event: UniTouchEvent) => {
+					onTouchStart(event, index, 'longpress');
+				}
+			"
+			@touchmove="onTouchMove"
 			@touchend="onTouchEnd"
 		>
 			<slot
@@ -44,6 +51,7 @@
 import { computed, ref, getCurrentInstance, type PropType, watch } from "vue";
 import { isNull, parsePt, uuid } from "@/cool";
 import type { PassThroughProps } from "../../types";
+import { vibrate } from "@/uni_modules/cool-vibrate";
 
 defineOptions({
 	name: "cl-draggable"
@@ -89,15 +97,15 @@ const props = defineProps({
 		type: Boolean,
 		default: false
 	},
-	/** 动画持续时间（毫秒） */
-	animation: {
-		type: Number,
-		default: 150
-	},
 	/** 列数：1为单列纵向布局，>1为多列网格布局 */
 	columns: {
 		type: Number,
 		default: 1
+	},
+	// 是否需要长按触发
+	longPress: {
+		type: Boolean,
+		default: true
 	}
 });
 
@@ -376,12 +384,6 @@ function getItemStyle(index: number) {
 		return style;
 	}
 
-	// 为非拖拽元素添加过渡动画
-	if (props.animation > 0 && !isCurrent) {
-		style["transition-property"] = "transform";
-		style["transition-duration"] = `${props.animation}ms`;
-	}
-
 	// 拖拽状态下的样式处理
 	if (dragging.value) {
 		if (isCurrent) {
@@ -391,9 +393,7 @@ function getItemStyle(index: number) {
 		} else {
 			// 其他元素：显示排序预览位移
 			const translateOffset = getItemTranslateOffset(index);
-			if (translateOffset.x != 0 || translateOffset.y != 0) {
-				style["transform"] = `translate(${translateOffset.x}px, ${translateOffset.y}px)`;
-			}
+			style["transform"] = `translate(${translateOffset.x}px, ${translateOffset.y}px)`;
 		}
 	}
 
@@ -513,22 +513,31 @@ function checkMovedToOtherElement(): boolean {
  * @param event 触摸事件对象
  * @param index 触摸的项目索引
  */
-async function onTouchStart(event: UniTouchEvent, index: number): Promise<void> {
+async function onTouchStart(event: UniTouchEvent, index: number, type: string) {
+	// 如果是长按触发，但未开启长按功能，则直接返回
+	if (type == "longpress" && !props.longPress) return;
+	// 如果是普通触摸触发，但已开启长按功能，则直接返回
+	if (type == "touch" && props.longPress) return;
+
 	// 检查是否禁用或索引无效
 	if (props.disabled) return;
 	if (getItemDisabled(index)) return;
 	if (index < 0 || index >= list.value.length) return;
 
+	// 获取触摸点
 	const touch = event.touches[0];
 
 	// 初始化拖拽状态
 	dragging.value = true;
+
+	// 初始化拖拽索引
 	dragIndex.value = index;
 	insertIndex.value = index; // 初始插入位置为原位置
 	startX.value = touch.clientX;
 	startY.value = touch.clientY;
 	offsetX.value = 0;
 	offsetY.value = 0;
+	// 初始化拖拽数据项
 	dragItem.value = list.value[index];
 
 	// 先获取所有项目的位置信息，为后续计算做准备
@@ -536,6 +545,14 @@ async function onTouchStart(event: UniTouchEvent, index: number): Promise<void> 
 
 	// 触发开始事件
 	emit("start", index);
+
+	// 震动
+	vibrate(1);
+
+	// 阻止事件冒泡
+	event.stopPropagation();
+	// 阻止默认行为
+	event.preventDefault();
 }
 
 /**
@@ -575,7 +592,7 @@ function onTouchMove(event: TouchEvent): void {
 		}
 	}
 
-	// 阻止默认行为和事件冒泡
+	// 阻止默认行为
 	event.preventDefault();
 }
 
@@ -585,7 +602,10 @@ function onTouchMove(event: TouchEvent): void {
 function onTouchEnd(): void {
 	if (!dragging.value) return;
 
+	// 旧索引
 	const oldIndex = dragIndex.value;
+
+	// 新索引
 	const newIndex = insertIndex.value;
 
 	// 如果位置发生变化，立即更新数组
@@ -604,15 +624,11 @@ function onTouchEnd(): void {
 	dropping.value = true;
 	dragging.value = false;
 
-	// 让拖拽元素回到自然位置（偏移归零）
-	offsetX.value = 0;
-	offsetY.value = 0;
+	// 重置所有状态
+	reset();
 
 	// 等待放下动画完成后重置所有状态
-	setTimeout(() => {
-		emit("end", newIndex >= 0 ? newIndex : oldIndex);
-		reset();
-	}, 10);
+	emit("end", newIndex >= 0 ? newIndex : oldIndex);
 }
 
 /**
@@ -652,21 +668,30 @@ watch(
 <style lang="scss" scoped>
 .cl-draggable {
 	@apply flex-col relative overflow-visible;
-}
 
-.cl-draggable--grid {
-	@apply flex-row flex-wrap;
-}
+	&--columns {
+		@apply flex-row flex-wrap;
+	}
 
-.cl-draggable__item {
-	@apply relative;
-}
+	&__item {
+		@apply relative z-10;
 
-.cl-draggable__item--dragging {
-	@apply opacity-80;
-}
+		// #ifdef APP-IOS
+		@apply transition-none opacity-100;
+		// #endif
 
-.cl-draggable__item--disabled {
-	@apply opacity-60;
+		&--dragging {
+			@apply opacity-80 z-20;
+		}
+
+		&--disabled {
+			@apply opacity-60;
+		}
+
+		&--animating {
+			@apply duration-200;
+			transition-property: transform;
+		}
+	}
 }
 </style>

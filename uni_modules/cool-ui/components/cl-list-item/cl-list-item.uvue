@@ -109,7 +109,7 @@ import {
 	useSlots,
 	type PropType
 } from "vue";
-import { isDark, isHarmony, parseClass, parsePt } from "@/cool";
+import { isAppIOS, isDark, isHarmony, parseClass, parsePt } from "@/cool";
 import type { Justify, PassThroughProps } from "../../types";
 import type { ClIconProps } from "../cl-icon/props";
 
@@ -388,7 +388,7 @@ onMounted(() => {
 		() => {
 			initSwipe();
 		},
-		isHarmony() ? 50 : 0
+		isHarmony() || isAppIOS() ? 50 : 0
 	);
 });
 

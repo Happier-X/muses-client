@@ -10,33 +10,31 @@
 			</demo-item>
 
 			<demo-item :label="t('自定义')">
-				<view class="mb-3">
-					<cl-input-otp
-						:length="isLength ? 6 : 4"
-						:disabled="isDisabled"
-						:pt="{
-							item: {
-								className: parseClass({
-									'!bg-sky-100': isCustom,
-									'!border-white': isCustom
-								})
-							},
-							value: {
-								className: parseClass({
-									'!text-sky-700': isCustom
-								})
-							},
-							cursor: {
-								className: parseClass({
-									'!bg-sky-700': isCustom
-								})
-							}
-						}"
-						@done="toDone"
-					></cl-input-otp>
-				</view>
+				<cl-input-otp
+					:length="isLength ? 6 : 4"
+					:disabled="isDisabled"
+					:pt="{
+						item: {
+							className: parseClass({
+								'!bg-sky-100': isCustom,
+								'!border-white': isCustom
+							})
+						},
+						value: {
+							className: parseClass({
+								'!text-sky-700': isCustom
+							})
+						},
+						cursor: {
+							className: parseClass({
+								'!bg-sky-700': isCustom
+							})
+						}
+					}"
+					@done="toDone"
+				></cl-input-otp>
 
-				<cl-list border>
+				<cl-list border :pt="{ className: 'mt-5' }">
 					<cl-list-item :label="t('长度为6')">
 						<cl-switch v-model="isLength"></cl-switch>
 					</cl-list-item>

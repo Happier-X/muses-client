@@ -317,14 +317,15 @@ function initCanvas() {
 }
 
 onMounted(() => {
-	initCanvas();
-
 	watch(
 		computed(() => [props.width, props.height]),
 		() => {
 			nextTick(() => {
 				initCanvas();
 			});
+		},
+		{
+			immediate: true
 		}
 	);
 });

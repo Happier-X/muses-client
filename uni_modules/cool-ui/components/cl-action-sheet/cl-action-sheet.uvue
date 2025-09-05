@@ -30,7 +30,7 @@
 					v-for="(item, index) in config.list"
 					:key="index"
 					:hover-class="`${isDark ? '!bg-surface-900' : '!bg-surface-50'}`"
-					:hover-stay-time="100"
+					:hover-stay-time="250"
 					@tap="onItemTap(item)"
 				>
 					<slot name="item" :item="item">

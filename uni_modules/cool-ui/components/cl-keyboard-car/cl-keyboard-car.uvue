@@ -64,7 +64,7 @@
 							marginRight: index == row.length - 1 ? '0' : '10rpx'
 						}"
 						hover-class="opacity-50"
-						:hover-stay-time="50"
+						:hover-stay-time="250"
 						@touchstart.stop="onCommand(item)"
 					>
 						<slot name="item" :item="item">

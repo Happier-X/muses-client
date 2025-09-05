@@ -22,8 +22,6 @@
 				:hold-keyboard="false"
 				:clearable="false"
 				@change="onChange"
-				@focus="animateCursor(true)"
-				@blur="animateCursor(true)"
 			></cl-input>
 		</view>
 
@@ -36,12 +34,13 @@
 					{
 						'is-disabled': disabled,
 						'is-dark': isDark,
-						'is-active': value.length == index && isFocus
+						'is-active': value.length >= index && isFocus
 					},
 					pt.item?.className
 				]"
 			>
 				<cl-text
+					:color="value.length >= index && isFocus ? 'primary' : ''"
 					:pt="{
 						className: pt.value?.className
 					}"
@@ -50,9 +49,6 @@
 				<view
 					class="cl-input-otp__cursor"
 					:class="[pt.cursor?.className]"
-					:style="{
-						opacity: cursorOpacity
-					}"
 					v-if="value.length == index && isFocus && item == ''"
 				></view>
 			</view>
@@ -184,62 +180,17 @@ function onChange(val: string) {
 		emit("done", val);
 	}
 }
-
-/**
- * 光标闪烁透明度值
- * 范围: 0.3-1.0
- */
-const cursorOpacity = ref(0.3);
-
-/**
- * 光标闪烁动画帧ID
- */
-let cursorAnimationId = 0;
-
-/**
- * 控制光标闪烁动画
- * @param isIncreasing 透明度是否递增
- */
-function animateCursor(isIncreasing: boolean) {
-	// #ifdef APP
-	// 未获得焦点时不执行动画
-	if (!isFocus.value) {
-		return;
-	}
-
-	// 取消上一次动画
-	if (cursorAnimationId != 0) {
-		cancelAnimationFrame(cursorAnimationId);
-		cursorAnimationId = 0;
-	}
-
-	// 执行动画帧
-	cursorAnimationId = requestAnimationFrame(() => {
-		// 根据方向调整透明度值
-		cursorOpacity.value += isIncreasing ? 0.01 : -0.01;
-
-		// 到达边界值时改变方向
-		if (cursorOpacity.value > 1) {
-			animateCursor(false);
-		} else if (cursorOpacity.value <= 0.3) {
-			animateCursor(true);
-		} else {
-			animateCursor(isIncreasing);
-		}
-	});
-	// #endif
-}
 </script>
 
 <style lang="scss" scoped>
 .cl-input-otp {
-	@apply relative;
+	@apply relative overflow-visible;
 
 	&__inner {
 		@apply absolute top-0 h-full z-10;
 		opacity: 0;
-		left: -100%;
-		width: 200%;
+		left: 0;
+		width: 100%;
 	}
 
 	&__list {
@@ -248,7 +199,7 @@ function animateCursor(isIncreasing: boolean) {
 	}
 
 	&__item {
-		@apply flex flex-row items-center justify-center;
+		@apply flex flex-row items-center justify-center duration-100;
 		@apply border border-solid border-surface-200 rounded-lg bg-white;
 		height: 80rpx;
 		width: 80rpx;
@@ -272,10 +223,10 @@ function animateCursor(isIncreasing: boolean) {
 	}
 
 	&__cursor {
-		@apply absolute;
+		@apply absolute duration-100;
 		@apply bg-primary-500;
 		width: 2rpx;
-		height: 36rpx;
+		height: 24rpx;
 	}
 
 	// #ifdef H5 || MP
@@ -285,7 +236,7 @@ function animateCursor(isIncreasing: boolean) {
 
 	@keyframes flash {
 		0% {
-			opacity: 0.3;
+			opacity: 0;
 		}
 
 		50% {
@@ -293,7 +244,7 @@ function animateCursor(isIncreasing: boolean) {
 		}
 
 		100% {
-			opacity: 0.3;
+			opacity: 0;
 		}
 	}
 	// #endif

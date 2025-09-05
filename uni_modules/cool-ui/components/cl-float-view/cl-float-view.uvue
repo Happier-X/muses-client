@@ -1,6 +1,9 @@
 <template>
 	<view
 		class="cl-float-view"
+		:class="{
+			'no-dragging': !position.isDragging
+		}"
 		:style="viewStyle"
 		@touchstart="onTouchStart"
 		@touchmove.stop.prevent="onTouchMove"
@@ -125,11 +128,6 @@ const viewStyle = computed(() => {
 	style["width"] = `${props.size}px`;
 	// 设置高度
 	style["height"] = `${props.size}px`;
-
-	// 非拖拽状态下添加过渡动画，使移动更平滑
-	if (!position.isDragging) {
-		style["transition-duration"] = "300ms";
-	}
 
 	return style;
 });
@@ -279,6 +277,11 @@ function onTouchEnd() {
 
 <style lang="scss" scoped>
 .cl-float-view {
-	@apply fixed;
+	@apply fixed transition-none;
+
+	&.no-dragging {
+		@apply duration-300;
+		transition-property: left, bottom;
+	}
 }
 </style>

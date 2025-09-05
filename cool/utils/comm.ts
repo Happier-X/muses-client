@@ -636,6 +636,28 @@ export const isApp = (): boolean => {
 };
 
 /**
+ * 检查是否为App-IOS环境
+ * @returns 是否为App-IOS环境
+ */
+export const isAppIOS = (): boolean => {
+	// #ifdef APP-IOS
+	return true;
+	// #endif
+	return false;
+};
+
+/**
+ * 检查是否为App-Android环境
+ * @returns 是否为App-Android环境
+ */
+export const isAppAndroid = (): boolean => {
+	// #ifdef APP-ANDROID
+	return true;
+	// #endif
+	return false;
+};
+
+/**
  * 检查是否为H5环境
  * @returns 是否为H5环境
  */

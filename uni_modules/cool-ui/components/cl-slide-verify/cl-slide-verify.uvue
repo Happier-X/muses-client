@@ -45,7 +45,8 @@
 				:class="[
 					{
 						'cl-slide-verify__progress--success': isSuccess,
-						'cl-slide-verify__progress--fail': isFail
+						'cl-slide-verify__progress--fail': isFail,
+						'no-dragging': !isDragging
 					},
 					pt.progress?.className
 				]"
@@ -60,7 +61,8 @@
 						'cl-slide-verify__slider--active': isDragging,
 						'cl-slide-verify__slider--success': isSuccess,
 						'cl-slide-verify__slider--fail': isFail,
-						'cl-slide-verify__slider--dark': isDark
+						'cl-slide-verify__slider--dark': isDark,
+						'no-dragging': !isDragging
 					},
 					pt.slider?.className
 				]"
@@ -268,10 +270,6 @@ const progressStyle = computed(() => {
 		width += props.size / 2;
 	}
 	style["width"] = width + "px"; // 设置宽度
-	if (!isDragging.value) {
-		// 非拖动时添加过渡动画
-		style["transition-duration"] = "300ms";
-	}
 	return style; // 返回样式对象
 });
 
@@ -282,10 +280,6 @@ const sliderStyle = computed(() => {
 		height: props.size + "px", // 滑块高度
 		width: props.size + "px" // 滑块宽度
 	};
-	if (!isDragging.value) {
-		// 非拖动时添加过渡动画
-		style["transition-duration"] = "300ms";
-	}
 	return style; // 返回样式对象
 });
 
@@ -390,7 +384,7 @@ function onTouchEnd() {
 			angle: currentAngle.value
 		});
 	}
-	vibrate(2); // 震动反馈
+	vibrate(1); // 震动反馈
 }
 
 // 监听模式变化，重新初始化
@@ -423,6 +417,11 @@ defineExpose({
 .cl-slide-verify {
 	@apply relative rounded-lg w-full flex flex-col items-center justify-center;
 
+	.no-dragging {
+		@apply duration-300;
+		transition-property: left;
+	}
+
 	&__track {
 		@apply relative w-full h-full;
 		@apply bg-surface-100 rounded-lg;
@@ -445,7 +444,7 @@ defineExpose({
 	}
 
 	&__progress {
-		@apply absolute left-0 top-0 h-full;
+		@apply absolute left-0 top-0 h-full transition-none;
 		@apply bg-primary-100;
 
 		&--success {
@@ -458,7 +457,7 @@ defineExpose({
 	}
 
 	&__slider {
-		@apply absolute top-1/2 left-0 z-20;
+		@apply absolute top-1/2 left-0 z-20 transition-none;
 		@apply bg-white rounded-lg;
 		@apply flex items-center justify-center;
 		@apply border border-surface-200;

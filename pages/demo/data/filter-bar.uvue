@@ -236,6 +236,8 @@
 						>{{ t("确定") }}</cl-button
 					>
 				</view>
+
+				<cl-safe-area type="bottom"></cl-safe-area>
 			</view>
 		</cl-popup>
 	</cl-page>

@@ -1,5 +1,6 @@
 import { computed, type ComputedRef } from "vue";
 import { config } from "../config";
+import { rpx2px } from "@/cool";
 
 /**
  * 字号管理类
@@ -71,6 +72,35 @@ class Size {
 
 			return num * scale + unit;
 		}
+	};
+
+	/**
+	 * 获取px值
+	 * @param val - 需要转换的值 10、10rpx、10px
+	 * @returns 转换后的px值
+	 */
+	getPxValue = (val: number | string) => {
+		const scale = this.getScale();
+
+		if (typeof val == "string") {
+			const num = parseFloat(val);
+			const unit = val.replace(`${num}`, "");
+
+			if (unit == "px") {
+				return num * scale;
+			} else {
+				return rpx2px(num * scale);
+			}
+		} else {
+			return rpx2px(val * scale);
+		}
+	};
+
+	/**
+	 * 获取px值
+	 */
+	getPx = (val: number | string) => {
+		return this.getPxValue(val) + "px";
 	};
 
 	/**

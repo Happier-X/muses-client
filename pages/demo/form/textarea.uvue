@@ -6,28 +6,26 @@
 			</demo-item>
 
 			<demo-item :label="t('自定义')">
-				<view class="mb-3">
-					<cl-textarea
-						v-model="content"
-						:border="isBorder"
-						:disabled="isDisabled"
-						:show-word-limit="isShowCount"
-						:auto-height="isAutoHeight"
-						:pt="{
+				<cl-textarea
+					v-model="content"
+					:border="isBorder"
+					:disabled="isDisabled"
+					:show-word-limit="isShowCount"
+					:auto-height="isAutoHeight"
+					:pt="{
+						className: parseClass({
+							'!bg-sky-100': isColor,
+							'!border-sky-700': isColor
+						}),
+						inner: {
 							className: parseClass({
-								'!bg-sky-100': isColor,
-								'!border-sky-700': isColor
-							}),
-							inner: {
-								className: parseClass({
-									'!text-sky-700': isColor
-								})
-							}
-						}"
-					></cl-textarea>
-				</view>
+								'!text-sky-700': isColor
+							})
+						}
+					}"
+				></cl-textarea>
 
-				<cl-list border>
+				<cl-list border :pt="{ className: 'mt-5' }">
 					<cl-list-item :label="t('边框')">
 						<cl-switch v-model="isBorder"></cl-switch>
 					</cl-list-item>

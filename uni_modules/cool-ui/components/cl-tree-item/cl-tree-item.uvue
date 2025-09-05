@@ -6,7 +6,10 @@
 				{
 					'is-expand': hover,
 					'is-dark': isDark,
-					'is-checked': item.isChecked == true && ClTree?.checkable == true,
+					'is-checked':
+						item.isChecked == true &&
+						ClTree?.checkable == true &&
+						ClTree?.multiple == false,
 					'is-half-checked': item.isHalfChecked,
 					'is-disabled': item.disabled,
 					'is-multiple': ClTree?.multiple

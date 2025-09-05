@@ -56,7 +56,7 @@
 							<view
 								class="item dark:!bg-surface-800"
 								hover-class="opacity-80"
-								:hover-stay-time="50"
+								:hover-stay-time="250"
 								@tap="toPath(child)"
 							>
 								<cl-icon :name="child.icon" :size="36"></cl-icon>
@@ -74,7 +74,7 @@
 		</view>
 
 		<!-- 自定义底部导航栏 -->
-		<tabbar></tabbar>
+		<custom-tabbar></custom-tabbar>
 
 		<!-- 主题设置 -->
 		<locale-set :ref="refs.set('localeSet')"></locale-set>
@@ -92,7 +92,7 @@ import { useUi } from "@/uni_modules/cool-ui";
 import { config } from "@/config";
 import LocaleSet from "@/components/locale-set.uvue";
 import SizeSet from "@/components/size-set.uvue";
-import Tabbar from "@/components/tabbar.uvue";
+import CustomTabbar from "@/components/tabbar.uvue";
 
 const ui = useUi();
 const refs = useRefs();

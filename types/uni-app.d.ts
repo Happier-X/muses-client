@@ -446,6 +446,26 @@ declare interface UniElement {
 		success?: (res: { tempFilePath: string }) => void;
 		fail?: (err: { errCode: number; errMsg: string }) => void;
 	}): void;
+	getDrawableContext(): DrawableContext;
+	animate(
+		keyframes: UniAnimationKeyframe | UniAnimationKeyframe[],
+		options?:
+			| {
+					delay?: number;
+					direction?: "normal" | "reverse" | "alternate" | "alternate-reverse";
+					duration?: number;
+					easing?:
+						| "ease"
+						| "ease-in"
+						| "ease-out"
+						| "ease-in-out"
+						| "linear"
+						| "cubic-bezier";
+					fill?: "backwards" | "forwards" | "both" | "none";
+					iterations?: number;
+			  }
+			| number
+	): { id: string; playState: "running" | "paused" | "finished" | "idle" } | null;
 }
 
 declare interface CanvasContext extends HTMLCanvasElement {

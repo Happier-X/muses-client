@@ -2,7 +2,7 @@
 	<cl-page>
 		<view class="p-3">
 			<demo-item :label="t('数字键盘')">
-				<view class="mb-3">
+				<view class="mb-3 overflow-visible">
 					<cl-input type="number" v-model="content"></cl-input>
 				</view>
 
@@ -44,7 +44,7 @@
 			</demo-item>
 
 			<demo-item :label="t('车牌号键盘')">
-				<view class="flex mb-3 justify-center flex-row">
+				<view class="flex mb-3 justify-center flex-row overflow-visible">
 					<cl-input-otp
 						input-type="text"
 						:length="8"

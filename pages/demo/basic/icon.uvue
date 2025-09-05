@@ -32,7 +32,7 @@
 						<view
 							class="flex flex-col items-center justify-center h-[100rpx] rounded-lg"
 							hover-class="opacity-60"
-							:hover-stay-time="100"
+							:hover-stay-time="250"
 							@tap="copy(item)"
 						>
 							<cl-icon :name="item"></cl-icon>
@@ -47,7 +47,7 @@
 						<view
 							class="flex flex-col items-center justify-center h-[100rpx]"
 							hover-class="opacity-60"
-							:hover-stay-time="100"
+							:hover-stay-time="250"
 							@tap="copy(item)"
 						>
 							<cl-icon :name="item"></cl-icon>

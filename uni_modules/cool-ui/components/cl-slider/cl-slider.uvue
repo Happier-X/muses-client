@@ -26,29 +26,29 @@
 					:class="[pt.progress?.className]"
 					:style="progressStyle"
 				></view>
-
-				<!-- 单滑块模式 -->
-				<view
-					v-if="!range"
-					class="cl-slider__thumb"
-					:class="[pt.thumb?.className]"
-					:style="singleThumbStyle"
-				></view>
-
-				<!-- 双滑块模式 -->
-				<template v-if="range">
-					<view
-						class="cl-slider__thumb cl-slider__thumb--min"
-						:class="[pt.thumb?.className]"
-						:style="minThumbStyle"
-					></view>
-					<view
-						class="cl-slider__thumb cl-slider__thumb--max"
-						:class="[pt.thumb?.className]"
-						:style="maxThumbStyle"
-					></view>
-				</template>
 			</view>
+
+			<!-- 单滑块模式 -->
+			<view
+				v-if="!range"
+				class="cl-slider__thumb"
+				:class="[pt.thumb?.className]"
+				:style="singleThumbStyle"
+			></view>
+
+			<!-- 双滑块模式 -->
+			<template v-if="range">
+				<view
+					class="cl-slider__thumb cl-slider__thumb--min"
+					:class="[pt.thumb?.className]"
+					:style="minThumbStyle"
+				></view>
+				<view
+					class="cl-slider__thumb cl-slider__thumb--max"
+					:class="[pt.thumb?.className]"
+					:style="maxThumbStyle"
+				></view>
+			</template>
 
 			<view
 				class="cl-slider__picker"
@@ -531,9 +531,8 @@ onMounted(() => {
 	}
 
 	&__thumb {
-		@apply absolute top-1/2 rounded-full border border-solid border-white;
+		@apply absolute rounded-full border border-solid border-white;
 		@apply bg-primary-500;
-		transform: translateY(-50%);
 		pointer-events: none;
 		z-index: 1;
 		border-width: 4rpx;

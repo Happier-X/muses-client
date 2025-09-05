@@ -6,18 +6,18 @@
 			</demo-item>
 
 			<demo-item :label="t('不同类型')">
-				<view class="flex flex-row flex-wrap mb-2">
+				<view class="flex flex-row flex-wrap mb-2 overflow-visible">
 					<cl-button type="primary">{{ t("主要") }}</cl-button>
 					<cl-button type="success">{{ t("成功") }}</cl-button>
 					<cl-button type="warn">{{ t("警告") }}</cl-button>
 				</view>
 
-				<view class="flex flex-row mb-2">
+				<view class="flex flex-row mb-2 overflow-visible">
 					<cl-button type="error">{{ t("危险") }}</cl-button>
 					<cl-button type="info">{{ t("信息") }}</cl-button>
 				</view>
 
-				<view class="flex flex-row">
+				<view class="flex flex-row overflow-visible">
 					<cl-button type="light">{{ t("浅色") }}</cl-button>
 					<cl-button type="dark">{{ t("深色") }}</cl-button>
 				</view>
