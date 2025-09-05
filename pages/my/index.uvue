@@ -1,0 +1,10 @@
+<template>
+	<cl-page>
+        我的
+        <tabbar></tabbar>
+	</cl-page>
+</template>
+
+<script lang="ts" setup>
+import Tabbar from "@/components/tabbar.uvue";
+</script>
