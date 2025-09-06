@@ -1,12 +1,12 @@
 <template>
 	<!-- App 平台：使用原生视图渲染 SVG，性能最佳 -->
-	<!-- #ifdef APP -->
+	<!-- #ifdef APP-ANDROID || APP-IOS -->
 	<!-- @vue-ignore -->
 	<native-view @init="onInit"></native-view>
 	<!-- #endif -->
 
 	<!-- 小程序平台：使用 image 标签显示 SVG -->
-	<!-- #ifdef MP -->
+	<!-- #ifdef MP || APP-HARMONY -->
 	<!-- @vue-ignore -->
 	<image class="cl-svg" :src="svgSrc"></image>
 	<!-- #endif -->
@@ -21,7 +21,7 @@
 import { computed, watch, onMounted } from "vue";
 import { getColor, isDark } from "@/cool";
 
-// #ifdef APP
+// #ifdef APP-ANDROID || APP-IOS
 // @ts-ignore
 import { CoolSvg } from "@/uni_modules/cool-svg";
 // #endif
@@ -73,20 +73,14 @@ const color = computed(() => {
  * @returns 转换后的数据 URL
  */
 function svgToDataUrl(svgString: string): string {
-	// 如果指定了颜色，替换 SVG 中所有 path 元素的 fill 属性
-	if (color.value != "") {
-		svgString = svgString.replace(
-			/(<path\b[^>]*\bfill=")[^"]*("[^>]*>)/g,
-			`$1${color.value}$2`
-		);
-	}
-
 	let encodedSvg: string;
-	// #ifdef APP
+
+	// #ifdef APP-ANDROID || APP-IOS
 	// App 平台：简单的空格替换即可，无需完整 URL 编码
 	encodedSvg = svgString.replace(/\+/g, "%20");
 	// #endif
-	// #ifndef APP
+
+	// #ifndef APP-ANDROID || APP-IOS
 	// 非 App 平台：使用标准 URL 编码
 	encodedSvg = encodeURIComponent(svgString)!.replace(/\+/g, "%20");
 	// #endif
@@ -108,18 +102,19 @@ const svgSrc = computed((): string => {
 		return "";
 	}
 
+	// 处理颜色
+	if (color.value != "") {
+		if (val.includes("fill")) {
+			val = val.replace(/(<path\b[^>]*\bfill=")[^"]*("[^>]*>)/g, `$1${color.value}$2`);
+		} else {
+			val = val.replace(/<svg /g, `<svg fill="${color.value}" `);
+		}
+	}
+
 	// 判断是否为 标签 SVG（以 <svg 开头）
 	if (val.startsWith("<svg")) {
 		return svgToDataUrl(val);
 	}
-
-	// #ifdef MP
-	if (val.includes("fill")) {
-		val = val.replace(/fill="[^"]*"/g, `fill="${color.value}"`);
-	} else {
-		val = val.replace("<svg ", `<svg fill="${color.value}" `);
-	}
-	// #endif
 
 	// 其他情况直接返回原始数据源（文件路径、base64 等）
 	return val;
@@ -154,9 +149,16 @@ function generateUuid(): string {
 // Web 平台使用的唯一元素 ID
 const svgId = `cool-svg-${generateUuid()}`;
 
-// #ifdef APP
+// #ifdef APP-ANDROID || APP-IOS
 // App 平台 SVG 渲染器实例
 let svgRenderer: CoolSvg | null = null;
+
+// 重新加载
+function reload() {
+	if (svgRenderer != null) {
+		svgRenderer!.load(svgSrc.value, color.value);
+	}
+}
 
 /**
  * App 平台原生视图初始化回调
@@ -167,7 +169,7 @@ function onInit(e: UniNativeViewInitEvent) {
 
 	// 立即加载 SVG 内容
 	if (svgRenderer != null) {
-		svgRenderer!.load(svgSrc.value, color.value);
+		reload();
 	}
 }
 
@@ -176,7 +178,7 @@ function onInit(e: UniNativeViewInitEvent) {
  */
 watch(svgSrc, (newSrc: string) => {
 	if (svgRenderer != null && newSrc != "") {
-		svgRenderer!.load(newSrc, color.value);
+		reload();
 	}
 });
 // #endif
@@ -212,9 +214,9 @@ function setColor() {
 	}
 	// #endif
 
-	// #ifdef APP
+	// #ifdef APP-ANDROID || APP-IOS
 	if (svgRenderer != null && svgSrc.value != "") {
-		svgRenderer!.load(svgSrc.value, color.value);
+		reload();
 	}
 	// #endif
 }

@@ -45,11 +45,13 @@
 				</view>
 			</demo-item>
 
+			<!-- #ifdef APP-ANDROID || H5 -->
 			<demo-item :label="t('使用base64')">
 				<view class="flex flex-row">
 					<cl-svg :src="base64" class="h-6 w-6"></cl-svg>
 				</view>
 			</demo-item>
+			<!-- #endif -->
 		</view>
 	</cl-page>
 </template>
