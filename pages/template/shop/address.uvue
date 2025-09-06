@@ -71,9 +71,7 @@
 			<cl-empty v-if="list.length == 0"></cl-empty>
 		</view>
 
-		<cl-footer>
-			<cl-button @tap="toAdd()">{{ t("添加地址") }}</cl-button>
-		</cl-footer>
+		<Tabbar></Tabbar>
 	</cl-page>
 </template>
 
@@ -83,6 +81,7 @@ import { parse, request, router, usePager, type Response } from "@/cool";
 import { t } from "@/locale";
 import { computed, ref } from "vue";
 import type { UserAddress } from "../types";
+import Tabbar from "@/components/tabbar.uvue";
 
 const ui = useUi();
 

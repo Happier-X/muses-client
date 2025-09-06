@@ -1,34 +1,20 @@
 <template>
-	<cl-footer
-		:pt="{
-			content: {
-				className: '!p-0 h-[60px]'
-			}
-		}"
-	>
-		<view class="custom-tabbar" :class="{ 'is-dark': isDark }">
-			<view
-				class="custom-tabbar-item"
-				v-for="item in list"
-				:key="item.pagePath"
-				@tap="router.to(item.pagePath)"
-			>
-				<cl-image
-					:src="path == item.pagePath ? item.icon2 : item.icon"
-					:height="56"
-					:width="56"
-				></cl-image>
+	<cl-footer :pt="{
+		content: {
+			className: '!p-0'
+		}
+	}">
+		<view class="w-full h-[125rpx]">123</view>
+		<view v-if="isTabPage" class="w-full h-[125rpx] flex flex-row items-center border-0 border-t border-solid border-t-surface-100 dark:!border-t-surface-800">
+			<view class="flex flex-col items-center justify-center flex-1" v-for="item in list" :key="item.pagePath" @tap="router.to(item.pagePath)">
+				<cl-image :src="path == item.pagePath ? item.icon2 : item.icon" :height="56" :width="56"></cl-image>
 
-				<cl-text
-					v-if="item.text != null"
-					:pt="{
-						className: parseClass([
-							'!text-xs mt-1',
-							[path == item.pagePath, '!text-primary-500', '!text-surface-400']
-						])
-					}"
-					>{{ t(item.text!) }}</cl-text
-				>
+				<cl-text v-if="item.text != null" :pt="{
+					className: parseClass([
+						'!text-xs mt-1',
+						[path == item.pagePath, '!text-primary-500', '!text-surface-400']
+					])
+				}">{{ t(item.text!) }}</cl-text>
 			</view>
 		</view>
 	</cl-footer>
@@ -68,14 +54,8 @@ const list = computed<Item[]>(() => {
 // #ifndef MP
 uni.hideTabBar();
 // #endif
+
+const isTabPage = computed(() => {
+	return list.value.some((e) => e.pagePath == path.value);
+});
 </script>
-
-<style lang="scss" scoped>
-.custom-tabbar {
-	@apply flex flex-row items-center flex-1;
-
-	&-item {
-		@apply flex flex-col items-center justify-center flex-1;
-	}
-}
-</style>
