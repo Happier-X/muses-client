@@ -7,7 +7,7 @@
 			title="我的"
 			:pt="{
 				title: {
-					className: 'font-bold'
+					className: '!text-xl !font-bold'
 				}
 			}"
 		>

@@ -93,15 +93,6 @@ const disabled = computed(() => {
 	return form.value.username == "" || form.value.password == "";
 });
 
-// 触发提交
-const handleSubmit = async () => {
-	loading.value = true;
-	if (!isAgree()) {
-		return;
-	}
-	await toLogin('test');
-	loading.value = false;
-}
 // 提交成功
 async function toLogin(res: any) {
 	user.setToken(parse<Token>(res)!);
@@ -112,7 +103,7 @@ async function toLogin(res: any) {
 function toDoc(name: string, path: string) { }
 
 // 是否同意
-function isAgree() {
+function isAgree(){
 	if (!agree.value) {
 		ui.showToast({
 			message: t("请先阅读并同意《用户协议》和《隐私政策》")
@@ -122,5 +113,14 @@ function isAgree() {
 	}
 
 	return true;
+}
+// 触发提交
+const handleSubmit = async () => {
+	loading.value = true;
+	if (!isAgree()) {
+		return;
+	}
+	await toLogin('test');
+	loading.value = false;
 }
 </script>

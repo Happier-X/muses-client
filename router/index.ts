@@ -4,7 +4,7 @@ const ignoreToken = [
 	"/pages/auth/index",
 	"/pages/home/index",
 	"/pages/my/index",
-	"/pages/musicLibrary/index"
+	"/pages/music/index"
 ];
 
 router.beforeEach((to, next) => {

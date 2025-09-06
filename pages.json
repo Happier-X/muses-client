@@ -7,7 +7,7 @@
 			}
 		},
 		{
-			"path": "pages/musicLibrary/index",
+			"path": "pages/music/index",
 			"style": {
 				"navigationStyle": "custom"
 			}
@@ -503,10 +503,10 @@
 				"text": "首页"
 			},
 			{
-				"pagePath": "pages/musicLibrary/index",
-				"iconPath": "/static/icon/tabbar/musicLibrary.png",
-				"selectedIconPath": "/static/icon/tabbar/musicLibrarySelect.png",
-				"text": "音乐库"
+				"pagePath": "pages/music/index",
+				"iconPath": "/static/icon/tabbar/music.png",
+				"selectedIconPath": "/static/icon/tabbar/musicSelect.png",
+				"text": "音乐"
 			},
 			{
 				"pagePath": "pages/my/index",

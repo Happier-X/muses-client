@@ -1,0 +1,82 @@
+<template>
+        <cl-page>
+                <cl-topbar fixed :show-back="false" safe-area-top title="音乐" :pt="{
+                        title: {
+                                className: '!text-xl !font-bold'
+                        }
+                }">
+                </cl-topbar>
+                <view class="p-3">
+                        <cl-list v-for="item in list" :key="item.label" :title="item.label" :pt="{
+                                className: 'mb-3'
+                        }">
+                                <cl-list-item v-for="child in item.children" :key="child.label" :label="child.label"
+                                        :arrow="child.path != null" @tap="toPath(child)" hoverable justify="center">
+                                </cl-list-item>
+                        </cl-list>
+                </view>
+                <tabbar></tabbar>
+        </cl-page>
+</template>
+
+<script lang="ts" setup>
+import Tabbar from "@/components/tabbar.uvue";
+import { router } from "@/cool";
+import { t } from "@/locale";
+import { useUi } from "@/uni_modules/cool-ui";
+import { computed } from "vue";
+
+const ui = useUi();
+
+type Item = {
+        label: string;
+        path?: string;
+        children?: Item[];
+};
+
+const list = computed<Item[]>(() => [
+        {
+                label: t("音乐库"),
+                children: [
+                        {
+                                label: t("歌曲"),
+                                path: ""
+                        },
+                        {
+                                label: t("专辑"),
+                                path: ""
+                        },
+                        {
+                                label: t("艺术家"),
+                                path: ""
+                        }
+                ]
+        },
+        {
+                label: t("我的"),
+                children: [
+                        {
+                                label: t("歌单"),
+                                path: ""
+                        },
+                        {
+                                label: t("喜欢"),
+                                path: ""
+                        },
+                        {
+                                label: t("最近播放"),
+                                path: ""
+                        },
+                ]
+        }
+]);
+function toPath(item: Item) {
+        if (item.path == null) {
+                return ui.showToast({
+                        message: t("该模板正在开发中")
+                });
+        }
+
+        router.to(item.path!);
+}
+</script>
