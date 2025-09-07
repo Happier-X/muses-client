@@ -1,0 +1,26 @@
+<template>
+    <view class="w-full h-[125rpx] px-4 flex flex-row items-center justify-between">
+        <view class="flex flex-row items-center">
+            <cl-image src="" mode="scaleToFill" width="100rpx" height="100rpx"></cl-image>
+            <view class="ml-3">
+                <cl-text :pt="{
+                    className:'!text-lg !font-bold'
+                }">爱无所不在</cl-text>
+                <cl-noticebar direction="vertical" :text="[
+                    '江南可采莲，莲叶何田田',
+                    '鱼戏莲叶间',
+                    '鱼戏莲叶东',
+                    '鱼戏莲叶西',
+                    '鱼戏莲叶南',
+                    '鱼戏莲叶北',
+                ]"></cl-noticebar>
+            </view>
+        </view>
+        <view class="flex flex-row items-center">
+            <cl-button text icon="send-plane-fill"></cl-button>
+            <cl-button text icon="send-plane-fill"></cl-button>
+        </view>
+    </view>
+</template>
+<script setup lang="ts">
+</script>

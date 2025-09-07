@@ -12,7 +12,7 @@
 			}"
 		>
 		</cl-topbar>
-        <cl-text>开发中...</cl-text>
+        <cl-text>开发中...</cl-text> 
 		<tabbar></tabbar>
 	</cl-page>
 </template>
