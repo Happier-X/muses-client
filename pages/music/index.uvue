@@ -6,7 +6,7 @@
                         }
                 }">
                 </cl-topbar>
-                <view class="p-3">
+                <view class="p-4">
                         <cl-list v-for="item in list" :key="item.label" :title="item.label" :pt="{
                                 className: 'mb-3'
                         }">

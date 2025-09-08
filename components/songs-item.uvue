@@ -9,9 +9,7 @@
                 <cl-text>王力宏-不可思议</cl-text>
             </view>
         </view>
-        <cl-button text>
-            <cl-svg src="static/icon/more.svg" class="size-6"></cl-svg>
-        </cl-button>
+        <cl-svg src="static/icon/more.svg" class="size-6"></cl-svg>
     </view>
 </template>
 <script setup lang="ts">

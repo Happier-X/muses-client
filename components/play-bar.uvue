@@ -4,7 +4,7 @@
             <cl-image src="" mode="scaleToFill" width="100rpx" height="100rpx"></cl-image>
             <view class="ml-3">
                 <cl-text :pt="{
-                    className:'!text-lg !font-bold'
+                    className: '!text-lg !font-bold'
                 }">爱无所不在</cl-text>
                 <cl-noticebar direction="vertical" :text="[
                     '江南可采莲，莲叶何田田',
@@ -17,12 +17,8 @@
             </view>
         </view>
         <view class="flex flex-row items-center">
-            <cl-button text>
-                <cl-svg src="static/icon/play.svg" class="size-6"></cl-svg>
-            </cl-button>
-            <cl-button text>
-                <cl-svg src="static/icon/playQueue.svg" class="size-6"></cl-svg>
-            </cl-button>
+            <cl-svg src="static/icon/play.svg" class="size-6 mr-5"></cl-svg>
+            <cl-svg src="static/icon/playQueue.svg" class="size-6"></cl-svg>
         </view>
     </view>
 </template>
