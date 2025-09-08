@@ -9,7 +9,7 @@
 		</view>
 		<view v-if="isTabPage" class="w-full h-[125rpx] flex flex-row items-center border-0 border-t border-solid border-t-surface-100 dark:!border-t-surface-800">
 			<view class="flex flex-col items-center justify-center flex-1" v-for="item in list" :key="item.pagePath" @tap="router.to(item.pagePath)">
-				<cl-image :src="path == item.pagePath ? item.icon2 : item.icon" :height="56" :width="56"></cl-image>
+				<cl-image :src="path == item.pagePath ? item.icon2 : item.icon" :height="50" :width="50"></cl-image>
 				<cl-text v-if="item.text != null" :pt="{
 					className: parseClass([
 						'!text-xs mt-1',
