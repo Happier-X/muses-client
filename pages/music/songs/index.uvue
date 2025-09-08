@@ -1,33 +1,31 @@
 <template>
-    <cl-page>
-        <view class="flex flex-col h-full">
-            <cl-topbar fixed safe-area-top title="歌曲" :pt="{
-                title: {
-                    className: '!text-xl !font-bold'
-                }
-            }">
-            </cl-topbar>
-            <view class="px-4 flex-1 flex flex-col min-h-0">
-                <cl-filter-bar>
-                    <view class="flex flex-row items-center justify-center flex-1">
-                        <cl-svg src="static/icon/playAll.svg" class="size-5 mr-1"></cl-svg>
-                        <cl-text>播放全部</cl-text>
-                    </view>
-                    <cl-filter-item label="标题" type="select" :value="1" :options="selectOptions"
-                        @change="onSelectOptionsChange" :pt="{
-                            className: '!h-[80rpx]'
-                        }"></cl-filter-item>
-                </cl-filter-bar>
-                <view class="flex-1 min-h-0">
-                    <cl-list-view :data="data" :itemHeight="rpx2px(125)">
-                        <template #item>
-                            <songs-item></songs-item>
-                        </template>
-                    </cl-list-view>
+    <cl-page class="flex flex-col h-full">
+        <cl-topbar fixed safe-area-top title="歌曲" :pt="{
+            title: {
+                className: '!text-xl !font-bold'
+            }
+        }">
+        </cl-topbar>
+        <view class="px-4 flex-1 flex flex-col min-h-0">
+            <cl-filter-bar>
+                <view class="flex flex-row items-center justify-center flex-1">
+                    <cl-svg src="static/icon/playAll.svg" class="size-5 mr-1"></cl-svg>
+                    <cl-text>播放全部</cl-text>
                 </view>
+                <cl-filter-item label="标题" type="select" :value="1" :options="selectOptions"
+                    @change="onSelectOptionsChange" :pt="{
+                        className: '!h-[80rpx]'
+                    }"></cl-filter-item>
+            </cl-filter-bar>
+            <view class="flex-1 min-h-0">
+                <cl-list-view :data="data" :itemHeight="rpx2px(125)">
+                    <template #item>
+                        <songs-item></songs-item>
+                    </template>
+                </cl-list-view>
             </view>
-            <tabbar></tabbar>
         </view>
+        <tabbar></tabbar>
     </cl-page>
 </template>
 <script setup lang="ts">
