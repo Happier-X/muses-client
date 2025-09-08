@@ -1,5 +1,5 @@
 <template>
-    <el-page>
+    <cl-page>
         <cl-topbar fixed safe-area-top title="歌单" :pt="{
             title: {
                 className: '!text-xl !font-bold'
@@ -7,7 +7,7 @@
         }">
         </cl-topbar>
         <tabbar></tabbar>
-    </el-page>
+    </cl-page>
 </template>
 <script setup lang="ts">
 import Tabbar from "@/components/tabbar.uvue";
