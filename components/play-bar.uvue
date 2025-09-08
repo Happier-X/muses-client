@@ -21,7 +21,7 @@
                 <cl-svg src="static/icon/play.svg" class="size-6"></cl-svg>
             </cl-button>
             <cl-button text>
-                <cl-svg src="static/icon/pause.svg" class="size-6"></cl-svg>
+                <cl-svg src="static/icon/playQueue.svg" class="size-6"></cl-svg>
             </cl-button>
         </view>
     </view>
