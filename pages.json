@@ -23,6 +23,42 @@
 			"style": {
 				"navigationStyle": "custom"
 			}
+		},
+		{
+			"path": "pages/music/songs/index",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/music/albums/index",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/music/artists/index",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/music/playlists/index",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/music/likes/index",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/music/recentlyPlayed/index",
+			"style": {
+				"navigationStyle": "custom"
+			}
 		}
 	],
 	"subPackages": [
@@ -504,20 +540,20 @@
 		"list": [
 			{
 				"pagePath": "pages/home/index",
-				"iconPath": "/static/icon/tabbar/home.png",
-				"selectedIconPath": "/static/icon/tabbar/homeSelect.png",
+				"iconPath": "/static/icon/home.png",
+				"selectedIconPath": "/static/icon/homeSelect.png",
 				"text": "首页"
 			},
 			{
 				"pagePath": "pages/music/index",
-				"iconPath": "/static/icon/tabbar/music.png",
-				"selectedIconPath": "/static/icon/tabbar/musicSelect.png",
+				"iconPath": "/static/icon/music.png",
+				"selectedIconPath": "/static/icon/musicSelect.png",
 				"text": "音乐"
 			},
 			{
 				"pagePath": "pages/my/index",
-				"iconPath": "/static/icon/tabbar/my.png",
-				"selectedIconPath": "/static/icon/tabbar/mySelect.png",
+				"iconPath": "/static/icon/my.png",
+				"selectedIconPath": "/static/icon/mySelect.png",
 				"text": "我的"
 			}
 		]

@@ -17,8 +17,12 @@
             </view>
         </view>
         <view class="flex flex-row items-center">
-            <cl-button text icon="send-plane-fill"></cl-button>
-            <cl-button text icon="send-plane-fill"></cl-button>
+            <cl-button text>
+                <cl-svg src="static/icon/play.svg" class="size-6"></cl-svg>
+            </cl-button>
+            <cl-button text>
+                <cl-svg src="static/icon/pause.svg" class="size-6"></cl-svg>
+            </cl-button>
         </view>
     </view>
 </template>

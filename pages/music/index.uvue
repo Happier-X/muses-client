@@ -33,11 +33,9 @@ const ui = useUi();
 
 type Item = {
         label: string;
-        children?: {
-                label: string;
-                path?: string;
-                icon?: string;
-        }[];
+        children?: Item[];
+        path?: string;
+        icon?: string;
 };
 
 const list = computed<Item[]>(() => [
@@ -46,18 +44,18 @@ const list = computed<Item[]>(() => [
                 children: [
                         {
                                 label: t("歌曲"),
-                                path: "/pages/template/shop/address",
-                                icon: "/static/icon/music/songs.svg"
+                                path: "/pages/music/songs/index",
+                                icon: "/static/icon/songs.svg"
                         },
                         {
                                 label: t("专辑"),
-                                path: "",
-                                icon: "/static/icon/music/albums.svg"
+                                path: "/pages/music/albums/index",
+                                icon: "/static/icon/albums.svg"
                         },
                         {
                                 label: t("艺术家"),
-                                path: "",
-                                icon: "/static/icon/music/artists.svg"
+                                path: "/pages/music/artists/index",
+                                icon: "/static/icon/artists.svg"
                         }
                 ]
         },
@@ -66,18 +64,18 @@ const list = computed<Item[]>(() => [
                 children: [
                         {
                                 label: t("歌单"),
-                                path: "",
-                                icon: "/static/icon/music/playlists.svg"
+                                path: "/pages/music/playlists/index",
+                                icon: "/static/icon/playlists.svg"
                         },
                         {
                                 label: t("喜欢"),
-                                path: "",
-                                icon: "/static/icon/music/likes.svg"
+                                path: "/pages/music/likes/index",
+                                icon: "/static/icon/likes.svg"
                         },
                         {
                                 label: t("最近播放"),
-                                path: "",
-                                icon: "/static/icon/music/recentlyPlayed.svg"
+                                path: "/pages/music/recentlyPlayed/index",
+                                icon: "/static/icon/recentlyPlayed.svg"
                         },
                 ]
         }
@@ -85,7 +83,7 @@ const list = computed<Item[]>(() => [
 function toPath(item: Item) {
         if (item.path == null) {
                 return ui.showToast({
-                        message: t("该模板正在开发中")
+                        message: t("该功能正在开发中")
                 });
         }
 
