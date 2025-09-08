@@ -7,7 +7,7 @@
 		@close="onEditClose"
 	>
 		<view class="p-4 pt-0">
-			<cl-text color="info" :pt="{ className: '!text-sm' }">
+			<cl-text color="info" :pt="{ className: 'text-sm' }">
 				{{ t("为提供更好的服务，我们邀请您填写昵称、头像等公开信息") }}
 			</cl-text>
 

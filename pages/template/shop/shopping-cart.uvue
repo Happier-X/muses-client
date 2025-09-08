@@ -34,7 +34,7 @@
 			<view class="p-3 rounded-xl bg-white dark:!bg-surface-800 mb-3">
 				<cl-text
 					:pt="{
-						className: '!text-sm'
+						className: 'text-sm'
 					}"
 					>🔥 最新降价商品，限时优惠，抓紧抢购！</cl-text
 				>
@@ -81,7 +81,7 @@
 							>
 								<cl-text
 									:pt="{
-										className: '!text-xs'
+										className: 'text-xs'
 									}"
 									>{{ item.skuName }}</cl-text
 								>
@@ -92,13 +92,13 @@
 						<view class="flex flex-row items-center mb-2">
 							<cl-text
 								:pt="{
-									className: '!text-[22rpx] !text-red-500 mr-[1rpx]'
+									className: 'text-[22rpx] text-red-500 mr-[1rpx]'
 								}"
 								>¥</cl-text
 							>
 							<cl-text
 								:pt="{
-									className: '!text-red-500 !text-[32rpx] mr-auto'
+									className: 'text-red-500 text-[32rpx] mr-auto'
 								}"
 								>{{ item.price }}</cl-text
 							>
@@ -131,7 +131,7 @@
 										value: {
 											className: '!w-[60rpx] rounded-full !px-0',
 											input: {
-												className: '!text-[24rpx]'
+												className: 'text-[24rpx]'
 											}
 										}
 									}"
@@ -191,7 +191,7 @@
 						<cl-text
 							color="info"
 							:pt="{
-								className: '!text-xs'
+								className: 'text-xs'
 							}"
 							>{{ t("合计") }}</cl-text
 						>

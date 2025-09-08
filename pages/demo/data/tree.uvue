@@ -43,7 +43,7 @@
 					<cl-text
 						v-if="halfCheckedKeys.length > 0"
 						:pt="{
-							className: '!text-sm p-2'
+							className: 'text-sm p-2'
 						}"
 						>{{ halfCheckedKeys.join("、") }}</cl-text
 					>
@@ -65,7 +65,7 @@
 					<cl-text
 						v-if="expandedKeys.length > 0"
 						:pt="{
-							className: '!text-sm p-2'
+							className: 'text-sm p-2'
 						}"
 						>{{ expandedKeys.join("、") }}</cl-text
 					>

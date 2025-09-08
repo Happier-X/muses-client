@@ -29,7 +29,7 @@
 				:pt="{
 					className: parseClass([
 						`mb-1 !font-bold ${pt.title?.className}`,
-						[isDark, '!text-white', '!text-surface-900']
+						[isDark, 'text-white', 'text-surface-900']
 					])
 				}"
 				>{{ title }}</cl-text
@@ -38,7 +38,7 @@
 			<cl-text
 				v-if="content != ''"
 				:pt="{
-					className: `mb-2 !text-sm ${pt.content?.className}`
+					className: `mb-2 text-sm ${pt.content?.className}`
 				}"
 				>{{ content }}</cl-text
 			>
@@ -48,7 +48,7 @@
 			<cl-text
 				v-if="date != ''"
 				:pt="{
-					className: `!text-xs ${pt.date?.className}`
+					className: `text-xs ${pt.date?.className}`
 				}"
 				color="info"
 				>{{ date }}</cl-text

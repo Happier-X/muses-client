@@ -1,30 +1,12 @@
 <template>
-	<text
-		class="cl-icon"
-		:class="[
-			isDark ? 'text-white' : 'text-surface-700',
-			{
-				'!text-primary-500': color == 'primary',
-				'!text-green-500': color == 'success',
-				'!text-yellow-500': color == 'warn',
-				'!text-red-500': color == 'error',
-				'!text-surface-500': color == 'info',
-				'!text-surface-700': color == 'dark',
-				'!text-surface-50': color == 'light',
-				'!text-surface-300': color == 'disabled'
-			},
-			pt.className
-		]"
-		:style="iconStyle"
-		:key="cache.key"
-	>
+	<text class="cl-icon" :class="[ptClassName]" :style="iconStyle" :key="cache.key">
 		{{ icon.text }}
 	</text>
 </template>
 
 <script setup lang="ts">
 import { computed, type PropType } from "vue";
-import { forInObject, get, has, parsePt, useCache, isDark } from "@/cool";
+import { forInObject, get, has, parsePt, useCache, isDark, ctx, hasTextColor } from "@/cool";
 import { icons } from "@/icons";
 import { useSize } from "../../hooks";
 
@@ -66,12 +48,6 @@ const props = defineProps({
 	}
 });
 
-// 缓存
-const { cache } = useCache(() => [props.color]);
-
-// 字号
-const { getRpx } = useSize();
-
 // 透传样式类型定义
 type PassThrough = {
 	className?: string;
@@ -79,6 +55,12 @@ type PassThrough = {
 
 // 解析透传样式
 const pt = computed(() => parsePt<PassThrough>(props.pt));
+
+// 缓存
+const { cache } = useCache(() => [props.color]);
+
+// 字号
+const { getRpx, ptClassName } = useSize(() => pt.value.className ?? "");
 
 // 图标类型定义
 type Icon = {
@@ -113,22 +95,57 @@ const icon = computed<Icon>(() => {
 	};
 });
 
+// 图标颜色
+const color = computed(() => {
+	if (props.color != "") {
+		switch (props.color) {
+			case "primary":
+				return ctx.color["primary-500"] as string;
+			case "success":
+				return "#22c55e";
+			case "warn":
+				return "#eab308";
+			case "error":
+				return "#ef4444";
+			case "info":
+				return ctx.color["surface-500"] as string;
+			case "dark":
+				return ctx.color["surface-700"] as string;
+			case "light":
+				return ctx.color["surface-50"] as string;
+			case "disabled":
+				return ctx.color["surface-300"] as string;
+			default:
+				return props.color;
+		}
+	}
+
+	return isDark.value ? "white" : (ctx.color["surface-700"] as string);
+});
+
 // 图标样式
 const iconStyle = computed(() => {
 	const style = {};
 
-	if (props.color != "") {
-		style["color"] = props.color;
+	// 判断是不是有颜色样式
+	if (!hasTextColor(ptClassName.value)) {
+		style["color"] = color.value;
 	}
 
+	// 设置字体
 	if (icon.value.font != "") {
 		style["fontFamily"] = icon.value.font;
 	}
 
+	// 设置字体大小
 	style["fontSize"] = getRpx(props.size!);
+
+	// 设置高度
 	style["height"] = getRpx(props.height ?? props.size!);
-	style["width"] = getRpx(props.width ?? props.size!);
 	style["lineHeight"] = getRpx(props.size!);
+
+	// 设置宽度
+	style["width"] = getRpx(props.width ?? props.size!);
 
 	return style;
 });

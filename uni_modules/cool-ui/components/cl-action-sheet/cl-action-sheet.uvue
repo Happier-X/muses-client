@@ -17,7 +17,7 @@
 			<view class="cl-action-sheet__description" v-if="config.description != ''">
 				<cl-text
 					:pt="{
-						className: '!text-surface-400 !text-md text-center'
+						className: 'text-surface-400 text-md text-center'
 					}"
 					>{{ config.description }}</cl-text
 				>

@@ -27,18 +27,32 @@
 			@tap="onTap"
 		>
 			<view class="cl-list-item__inner" :class="[pt.inner?.className]">
-				<cl-icon
-					:name="icon"
-					:size="pt.icon?.size ?? 36"
-					:color="pt.icon?.color"
-					:pt="{
-						className: `mr-3 ${pt.icon?.className}`
-					}"
-					v-if="icon"
-				></cl-icon>
+				<slot name="icon">
+					<cl-icon
+						v-if="icon != ''"
+						:name="icon"
+						:size="pt.icon?.size ?? 36"
+						:color="pt.icon?.color"
+						:pt="{
+							className: `mr-3 ${pt.icon?.className}`
+						}"
+					></cl-icon>
+				</slot>
+
+				<slot name="image">
+					<cl-image
+						v-if="image != ''"
+						:width="pt.image?.width ?? 36"
+						:height="pt.image?.height ?? 36"
+						:src="image"
+						:pt="{
+							className: `mr-3 rounded-full ${pt.image?.className}`
+						}"
+					></cl-image>
+				</slot>
 
 				<cl-text
-					v-if="label"
+					v-if="label != ''"
 					:pt="{
 						className: parseClass([
 							'cl-list-item__label whitespace-nowrap overflow-visible',
@@ -69,7 +83,7 @@
 					:size="36"
 					:pt="{
 						className: parseClass([
-							'!text-surface-400 ml-1 duration-200',
+							'text-surface-400 ml-1 duration-200',
 							{
 								'rotate-90': isCollapse
 							}
@@ -112,6 +126,7 @@ import {
 import { isAppIOS, isDark, isHarmony, parseClass, parsePt } from "@/cool";
 import type { Justify, PassThroughProps } from "../../types";
 import type { ClIconProps } from "../cl-icon/props";
+import type { ClImageProps } from "../cl-image/props";
 
 defineOptions({
 	name: "cl-list-item"
@@ -126,6 +141,11 @@ const props = defineProps({
 	},
 	// 图标名称
 	icon: {
+		type: String,
+		default: ""
+	},
+	// 图标名称
+	image: {
 		type: String,
 		default: ""
 	},
@@ -176,6 +196,7 @@ type PassThrough = {
 	label?: PassThroughProps; // 标签文本样式
 	content?: PassThroughProps; // 内容区域样式
 	icon?: ClIconProps; // 图标样式
+	image?: ClImageProps; // 图片样式
 	collapse?: PassThroughProps; // 折叠内容样式
 };
 
@@ -243,37 +264,8 @@ function resetSwipe() {
  * 使用requestAnimationFrame实现平滑滑动动画
  */
 function swipeTo(num: number) {
-	// #ifdef APP
-	function next() {
-		requestAnimationFrame(() => {
-			if (swipe.offsetX != num) {
-				// 计算每次移动的距离
-				const step = 2;
-				const direction = swipe.offsetX < num ? 1 : -1;
-
-				// 更新偏移量
-				swipe.offsetX += step * direction;
-
-				// 防止过度滑动
-				if (direction > 0 ? swipe.offsetX > num : swipe.offsetX < num) {
-					swipe.offsetX = num;
-				}
-
-				next();
-			} else {
-				// 动画结束,更新结束位置
-				swipe.endX = swipe.offsetX;
-			}
-		});
-	}
-
-	next();
-	// #endif
-
-	// #ifdef H5 || MP
 	swipe.offsetX = num;
 	swipe.endX = num;
-	// #endif
 }
 
 // 点击态状态 - 用于显示点击效果
@@ -403,14 +395,12 @@ defineExpose({
 	@apply flex flex-col w-full relative;
 
 	&__wrapper {
-		@apply w-full;
+		@apply w-full transition-none;
 		overflow: visible;
 
 		&.is-transition {
-			// #ifdef H5 || MP
+			@apply duration-200;
 			transition-property: transform;
-			transition-duration: 0.2s;
-			// #endif
 		}
 	}
 
@@ -429,7 +419,6 @@ defineExpose({
 
 		&-left {
 			@apply left-full;
-			transform: translateX(1rpx);
 		}
 
 		&-right {

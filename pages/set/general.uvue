@@ -7,10 +7,16 @@
 				</cl-list-item>
 
 				<cl-list-item :label="t('多语言')" arrow hoverable @tap="setLocale"> </cl-list-item>
+
+				<cl-list-item :label="t('字体大小')" arrow hoverable @tap="setSize"> </cl-list-item>
 			</cl-list>
 		</view>
 
+		<!-- 语言设置 -->
 		<locale-set :ref="refs.set('localeSet')"></locale-set>
+
+		<!-- 字体大小设置 -->
+		<size-set :ref="refs.set('sizeSet')"></size-set>
 	</cl-page>
 </template>
 
@@ -18,6 +24,7 @@
 import { isDark, toggleTheme, useRefs } from "@/cool";
 import { t } from "@/locale";
 import LocaleSet from "@/components/locale-set.uvue";
+import SizeSet from "@/components/size-set.uvue";
 
 const refs = useRefs();
 
@@ -27,5 +34,9 @@ function onThemeChange() {
 
 function setLocale() {
 	refs.open("localeSet");
+}
+
+function setSize() {
+	refs.open("sizeSet");
 }
 </script>

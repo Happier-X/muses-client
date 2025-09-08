@@ -51,7 +51,7 @@
 		/>
 
 		<cl-text
-			:pt="{ className: 'absolute right-2 bottom-2 !text-xs !text-surface-400' }"
+			:pt="{ className: 'absolute right-2 bottom-2 text-xs text-surface-400' }"
 			v-if="showWordLimit"
 			>{{ value.length }} / {{ maxlength }}</cl-text
 		>

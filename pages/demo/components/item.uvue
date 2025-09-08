@@ -1,6 +1,6 @@
 <template>
 	<view class="demo-item dark:!bg-surface-800">
-		<cl-text :pt="{ className: '!text-sm !text-surface-400 mb-2' }" v-if="label != ''">{{
+		<cl-text :pt="{ className: 'text-sm text-surface-400 mb-2' }" v-if="label != ''">{{
 			label
 		}}</cl-text>
 

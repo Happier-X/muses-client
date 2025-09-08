@@ -23,7 +23,7 @@
 		<cl-text
 			:color="color"
 			:pt="{
-				className: parseClass(['cl-tag__text !text-sm', pt.text?.className])
+				className: parseClass(['cl-tag__text text-sm', pt.text?.className])
 			}"
 		>
 			<slot></slot>

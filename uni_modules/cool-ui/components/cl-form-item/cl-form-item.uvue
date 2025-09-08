@@ -41,7 +41,7 @@
 				<cl-text
 					color="error"
 					:pt="{
-						className: parseClass(['mt-2 !text-sm', pt.error?.className])
+						className: parseClass(['mt-2 text-sm', pt.error?.className])
 					}"
 				>
 					{{ errorText }}

@@ -388,6 +388,7 @@ onMounted(() => {
 
 	&__item {
 		@apply relative duration-200;
+		transition-property: transform;
 
 		&-image {
 			@apply w-full h-full rounded-xl;

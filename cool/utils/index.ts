@@ -1,3 +1,4 @@
+export * from "./tailwind";
 export * from "./comm";
 export * from "./day";
 export * from "./device";

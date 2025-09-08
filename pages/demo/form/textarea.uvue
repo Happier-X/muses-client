@@ -19,7 +19,7 @@
 						}),
 						inner: {
 							className: parseClass({
-								'!text-sky-700': isColor
+								'text-sky-700': isColor
 							})
 						}
 					}"

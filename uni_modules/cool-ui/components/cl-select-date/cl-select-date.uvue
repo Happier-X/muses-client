@@ -61,7 +61,7 @@
 						<cl-text
 							v-else
 							:pt="{
-								className: 'text-center !text-surface-400'
+								className: 'text-center text-surface-400'
 							}"
 							>{{ startPlaceholder }}</cl-text
 						>
@@ -88,7 +88,7 @@
 						<cl-text
 							v-else
 							:pt="{
-								className: 'text-center !text-surface-400'
+								className: 'text-center text-surface-400'
 							}"
 							>{{ endPlaceholder }}</cl-text
 						>

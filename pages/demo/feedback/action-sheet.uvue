@@ -57,7 +57,7 @@
 			<template #item="{ item }">
 				<view class="flex flex-col justify-center items-center">
 					<cl-icon :name="item.icon" :size="46"></cl-icon>
-					<cl-text :pt="{ className: '!text-sm mt-1' }">{{ item.label }}</cl-text>
+					<cl-text :pt="{ className: 'text-sm mt-1' }">{{ item.label }}</cl-text>
 				</view>
 			</template>
 		</cl-action-sheet>

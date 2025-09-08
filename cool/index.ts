@@ -33,6 +33,7 @@ export function cool(app: VueApp) {
 	console.log(app);
 }
 
+export * from "./animation";
 export * from "./ctx";
 export * from "./hooks";
 export * from "./router";

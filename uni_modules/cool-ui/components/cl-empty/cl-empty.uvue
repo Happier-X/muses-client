@@ -23,7 +23,7 @@
 				className: parseClass([
 					'cl-empty__text',
 					{
-						'!text-surface-100': isDark
+						'text-surface-100': isDark
 					}
 				])
 			}"

@@ -27,7 +27,7 @@
 
 							<cl-row class="mt-2" :pt="{ className: 'justify-end items-center' }">
 								<cl-icon name="heart-line"></cl-icon>
-								<cl-text :pt="{ className: '!text-sm ml-1' }">{{
+								<cl-text :pt="{ className: 'text-sm ml-1' }">{{
 									item["likeCount"]
 								}}</cl-text>
 							</cl-row>

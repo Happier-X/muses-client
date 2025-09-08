@@ -1,6 +1,6 @@
 import { config } from "@/config";
 import { router } from "../router";
-import { isH5, isHarmony } from "./comm";
+import { isH5, isHarmony } from "./device";
 import { ctx } from "../ctx";
 import { getPx } from "./parse";
 

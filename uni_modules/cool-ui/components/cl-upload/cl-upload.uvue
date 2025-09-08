@@ -58,7 +58,7 @@
 				:name="icon"
 				:pt="{
 					className: parseClass([
-						[isDark, '!text-white', '!text-surface-400'],
+						[isDark, 'text-white', 'text-surface-400'],
 						pt.icon?.className
 					])
 				}"
@@ -68,8 +68,8 @@
 			<cl-text
 				:pt="{
 					className: parseClass([
-						[isDark, '!text-white', '!text-surface-500'],
-						'!text-xs mt-1 text-center',
+						[isDark, 'text-white', 'text-surface-500'],
+						'text-xs mt-1 text-center',
 						pt.text?.className
 					])
 				}"

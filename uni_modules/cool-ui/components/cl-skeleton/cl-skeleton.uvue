@@ -6,13 +6,11 @@
 				'is-loading': loading,
 				'is-dark': isDark
 			},
-			pt.className,
 			`cl-skeleton--${props.type}`,
-			`${loading ? `${pt.loading?.className}` : ''}`
+			`${loading ? `${pt.loading?.className}` : ''}`,
+			pt.className
 		]"
-		:style="{
-			opacity: loading ? opacity : 1
-		}"
+		ref="skeletonRef"
 	>
 		<template v-if="loading">
 			<cl-icon
@@ -34,7 +32,7 @@
 <script setup lang="ts">
 import { computed, onMounted, ref, watch, type PropType } from "vue";
 import type { PassThroughProps } from "../../types";
-import { isDark, parsePt } from "@/cool";
+import { AnimationEngine, createAnimation, isDark, parsePt } from "@/cool";
 
 defineOptions({
 	name: "cl-skeleton"
@@ -62,58 +60,34 @@ type PassThrough = {
 
 const pt = computed(() => parsePt<PassThrough>(props.pt));
 
-const opacity = ref(0.3);
+// 组件引用
+const skeletonRef = ref<UniElement | null>(null);
 
-let animationId: number = 0;
-let startTime: number;
+// 动画实例
+let animation: AnimationEngine | null = null;
 
+// 开始动画
 function start() {
 	if (!props.loading) return;
 
-	startTime = 0;
-
-	function animate(currentTime: number) {
-		if (startTime == 0) {
-			startTime = currentTime;
-		}
-
-		// 计算动画进度 (0-1)
-		const elapsed = currentTime - startTime;
-		const progress = (elapsed % 2000) / 2000;
-
-		// 使用正弦波形创建平滑的闪动效果
-		// 从0.3到1.0之间变化
-		const minOpacity = 0.3;
-		const maxOpacity = 1.0;
-		opacity.value =
-			minOpacity + (maxOpacity - minOpacity) * (Math.sin(progress * Math.PI * 2) * 0.5 + 0.5);
-
-		// 继续动画
-		if (props.loading) {
-			animationId = requestAnimationFrame((time) => {
-				animate(time);
-			});
-		}
-	}
-
-	animationId = requestAnimationFrame((time) => {
-		animate(time);
-	});
+	animation = createAnimation(skeletonRef.value, {
+		duration: 2000,
+		loop: -1,
+		alternate: true
+	})
+		.opacity("0.3", "1")
+		.play();
 }
 
-/**
- * 停止闪动动画
- */
+// 停止动画
 function stop() {
-	if (animationId != 0) {
-		cancelAnimationFrame(animationId);
-		animationId = 0;
-		startTime = 0;
+	if (animation != null) {
+		animation!.stop();
+		animation!.reset();
 	}
 }
 
 onMounted(() => {
-	// #ifdef APP
 	watch(
 		computed(() => props.loading),
 		(val: boolean) => {
@@ -127,7 +101,6 @@ onMounted(() => {
 			immediate: true
 		}
 	);
-	// #endif
 });
 </script>
 
@@ -139,10 +112,6 @@ onMounted(() => {
 		&.is-dark {
 			@apply bg-surface-600;
 		}
-
-		// #ifdef MP | H5
-		animation: shimmer-opacity 2s infinite;
-		// #endif
 
 		&.cl-skeleton--text {
 			height: 40rpx;
@@ -168,19 +137,5 @@ onMounted(() => {
 			width: 150rpx;
 		}
 	}
-
-	// #ifdef MP | H5
-	@keyframes shimmer-opacity {
-		0% {
-			opacity: 1;
-		}
-		50% {
-			opacity: 0.3;
-		}
-		100% {
-			opacity: 1;
-		}
-	}
-	// #endif
 }
 </style>

@@ -13,7 +13,14 @@
 			@tap="prev"
 		>
 			<slot name="prev" :disabled="value == 1">
-				<cl-icon name="arrow-left-s-line"></cl-icon>
+				<cl-icon
+					:name="pt.prevIcon?.name ?? 'arrow-left-s-line'"
+					:size="pt.prevIcon?.size"
+					:color="pt.prevIcon?.color"
+					:pt="{
+						className: pt.prevIcon?.className
+					}"
+				></cl-icon>
 			</slot>
 		</view>
 
@@ -35,9 +42,9 @@
 					className: parseClass([
 						'cl-pagination__item-text',
 						{
-							'is-active': item == value,
-							'is-dark': isDark
-						}
+							'text-white': item == value
+						},
+						pt.itemText?.className
 					])
 				}"
 				>{{ item }}</cl-text
@@ -57,7 +64,14 @@
 			@tap="next"
 		>
 			<slot name="next" :disabled="value == totalPage">
-				<cl-icon name="arrow-right-s-line"></cl-icon>
+				<cl-icon
+					:name="pt.nextIcon?.name ?? 'arrow-right-s-line'"
+					:size="pt.nextIcon?.size"
+					:color="pt.nextIcon?.color"
+					:pt="{
+						className: pt.nextIcon?.className
+					}"
+				></cl-icon>
 			</slot>
 		</view>
 	</view>
@@ -67,6 +81,7 @@
 import type { PassThroughProps } from "../../types";
 import { isDark, parseClass, parsePt } from "@/cool";
 import { computed, ref, watch } from "vue";
+import type { ClIconProps } from "../cl-icon/props";
 
 defineOptions({
 	name: "cl-pagination"
@@ -97,8 +112,11 @@ const emit = defineEmits(["update:modelValue", "change"]);
 type PassThrough = {
 	className?: string;
 	item?: PassThroughProps;
+	itemText?: PassThroughProps;
 	prev?: PassThroughProps;
+	prevIcon?: ClIconProps;
 	next?: PassThroughProps;
+	nextIcon?: ClIconProps;
 };
 
 // 解析透传样式配置
@@ -211,7 +229,7 @@ defineExpose({
 		}
 
 		&.is-dark {
-			@apply bg-surface-700 text-white;
+			@apply bg-surface-700;
 		}
 	}
 
@@ -229,15 +247,6 @@ defineExpose({
 
 	&__next {
 		margin-left: 5rpx;
-	}
-
-	&__item-text {
-		@apply text-md text-surface-700;
-
-		&.is-dark,
-		&.is-active {
-			@apply text-white;
-		}
 	}
 }
 </style>

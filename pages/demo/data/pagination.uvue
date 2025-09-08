@@ -38,7 +38,7 @@
 					<template #prev>
 						<cl-text
 							:pt="{
-								className: '!text-sm'
+								className: 'text-sm'
 							}"
 							>{{ t("上一页") }}</cl-text
 						>
@@ -47,7 +47,7 @@
 					<template #next>
 						<cl-text
 							:pt="{
-								className: '!text-sm'
+								className: 'text-sm'
 							}"
 							>{{ t("下一页") }}</cl-text
 						>

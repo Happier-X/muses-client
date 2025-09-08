@@ -9,22 +9,42 @@
 				<view class="flex flex-row justify-between">
 					<view class="flex flex-col items-center justify-center">
 						<cl-image :src="url" mode="aspectFill"></cl-image>
-						<cl-text class="!text-sm mt-1">aspectFill</cl-text>
+						<cl-text
+							:pt="{
+								className: 'text-sm mt-1'
+							}"
+							>aspectFill</cl-text
+						>
 					</view>
 
 					<view class="flex flex-col items-center justify-center">
 						<cl-image :src="url" mode="aspectFit"></cl-image>
-						<cl-text class="!text-sm mt-1">aspectFit</cl-text>
+						<cl-text
+							:pt="{
+								className: 'text-sm mt-1'
+							}"
+							>aspectFit</cl-text
+						>
 					</view>
 
 					<view class="flex flex-col items-center justify-center">
 						<cl-image :src="url" mode="heightFix"></cl-image>
-						<cl-text class="!text-sm mt-1">heightFix</cl-text>
+						<cl-text
+							:pt="{
+								className: 'text-sm mt-1'
+							}"
+							>heightFix</cl-text
+						>
 					</view>
 
 					<view class="flex flex-col items-center justify-center">
 						<cl-image :src="url" mode="scaleToFill"></cl-image>
-						<cl-text class="!text-sm mt-1">scaleToFill</cl-text>
+						<cl-text
+							:pt="{
+								className: 'text-sm mt-1'
+							}"
+							>scaleToFill</cl-text
+						>
 					</view>
 				</view>
 			</demo-item>

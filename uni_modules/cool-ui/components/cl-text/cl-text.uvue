@@ -3,20 +3,10 @@
 	<view
 		class="cl-text"
 		:class="[
-			isDark ? 'text-surface-50' : 'text-surface-700',
 			{
-				'truncate w-full': ellipsis,
-				'cl-text--pre-wrap': preWrap
-			},
-			{
-				'!text-primary-500': color == 'primary',
-				'!text-green-500': color == 'success',
-				'!text-yellow-500': color == 'warn',
-				'!text-red-500': color == 'error',
-				[isDark ? '!text-surface-300' : '!text-surface-500']: color == 'info',
-				'!text-surface-700': color == 'dark',
-				'!text-surface-50': color == 'light',
-				'!text-surface-400': color == 'disabled'
+				'cl-text--pre-wrap': preWrap,
+				'cl-text--ellipsis': ellipsis,
+				'cl-text--default-size': isDefaultSize
 			},
 			ptClassName
 		]"
@@ -34,20 +24,10 @@
 	<text
 		class="cl-text"
 		:class="[
-			isDark ? 'text-surface-50' : 'text-surface-700',
 			{
-				'truncate w-full': ellipsis,
-				'cl-text--pre-wrap': preWrap
-			},
-			{
-				'!text-primary-500': color == 'primary',
-				'!text-green-500': color == 'success',
-				'!text-yellow-500': color == 'warn',
-				'!text-red-500': color == 'error',
-				[isDark ? '!text-surface-300' : '!text-surface-500']: color == 'info',
-				'!text-surface-700': color == 'dark',
-				'!text-surface-50': color == 'light',
-				'!text-surface-400': color == 'disabled'
+				'cl-text--pre-wrap': preWrap,
+				'cl-text--ellipsis': ellipsis,
+				'cl-text--default-size': isDefaultSize
 			},
 			ptClassName
 		]"
@@ -64,7 +44,7 @@
 
 <script setup lang="ts">
 import { computed, type PropType } from "vue";
-import { isDark, parsePt, useCache } from "@/cool";
+import { ctx, hasTextColor, hasTextSize, isDark, parsePt, useCache } from "@/cool";
 import type { ClTextType } from "../../types";
 import { useSize } from "../../hooks";
 
@@ -170,12 +150,46 @@ const pt = computed(() => parsePt<PassThrough>(props.pt));
 // 文本大小
 const { getSize, getLineHeight, ptClassName } = useSize(() => pt.value.className ?? "");
 
+// 文本颜色
+const color = computed(() => {
+	if (props.color != "") {
+		switch (props.color) {
+			case "primary":
+				return ctx.color["primary-500"] as string;
+			case "success":
+				return "#22c55e";
+			case "warn":
+				return "#eab308";
+			case "error":
+				return "#ef4444";
+			case "info":
+				return isDark.value
+					? (ctx.color["surface-300"] as string)
+					: (ctx.color["surface-500"] as string);
+			case "dark":
+				return ctx.color["surface-700"] as string;
+			case "light":
+				return ctx.color["surface-50"] as string;
+			case "disabled":
+				return ctx.color["surface-400"] as string;
+			default:
+				return props.color;
+		}
+	}
+
+	return isDark.value ? "white" : (ctx.color["surface-700"] as string);
+});
+
+// 是否默认大小
+const isDefaultSize = computed(() => !hasTextSize(pt.value.className ?? ""));
+
 // 文本样式
 const textStyle = computed(() => {
 	const style = {};
 
-	if (props.color != "") {
-		style["color"] = props.color;
+	// 判断是不是有颜色样式
+	if (!hasTextColor(ptClassName.value)) {
+		style["color"] = color.value;
 	}
 
 	// 字号
@@ -295,8 +309,6 @@ const content = computed(() => {
 
 <style lang="scss" scoped>
 .cl-text {
-	@apply text-md;
-
 	// #ifndef APP
 	flex-shrink: unset;
 	// #endif
@@ -305,6 +317,14 @@ const content = computed(() => {
 		// #ifndef APP
 		white-space: pre-wrap;
 		// #endif
+	}
+
+	&--ellipsis {
+		@apply truncate w-full;
+	}
+
+	&--default-size {
+		@apply text-md;
 	}
 }
 </style>

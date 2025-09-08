@@ -53,7 +53,7 @@
 				<cl-text
 					:pt="{
 						className:
-							'mb-3 !text-sm p-3 bg-surface-100 dark:!bg-surface-700 rounded-lg'
+							'mb-3 text-sm p-3 bg-surface-100 dark:!bg-surface-700 rounded-lg'
 					}"
 					v-if="form.selected4 != null && isShowValue"
 				>
@@ -120,7 +120,7 @@ type Form = {
 };
 
 const form = reactive<Form>({
-	selected: 1,
+	selected: null,
 	selected2: "2",
 	selected3: [],
 	selected4: 3

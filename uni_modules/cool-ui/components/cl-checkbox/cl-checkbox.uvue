@@ -18,7 +18,7 @@
 				className: parseClass([
 					'cl-checkbox__icon mr-1',
 					{
-						'!text-primary-500': isChecked
+						'text-primary-500': isChecked
 					},
 					pt.icon?.className
 				])
@@ -30,7 +30,7 @@
 				className: parseClass([
 					'cl-checkbox__label',
 					{
-						'!text-primary-500': isChecked
+						'text-primary-500': isChecked
 					},
 					pt.label?.className
 				])

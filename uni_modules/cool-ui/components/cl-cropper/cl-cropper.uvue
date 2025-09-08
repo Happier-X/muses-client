@@ -54,7 +54,7 @@
 					<view class="cl-cropper__guide-text">
 						<cl-text
 							:pt="{
-								className: '!text-xl'
+								className: 'text-xl'
 							}"
 							color="white"
 						>
@@ -65,7 +65,7 @@
 
 						<cl-text
 							:pt="{
-								className: '!text-xl'
+								className: 'text-xl'
 							}"
 							color="white"
 						>

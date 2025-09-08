@@ -6,7 +6,17 @@
 			</demo-item>
 
 			<demo-item :label="t('自定义颜色')">
-				<cl-text color="primary">云想衣裳花想容，春风拂槛露华浓。</cl-text>
+				<cl-text color="primary">明月松间照，清泉石上流。</cl-text>
+				<cl-text color="error">举头望明月，低头思故乡。</cl-text>
+				<cl-text color="success">春眠不觉晓，处处闻啼鸟。</cl-text>
+				<cl-text color="warn">劝君更尽一杯酒，西出阳关无故人。</cl-text>
+				<cl-text color="info">孤帆远影碧空尽，唯见长江天际流。</cl-text>
+				<cl-text
+					:pt="{
+						className: 'text-sky-500'
+					}"
+					>大漠孤烟直，长河落日圆。</cl-text
+				>
 			</demo-item>
 
 			<demo-item :label="t('手机号脱敏')">

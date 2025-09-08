@@ -141,7 +141,7 @@
 			</demo-item>
 
 			<demo-item>
-				<cl-text pre-wrap :pt="{ className: '!text-sm p-2' }">{{
+				<cl-text pre-wrap :pt="{ className: 'text-sm p-2' }">{{
 					JSON.stringify(formData, null, 4)
 				}}</cl-text>
 			</demo-item>

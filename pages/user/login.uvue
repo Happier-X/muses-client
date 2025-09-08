@@ -14,7 +14,7 @@
 					></cl-image>
 				</view>
 
-				<cl-text :pt="{ className: '!text-xl font-bold mt-3' }">{{ config.name }}</cl-text>
+				<cl-text :pt="{ className: 'text-xl font-bold mt-3' }">{{ config.name }}</cl-text>
 			</view>
 
 			<!-- 手机号登录 -->
@@ -32,18 +32,18 @@
 					inactive-icon="checkbox-blank-circle-line"
 				>
 				</cl-checkbox>
-				<cl-text color="info" :pt="{ className: '!text-xs' }">{{
+				<cl-text color="info" :pt="{ className: 'text-xs' }">{{
 					t("已阅读并同意")
 				}}</cl-text>
 				<cl-text
-					:pt="{ className: '!text-xs' }"
+					:pt="{ className: 'text-xs' }"
 					@tap.stop="toDoc(t('用户协议'), 'userAgreement')"
 				>
 					《{{ t("用户协议") }}》
 				</cl-text>
-				<cl-text color="info" :pt="{ className: '!text-xs' }">、</cl-text>
+				<cl-text color="info" :pt="{ className: 'text-xs' }">、</cl-text>
 				<cl-text
-					:pt="{ className: '!text-xs' }"
+					:pt="{ className: 'text-xs' }"
 					@tap.stop="toDoc(t('隐私政策'), 'privacyPolicy')"
 				>
 					《{{ t("隐私政策") }}》

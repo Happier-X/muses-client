@@ -1,7 +1,7 @@
 <template>
 	<view class="flex flex-col mb-5">
-		<cl-text :pt="{ className: '!text-lg font-bold' }">{{ t("手机登录") }}</cl-text>
-		<cl-text :pt="{ className: '!text-sm mt-2' }" color="info">{{
+		<cl-text :pt="{ className: 'text-lg font-bold' }">{{ t("手机登录") }}</cl-text>
+		<cl-text :pt="{ className: 'text-sm mt-2' }" color="info">{{
 			t("未注册的手机号登录成功后将自动注册")
 		}}</cl-text>
 	</view>

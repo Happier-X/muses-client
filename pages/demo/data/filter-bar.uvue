@@ -43,13 +43,13 @@
 			</demo-item>
 
 			<demo-item>
-				<cl-text pre-wrap :pt="{ className: '!text-sm p-2' }">{{
+				<cl-text pre-wrap :pt="{ className: 'text-sm p-2' }">{{
 					JSON.stringify(filterForm, null, 4)
 				}}</cl-text>
 			</demo-item>
 
 			<demo-item>
-				<cl-text pre-wrap :pt="{ className: '!text-sm p-2' }">{{
+				<cl-text pre-wrap :pt="{ className: 'text-sm p-2' }">{{
 					JSON.stringify(searchForm, null, 4)
 				}}</cl-text>
 			</demo-item>
@@ -84,7 +84,7 @@
 												]
 											]),
 											label: {
-												className: '!text-sm'
+												className: 'text-sm'
 											}
 										}"
 									></cl-checkbox>
@@ -147,7 +147,7 @@
 												]
 											]),
 											label: {
-												className: '!text-sm'
+												className: 'text-sm'
 											}
 										}"
 									></cl-checkbox>
@@ -177,7 +177,7 @@
 												]
 											]),
 											label: {
-												className: '!text-sm'
+												className: 'text-sm'
 											}
 										}"
 									></cl-radio>
@@ -207,7 +207,7 @@
 												]
 											]),
 											label: {
-												className: '!text-sm'
+												className: 'text-sm'
 											}
 										}"
 									></cl-radio>

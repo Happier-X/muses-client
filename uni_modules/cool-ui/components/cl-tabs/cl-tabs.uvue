@@ -40,7 +40,7 @@
 								className: parseClass([
 									[
 										item.isActive && color == '' && unColor == '',
-										showSlider ? '!text-white' : '!text-primary-500'
+										showSlider ? 'text-white' : 'text-primary-500'
 									],
 									pt.text?.className
 								])

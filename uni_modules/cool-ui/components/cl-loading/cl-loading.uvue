@@ -5,7 +5,6 @@
 		:class="[
 			{
 				'cl-loading--dark': isDark && color == '',
-				'cl-loading--spin': loading,
 				'!border-r-transparent': true
 			},
 			pt.className
@@ -13,13 +12,11 @@
 		:style="{
 			height: getPx(size!),
 			width: getPx(size!),
-			// #ifndef APP
 			borderWidth: '1px',
 			borderTopColor: color,
 			borderRightColor: 'transparent',
 			borderBottomColor: color,
 			borderLeftColor: color
-			// #endif
 		}"
 		v-if="loading"
 	>
@@ -27,8 +24,8 @@
 </template>
 
 <script setup lang="ts">
-import { computed, nextTick, onMounted, ref, shallowRef, watch } from "vue";
-import { ctx, isDark, parsePt } from "@/cool";
+import { computed, onMounted, shallowRef, watch } from "vue";
+import { createAnimation, ctx, isDark, parsePt } from "@/cool";
 import type { ClIconProps } from "../cl-icon/props";
 import { useSize } from "../../hooks";
 
@@ -60,7 +57,7 @@ const props = defineProps({
 	}
 });
 
-const { getPxValue, getPx } = useSize();
+const { getPx } = useSize();
 
 // 透传样式类型定义
 type PassThrough = {
@@ -74,6 +71,7 @@ const pt = computed(() => parsePt<PassThrough>(props.pt));
 // 组件引用
 const loadingRef = shallowRef<UniElement | null>(null);
 
+// 颜色值
 const color = computed<string>(() => {
 	if (props.color == "") {
 		return isDark.value ? "#ffffff" : (ctx.color["surface-700"] as string);
@@ -101,83 +99,19 @@ const color = computed<string>(() => {
 	}
 });
 
-async function drawLoading() {
-	// #ifdef APP
-	await nextTick();
-
-	if (loadingRef.value == null) {
-		return;
-	}
-
-	const drawContext = loadingRef.value!.getDrawableContext();
-
-	// 重置画布，准备绘制新的loading图形
-	drawContext!.reset();
-	drawContext!.beginPath();
-
-	// 获取loading图标的尺寸和半径
-	const size = getPxValue(props.size!);
-	const radius = size / 2;
-	const centerX = radius;
-	const centerY = radius;
-
-	// 设置线宽
-	const lineWidth = 1;
-
-	// 缺口角度为60度（Math.PI / 3），用于形成loading的缺口效果
-	const gapAngle = Math.PI / 3; // 缺口60度
-
-	// 起始角度为顶部（-90度）
-	const startAngle = -Math.PI / 2; // 从顶部开始
-
-	// 结束角度为起始角度加上300度（360-60），形成环形缺口
-	const endAngle = startAngle + (2 * Math.PI - gapAngle); // 画300度
-
-	// 绘制圆弧，形成loading环
-	drawContext!.arc(centerX, centerY, radius - lineWidth, startAngle, endAngle, false);
-
-	// 设置描边颜色和线宽
-	drawContext!.strokeStyle = color.value;
-	drawContext!.lineWidth = lineWidth;
-
-	// 执行描边操作
-	drawContext!.stroke();
-
-	// 更新画布显示
-	drawContext!.update();
-	// #endif
-}
-
 // 开始旋转动画
 async function start() {
-	// #ifdef APP
-	await drawLoading();
-
-	if (loadingRef.value == null) {
-		return;
-	}
-
-	loadingRef.value!.animate(
-		[
-			{
-				transform: "rotate(0deg)"
-			},
-			{
-				transform: "rotate(360deg)"
-			}
-		],
-		{
-			duration: 2500,
-			easing: "linear",
-			iterations: 999999
-		}
-	);
-	// #endif
+	createAnimation(loadingRef.value, {
+		duration: 2500,
+		loop: -1,
+		timingFunction: "linear"
+	})
+		.rotate("0deg", "360deg")
+		.play();
 }
 
 // 组件挂载后监听loading状态
 onMounted(() => {
-	// #ifdef APP
 	watch(
 		computed(() => props.loading),
 		(val: boolean) => {
@@ -190,43 +124,17 @@ onMounted(() => {
 			immediate: true
 		}
 	);
-
-	watch(
-		computed(() => [props.color, props.size, isDark.value]),
-		() => {
-			drawLoading();
-		}
-	);
-	// #endif
 });
 </script>
 
 <style lang="scss" scoped>
 .cl-loading {
 	@apply flex flex-row items-center justify-center rounded-full;
-
-	// #ifndef APP
 	@apply border-surface-700 border-solid;
-	// #endif
 
 	&--dark {
 		border-color: white !important;
 		border-right-color: transparent !important;
 	}
-
-	// #ifdef H5 || MP
-	&--spin {
-		animation: spin 2.5s linear infinite;
-	}
-
-	@keyframes spin {
-		from {
-			transform: rotate(0deg);
-		}
-		to {
-			transform: rotate(360deg);
-		}
-	}
-	// #endif
 }
 </style>

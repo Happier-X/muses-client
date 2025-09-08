@@ -146,7 +146,6 @@ async function getCaptcha() {
 
 	await request({
 		url: "/app/user/login/captcha",
-		method: "POST",
 		data: {
 			color: isDark.value ? "#ffffff" : "#2c3142",
 			phone: props.phone,

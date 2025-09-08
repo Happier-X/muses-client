@@ -25,7 +25,7 @@
 					<cl-text
 						v-if="value != ''"
 						:pt="{
-							className: '!text-2xl'
+							className: 'text-2xl'
 						}"
 						>{{ value }}</cl-text
 					>
@@ -33,7 +33,7 @@
 					<cl-text
 						v-else
 						:pt="{
-							className: '!text-md !text-surface-400'
+							className: 'text-md text-surface-400'
 						}"
 						>{{ placeholder }}</cl-text
 					>
@@ -73,7 +73,7 @@
 											<cl-text
 												color="white"
 												:pt="{
-													className: '!text-lg'
+													className: 'text-lg'
 												}"
 												>{{ confirmText }}</cl-text
 											>
@@ -84,7 +84,7 @@
 										<cl-text
 											v-else
 											:pt="{
-												className: '!text-lg'
+												className: 'text-lg'
 											}"
 											>{{ item }}</cl-text
 										>
@@ -120,7 +120,7 @@
 									v-if="item == 'confirm'"
 									color="white"
 									:pt="{
-										className: '!text-lg'
+										className: 'text-lg'
 									}"
 									>{{ confirmText }}</cl-text
 								>

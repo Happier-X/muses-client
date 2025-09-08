@@ -92,7 +92,7 @@
 					className: parseClass([
 						'cl-button__label',
 						{
-							'!text-sm': size == 'small'
+							'text-sm': size == 'small'
 						},
 						pt.label?.className
 					])

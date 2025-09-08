@@ -76,7 +76,7 @@
 									<cl-text
 										:pt="{
 											className: parseClass({
-												'!text-primary-500': onItemActive(index, data)
+												'text-primary-500': onItemActive(index, data)
 											})
 										}"
 										>{{ data[labelKey] }}</cl-text

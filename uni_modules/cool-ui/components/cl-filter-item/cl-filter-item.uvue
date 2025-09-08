@@ -4,7 +4,7 @@
 			<cl-text
 				:pt="{
 					className: parseClass([
-						[isActive, '!text-primary-500'],
+						[isActive, 'text-primary-500'],
 						'text-center',
 						pt.label?.className
 					])

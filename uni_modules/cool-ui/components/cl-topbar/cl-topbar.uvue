@@ -31,7 +31,7 @@
 					<cl-text
 						:color="color"
 						:pt="{
-							className: parseClass(['!text-md', pt.title?.className])
+							className: parseClass(['text-md', pt.title?.className])
 						}"
 					>
 						{{ title }}

@@ -8,7 +8,15 @@
 			</demo-item>
 
 			<demo-item :label="t('内容靠左')">
-				<cl-list-item :label="t('QQ')" justify="start">
+				<cl-list-item
+					:label="t('QQ')"
+					justify="start"
+					:pt="{
+						label: {
+							className: '!w-10'
+						}
+					}"
+				>
 					<cl-text>615206459</cl-text>
 				</cl-list-item>
 			</demo-item>
@@ -22,6 +30,21 @@
 			<demo-item :label="t('带图标')">
 				<cl-list-item :label="t('余额')" icon="wallet-line">
 					<cl-text>10,9000</cl-text>
+				</cl-list-item>
+			</demo-item>
+
+			<demo-item :label="t('带图片')">
+				<cl-list-item
+					arrow
+					:pt="{
+						image: {
+							width: 48,
+							height: 48
+						}
+					}"
+					:label="t('神仙都没用')"
+					image="https://unix.cool-js.com/images/demo/avatar.jpg"
+				>
 				</cl-list-item>
 			</demo-item>
 
