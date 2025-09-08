@@ -13,7 +13,7 @@
                                 <cl-list-item v-for="child in item.children" :key="child.label" :label="child.label"
                                         :arrow="child.path != null" @tap="toPath(child)" hoverable justify="center">
                                         <template #icon>
-                                                <cl-svg :src="child.icon" class="size-4 mr-2"></cl-svg>
+                                                <cl-svg :src="child.icon" class="size-5 mr-2"></cl-svg>
                                         </template>
                                 </cl-list-item>
                         </cl-list>

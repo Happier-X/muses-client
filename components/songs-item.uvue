@@ -1,0 +1,19 @@
+<template>
+    <view class="flex flex-row items-center justify-between size-full">
+        <view class="flex flex-row items-center">
+            <cl-image src="" mode="scaleToFill" width="100rpx" height="100rpx"></cl-image>
+            <view class="ml-3">
+                <cl-text :pt="{
+                    className: '!text-lg !font-bold'
+                }">爱无所不在</cl-text>
+                <cl-text>王力宏-不可思议</cl-text>
+            </view>
+        </view>
+        <cl-button text>
+            <cl-svg src="static/icon/more.svg" class="size-6"></cl-svg>
+        </cl-button>
+    </view>
+</template>
+<script setup lang="ts">
+import { ref } from 'vue'
+</script>
