@@ -21,11 +21,11 @@
                 </cl-list-view>
             </view>
         </view>
-        <tabbar></tabbar>
+        <footer-bar></footer-bar>
     </cl-page>
 </template>
 <script setup lang="ts">
-import Tabbar from "@/components/tabbar.uvue";
+import FooterBar from "@/components/footer-bar/index.uvue";
 import { ref } from "vue";
 import { type ClSelectOption, useListView, type ClListViewItem } from "@/uni_modules/cool-ui";
 import playlistsItem from "./components/playlists-item.uvue";

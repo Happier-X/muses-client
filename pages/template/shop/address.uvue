@@ -71,7 +71,7 @@
 			<cl-empty v-if="list.length == 0"></cl-empty>
 		</view>
 
-		<Tabbar></Tabbar>
+		<footer-bar></footer-bar>
 	</cl-page>
 </template>
 
@@ -81,7 +81,7 @@ import { parse, request, router, usePager, type Response } from "@/cool";
 import { t } from "@/locale";
 import { computed, ref } from "vue";
 import type { UserAddress } from "../types";
-import Tabbar from "@/components/tabbar.uvue";
+import FooterBar from "@/components/footer-bar/index.uvue";
 
 const ui = useUi();
 

@@ -1,0 +1,15 @@
+<template>
+	<cl-footer :pt="{
+		content: {
+			className: '!p-0'
+		}
+	}">
+		<play-bar></play-bar>
+		<tab-bar></tab-bar>
+	</cl-footer>
+</template>
+
+<script setup lang="ts">
+import PlayBar from "./components/play-bar.uvue";
+import TabBar from "./components/tab-bar.uvue";
+</script>

@@ -14,10 +14,10 @@
 		</cl-topbar>
         <cl-text>开发中...</cl-text>
 
-		<tabbar></tabbar>
+		<footer-bar></footer-bar>
 	</cl-page>
 </template>
 
 <script lang="ts" setup>
-import Tabbar from "@/components/tabbar.uvue";
+import FooterBar from "@/components/footer-bar/index.uvue";
 </script>

@@ -6,9 +6,9 @@
             }
         }">
         </cl-topbar>
-        <tabbar></tabbar>
+        <footer-bar></footer-bar>
     </cl-page>
 </template>
 <script setup lang="ts">
-import Tabbar from "@/components/tabbar.uvue";
+import FooterBar from "@/components/footer-bar/index.uvue";
 </script>
