@@ -1,0 +1,19 @@
+<template>
+    <view class="flex flex-row items-center justify-between size-full">
+        <view class="flex flex-row items-center">
+            <cl-image src="" mode="scaleToFill" width="100rpx" height="100rpx" :pt="{
+                className: '!rounded-full'
+            }"></cl-image>
+            <view class="ml-3">
+                <cl-text :pt="{
+                    className: '!text-lg !font-bold'
+                }">王力宏</cl-text>
+                <cl-text>1首</cl-text>
+            </view>
+        </view>
+        <cl-svg src="static/icon/more.svg" class="size-6"></cl-svg>
+    </view>
+</template>
+<script setup lang="ts">
+import { ref } from 'vue'
+</script>
