@@ -1,14 +1,99 @@
 <template>
-    <cl-page>
+    <cl-page class="flex flex-col h-full">
         <cl-topbar fixed safe-area-top title="歌单" :pt="{
             title: {
                 className: '!text-xl !font-bold'
             }
         }">
         </cl-topbar>
+        <view class="px-4 flex-1 flex flex-col min-h-0">
+            <cl-filter-bar>
+                <cl-filter-item label="标题" type="select" :value="1" :options="selectOptions"
+                    @change="onSelectOptionsChange" :pt="{
+                        className: '!h-[80rpx]'
+                    }"></cl-filter-item>
+            </cl-filter-bar>
+            <view class="flex-1 min-h-0">
+                <cl-list-view :data="data" :itemHeight="rpx2px(125)">
+                    <template #item>
+                        <playlists-item></playlists-item>
+                    </template>
+                </cl-list-view>
+            </view>
+        </view>
         <tabbar></tabbar>
     </cl-page>
 </template>
 <script setup lang="ts">
 import Tabbar from "@/components/tabbar.uvue";
+import { ref } from "vue";
+import { type ClSelectOption, useListView, type ClListViewItem } from "@/uni_modules/cool-ui";
+import playlistsItem from "./components/playlists-item.uvue";
+import { rpx2px } from "@/cool";
+
+const selectOptions = ref<ClSelectOption[]>([
+    {
+        label: '标题',
+        value: 1
+    },
+    {
+        label: '播放次数',
+        value: 2
+    },
+])
+const onSelectOptionsChange = () => {
+
+}
+
+const data = ref<ClListViewItem[]>([]);
+data.value = useListView([
+    {
+        label: "福建",
+    },
+    {
+        label: "广东",
+    },
+    {
+        label: "江西",
+    },
+    {
+        label: "北京",
+    },
+    {
+        label: "上海",
+    },
+    {
+        label: "河南",
+    },
+    {
+        label: "宁夏",
+    },
+    {
+        label: "浙江",
+    },
+    {
+        label: "天津",
+    },
+    {
+        label: "新疆",
+    },
+    {
+        label: "云南",
+    },
+    {
+        label: "重庆",
+    },
+    {
+        label: "安徽",
+    },
+    {
+        label: "湖南",
+    },
+    {
+        label: "广西",
+    },
+    {
+        label: "海南",
+    },
+]);
 </script>
