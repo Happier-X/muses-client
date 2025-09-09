@@ -419,6 +419,7 @@ defineExpose({
 
 		&-left {
 			@apply left-full;
+			transform: translateX(1rpx);
 		}
 
 		&-right {

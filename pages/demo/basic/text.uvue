@@ -19,6 +19,22 @@
 				>
 			</demo-item>
 
+			<demo-item :label="t('省略号')">
+				<cl-text ellipsis
+					>云想衣裳花想容，春风拂槛露华浓。若非群玉山头见，会向瑶台月下逢。</cl-text
+				>
+			</demo-item>
+
+			<demo-item :label="t('多行省略号')">
+				<cl-text ellipsis :lines="2"
+					>云想衣裳花想容，春风拂槛露华浓。若非群玉山头见，会向瑶台月下逢。天阶夜色凉如水，卧看牵牛织女星。人生若只如初见，何事秋风悲画扇。山有木兮木有枝，心悦君兮君不知。</cl-text
+				>
+			</demo-item>
+
+			<demo-item :label="t('金额')">
+				<cl-text type="amount" :value="10000000.0"></cl-text>
+			</demo-item>
+
 			<demo-item :label="t('手机号脱敏')">
 				<cl-text type="phone" mask value="13800138000"></cl-text>
 			</demo-item>
@@ -35,18 +51,8 @@
 				<cl-text type="card" mask value="1234 5678 9012 3456"></cl-text>
 			</demo-item>
 
-			<demo-item :label="t('金额')">
-				<cl-text type="amount" :value="100.0"></cl-text>
-			</demo-item>
-
 			<demo-item :label="t('自定义脱敏字符')">
 				<cl-text type="phone" value="13800138000" mask mask-char="~"></cl-text>
-			</demo-item>
-
-			<demo-item :label="t('省略号')">
-				<cl-text ellipsis
-					>云想衣裳花想容，春风拂槛露华浓。若非群玉山头见，会向瑶台月下逢。</cl-text
-				>
 			</demo-item>
 		</view>
 	</cl-page>

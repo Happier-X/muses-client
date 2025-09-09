@@ -114,6 +114,11 @@ const props = defineProps({
 		type: Boolean,
 		default: false
 	},
+	// 最大行数
+	lines: {
+		type: Number,
+		default: 1
+	},
 	// 是否可选择
 	selectable: {
 		type: Boolean,
@@ -185,7 +190,9 @@ const isDefaultSize = computed(() => !hasTextSize(pt.value.className ?? ""));
 
 // 文本样式
 const textStyle = computed(() => {
-	const style = {};
+	const style = {
+		lines: props.lines
+	};
 
 	// 判断是不是有颜色样式
 	if (!hasTextColor(ptClassName.value)) {
@@ -320,7 +327,16 @@ const content = computed(() => {
 	}
 
 	&--ellipsis {
-		@apply truncate w-full;
+		text-overflow: ellipsis;
+
+		// #ifndef APP
+		display: -webkit-box;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		-webkit-line-clamp: v-bind(lines);
+		line-break: anywhere;
+		-webkit-box-orient: vertical;
+		// #endif
 	}
 
 	&--default-size {
