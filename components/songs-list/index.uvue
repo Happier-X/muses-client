@@ -1,0 +1,82 @@
+<template>
+    <view class="size-full px-4 flex flex-col">
+        <view class="py-4 flex flex-row items-start">
+            <cl-image src="https://unix.cool-js.com/images/demo/avatar.jpg" mode="scaleToFill" width="250rpx"
+                height="250rpx"></cl-image>
+            <view class="ml-4 h-full flex flex-col items-start justify-between">
+                <view>
+                    <cl-text :pt="{
+                        className: '!text-xl !font-bold'
+                    }">全部歌曲</cl-text>
+                    <cl-text class="mt-2">王力宏-不可思议</cl-text>
+                </view>
+                <cl-button rounded icon="play-fill">播放</cl-button>
+            </view>
+        </view>
+        <view class="flex-1 min-h-0">
+            <cl-list-view :data="data" :itemHeight="rpx2px(125)">
+                <template #item>
+                    <songs-item></songs-item>
+                </template>
+            </cl-list-view>
+        </view>
+    </view>
+</template>
+<script setup lang="ts">
+import { ref } from "vue";
+import { useListView, type ClListViewItem } from "@/uni_modules/cool-ui";
+import SongsItem from "./components/songs-item.uvue";
+import { rpx2px } from "@/cool";
+
+const data = ref<ClListViewItem[]>([]);
+data.value = useListView([
+    {
+        label: "福建",
+    },
+    {
+        label: "广东",
+    },
+    {
+        label: "江西",
+    },
+    {
+        label: "北京",
+    },
+    {
+        label: "上海",
+    },
+    {
+        label: "河南",
+    },
+    {
+        label: "宁夏",
+    },
+    {
+        label: "浙江",
+    },
+    {
+        label: "天津",
+    },
+    {
+        label: "新疆",
+    },
+    {
+        label: "云南",
+    },
+    {
+        label: "重庆",
+    },
+    {
+        label: "安徽",
+    },
+    {
+        label: "湖南",
+    },
+    {
+        label: "广西",
+    },
+    {
+        label: "海南",
+    },
+]);
+</script>

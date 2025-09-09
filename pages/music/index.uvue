@@ -10,11 +10,8 @@
                         <cl-list v-for="item in list" :key="item.label" :title="item.label" :pt="{
                                 className: 'mb-3'
                         }">
-                                <cl-list-item v-for="child in item.children" :key="child.label" :label="child.label"
+                                <cl-list-item v-for="child in item.children" :key="child.label" :icon="child.icon" :label="child.label"
                                         :arrow="child.path != null" @tap="toPath(child)" hoverable justify="center">
-                                        <template #icon>
-                                                <cl-svg :src="child.icon" class="size-5 mr-2"></cl-svg>
-                                        </template>
                                 </cl-list-item>
                         </cl-list>
                 </view>
@@ -45,17 +42,17 @@ const list = computed<Item[]>(() => [
                         {
                                 label: t("歌曲"),
                                 path: "/pages/music/songs/index",
-                                icon: "/static/icon/songs.svg"
+                                icon: "music-line"
                         },
                         {
                                 label: t("专辑"),
                                 path: "/pages/music/albums/index",
-                                icon: "/static/icon/albums.svg"
+                                icon: "album-line"
                         },
                         {
                                 label: t("艺术家"),
                                 path: "/pages/music/artists/index",
-                                icon: "/static/icon/artists.svg"
+                                icon: "mic-line"
                         }
                 ]
         },
@@ -65,17 +62,17 @@ const list = computed<Item[]>(() => [
                         {
                                 label: t("歌单"),
                                 path: "/pages/music/playlists/index",
-                                icon: "/static/icon/playlists.svg"
+                                icon: "play-list-line"
                         },
                         {
                                 label: t("喜欢"),
                                 path: "/pages/music/likes/index",
-                                icon: "/static/icon/likes.svg"
+                                icon: "heart-line"
                         },
                         {
                                 label: t("最近播放"),
                                 path: "/pages/music/recentlyPlayed/index",
-                                icon: "/static/icon/recentlyPlayed.svg"
+                                icon: "timer-2-line"
                         },
                 ]
         }

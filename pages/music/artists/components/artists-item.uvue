@@ -1,7 +1,7 @@
 <template>
     <view class="flex flex-row items-center justify-between size-full">
         <view class="flex flex-row items-center">
-            <cl-image src="" mode="scaleToFill" width="100rpx" height="100rpx" :pt="{
+            <cl-image src="https://unix.cool-js.com/images/demo/avatar.jpg" mode="scaleToFill" width="100rpx" height="100rpx" :pt="{
                 className: '!rounded-full'
             }"></cl-image>
             <view class="ml-3">

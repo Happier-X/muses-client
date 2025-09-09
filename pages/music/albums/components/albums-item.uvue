@@ -1,6 +1,6 @@
 <template>
     <view class="flex flex-col items-center justify-center">
-        <cl-image src="" ></cl-image>
+        <cl-image src="https://unix.cool-js.com/images/demo/avatar.jpg" ></cl-image>
         <cl-text>不可思议</cl-text>
         <cl-text>哈哈</cl-text>
     </view>
