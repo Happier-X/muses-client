@@ -10,11 +10,13 @@
 			<view class="flex flex-row items-center py-6 px-8">
 				<cl-avatar src="https://unix.cool-js.com/images/demo/avatar.jpg" :size="150" :pt="{ className: '!rounded-3xl', icon: { size: 60 } }">
 				</cl-avatar>
-				<view class="flex-1 flex flex-col pl-4">
+				<view class="flex-1 pl-4">
 					<cl-text :pt="{ className: '!text-2xl mb-2 font-bold' }">
 						admin123456
 					</cl-text>
-					<cl-tag :pt="{ className: '!px-2 !w-fit' }" plain>管理员</cl-tag>
+					<view class="flex flex-row">
+						<cl-tag :pt="{ className: '!px-2' }" plain>管理员</cl-tag>
+					</view>
 				</view>
 			</view>
 			<cl-list v-for="item in list" :key="item.label" :title="item.label" :pt="{
