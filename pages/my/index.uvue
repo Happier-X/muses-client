@@ -1,23 +1,84 @@
 <template>
 	<cl-page>
-		<cl-topbar
-			fixed
-			:show-back="false"
-			safe-area-top
-			title="我的"
-			:pt="{
-				title: {
-					className: '!text-xl !font-bold'
-				}
-			}"
-		>
+		<cl-topbar fixed :show-back="false" safe-area-top background-color="transparent">
+			<view class="flex flex-row items-center justify-end w-full flex-1 px-4">
+				<cl-button text icon="settings-4-line"></cl-button>
+				<cl-button text icon="moon-line"></cl-button>
+			</view>
 		</cl-topbar>
-        <cl-text>开发中...</cl-text>
-
+		<view class="p-4">
+			<view class="flex flex-row items-center py-6 px-8">
+				<cl-avatar src="https://unix.cool-js.com/images/demo/avatar.jpg" :size="150" :pt="{ className: '!rounded-3xl', icon: { size: 60 } }">
+				</cl-avatar>
+				<view class="flex-1 flex flex-col pl-4">
+					<cl-text :pt="{ className: '!text-2xl mb-2 font-bold' }">
+						admin123456
+					</cl-text>
+					<cl-tag :pt="{ className: '!px-2 !w-fit' }" plain>管理员</cl-tag>
+				</view>
+			</view>
+			<cl-list v-for="item in list" :key="item.label" :title="item.label" :pt="{
+				className: 'mb-3'
+			}">
+				<cl-list-item v-for="child in item.children" :key="child.label" :icon="child.icon" :label="child.label"
+					:arrow="child.path != null" @tap="toPath(child)" hoverable justify="center">
+				</cl-list-item>
+			</cl-list>
+		</view>
 		<footer-bar></footer-bar>
 	</cl-page>
 </template>
 
 <script lang="ts" setup>
 import FooterBar from "@/components/footer-bar/index.uvue";
+import { router } from "@/cool";
+import { t } from "@/locale";
+import { useUi } from "@/uni_modules/cool-ui";
+import { computed } from "vue";
+
+const ui = useUi();
+
+type Item = {
+	label?: string;
+	children?: Item[];
+	path?: string;
+	icon?: string;
+};
+
+const list = computed<Item[]>(() => [
+	{
+		children: [
+			{
+				label: t("扫描音乐"),
+				icon: "scan-line"
+			},
+			{
+				label: t("统计数据"),
+				icon: "line-chart-line"
+			},
+			{
+				label: t("用户管理"),
+				icon: "user-settings-line"
+			},
+		]
+	},
+	{
+		children: [
+			{
+				label: t("设置"),
+				path: "/pages/music/likes/index",
+				icon: "settings-4-line"
+			}
+		]
+	}
+]);
+function toPath(item: Item) {
+	if (item.path == null) {
+		return ui.showToast({
+			message: t("该功能正在开发中")
+		});
+	}
+
+	router.to(item.path!);
+}
 </script>
