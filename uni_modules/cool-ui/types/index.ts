@@ -198,3 +198,5 @@ export type ClTreeNodeInfo = {
 	parent?: ClTreeItem;
 	index: number;
 };
+
+export type ClCalendarMode = "single" | "multiple" | "range";

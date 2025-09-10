@@ -257,6 +257,12 @@
 					}
 				},
 				{
+					"path": "form/calendar",
+					"style": {
+						"navigationBarTitleText": "Calendar 日历"
+					}
+				},
+				{
 					"path": "layout/flex",
 					"style": {
 						"navigationBarTitleText": "Flex 弹性布局"

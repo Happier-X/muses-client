@@ -1,0 +1,41 @@
+<template>
+	<cl-page>
+		<view class="p-3">
+			<demo-item :label="t('选择器')">
+				<cl-calendar-select v-model="date"></cl-calendar-select>
+			</demo-item>
+
+			<demo-item :label="t('范围选择器')">
+				<cl-calendar-select v-model:date="dateArr" mode="range"></cl-calendar-select>
+			</demo-item>
+
+			<demo-item :label="t('禁用部分日期')">
+				<cl-calendar-select
+					v-model="date"
+					:disabled-date="disabledDate"
+				></cl-calendar-select>
+			</demo-item>
+
+			<demo-item :label="t('日历面板')">
+				<cl-calendar v-model="date"></cl-calendar>
+			</demo-item>
+		</view>
+	</cl-page>
+</template>
+
+<script lang="ts" setup>
+import { ref } from "vue";
+import { t } from "@/locale";
+import DemoItem from "../components/item.uvue";
+import { dayUts } from "@/cool";
+
+const date = ref<string | null>(dayUts().format("YYYY-MM-DD"));
+
+const dateArr = ref<string[]>(["2025-09-02", "2025-09-09"]);
+
+const disabledDate = ref<string[]>([
+	dayUts().add(2, "day").format("YYYY-MM-DD"),
+	dayUts().add(4, "day").format("YYYY-MM-DD"),
+	dayUts().add(6, "day").format("YYYY-MM-DD")
+]);
+</script>

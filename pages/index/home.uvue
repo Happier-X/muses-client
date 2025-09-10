@@ -226,6 +226,11 @@ const data = computed<Item[]>(() => {
 					label: t("文件上传"),
 					icon: "file-upload-line",
 					path: "/pages/demo/form/upload"
+				},
+				{
+					label: t("日历"),
+					icon: "calendar-line",
+					path: "/pages/demo/form/calendar"
 				}
 			]
 		},
@@ -327,6 +332,11 @@ const data = computed<Item[]>(() => {
 					label: t("树形结构"),
 					icon: "node-tree",
 					path: "/pages/demo/data/tree"
+				},
+				{
+					label: t("日历"),
+					icon: "calendar-line",
+					path: "/pages/demo/data/calendar"
 				}
 			]
 		},

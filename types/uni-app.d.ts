@@ -430,6 +430,17 @@ declare const onUnhandledRejection: (
 
 declare const onUnload: (hook: () => any, target?: ComponentInternalInstance | null) => void;
 
+declare interface DOMRect {
+	x: number;
+	y: number;
+	width: number;
+	height: number;
+	left: number;
+	top: number;
+	right: number;
+	bottom: number;
+}
+
 declare interface UniElement {
 	$vm: ComponentPublicInstance;
 	id: string;
@@ -446,6 +457,7 @@ declare interface UniElement {
 		success?: (res: { tempFilePath: string }) => void;
 		fail?: (err: { errCode: number; errMsg: string }) => void;
 	}): void;
+	getBoundingClientRectAsync(): Promise<DOMRect>;
 	getDrawableContext(): DrawableContext;
 	animate(
 		keyframes: UniAnimationKeyframe | UniAnimationKeyframe[],

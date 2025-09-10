@@ -72,6 +72,27 @@ export class DayUts {
 	}
 
 	/**
+	 * 本月多少天
+	 */
+	getDays(): number {
+		return new Date(this._date.getFullYear(), this._date.getMonth() + 1, 0).getDate();
+	}
+
+	/**
+	 * 是否为闰年
+	 */
+	isLeapYear(): boolean {
+		return this._date.getFullYear() % 4 == 0 && this._date.getFullYear() % 100 != 0;
+	}
+
+	/**
+	 * 星期几
+	 */
+	getDay(): number {
+		return this._date.getDay();
+	}
+
+	/**
 	 * 获取某个单位的开始时间
 	 */
 	startOf(unit: "month" | "day" | "year" | "week"): DayUts {
