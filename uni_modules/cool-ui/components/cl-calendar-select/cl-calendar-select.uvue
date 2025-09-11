@@ -33,7 +33,8 @@
 					v-model="value"
 					v-model:date="date"
 					:mode="mode"
-					:disabled-date="disabledDate"
+					:date-config="dateConfig"
+					@change="onCalendarChange"
 				></cl-calendar>
 			</view>
 
@@ -68,7 +69,7 @@
 
 <script setup lang="ts">
 import { ref, computed, type PropType } from "vue";
-import type { ClCalendarMode } from "../../types";
+import type { ClCalendarDateConfig, ClCalendarMode } from "../../types";
 import { isEmpty, parsePt } from "@/cool";
 import type { ClSelectTriggerPassThrough } from "../cl-select-trigger/props";
 import type { ClPopupPassThrough } from "../cl-popup/props";
@@ -105,9 +106,9 @@ const props = defineProps({
 		type: String as PropType<ClCalendarMode>,
 		default: "single"
 	},
-	// 禁用的日期
-	disabledDate: {
-		type: Array as PropType<string[]>,
+	// 日期配置
+	dateConfig: {
+		type: Array as PropType<ClCalendarDateConfig[]>,
 		default: () => []
 	},
 	// 选择器标题
@@ -132,6 +133,11 @@ const props = defineProps({
 	},
 	// 分隔符
 	splitor: {
+		type: String,
+		default: "、"
+	},
+	// 范围分隔符
+	rangeSplitor: {
 		type: String,
 		default: () => t(" 至 ")
 	},
@@ -158,7 +164,7 @@ const props = defineProps({
 });
 
 // 定义事件
-const emit = defineEmits(["update:modelValue", "update:date", "change"]);
+const emit = defineEmits(["update:modelValue", "update:date", "change", "select"]);
 
 // 弹出层引用
 const popupRef = ref<ClPopupComponentPublicInstance | null>(null);
@@ -180,7 +186,16 @@ const date = ref<string[]>([]);
 
 // 显示文本
 const text = computed(() => {
-	return props.mode == "single" ? (props.modelValue ?? "") : props.date.join(props.splitor);
+	switch (props.mode) {
+		case "single":
+			return props.modelValue ?? "";
+		case "multiple":
+			return props.date.join(props.splitor);
+		case "range":
+			return props.date.join(props.rangeSplitor);
+		default:
+			return "";
+	}
 });
 
 // 选择器显示状态
@@ -247,6 +262,11 @@ function confirm() {
 
 	// 关闭选择器
 	close();
+}
+
+// 日历变化
+function onCalendarChange(date: string[]) {
+	emit("select", date);
 }
 
 defineExpose({

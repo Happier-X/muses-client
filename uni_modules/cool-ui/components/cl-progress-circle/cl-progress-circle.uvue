@@ -22,7 +22,15 @@
 </template>
 
 <script lang="ts" setup>
-import { getColor, getDevicePixelRatio, isDark, parseClass, parsePt, uuid } from "@/cool";
+import {
+	getColor,
+	getDevicePixelRatio,
+	isDark,
+	isHarmony,
+	parseClass,
+	parsePt,
+	uuid
+} from "@/cool";
 import { computed, getCurrentInstance, onMounted, ref, watch, type PropType } from "vue";
 import type { PassThroughProps } from "../../types";
 
@@ -203,24 +211,29 @@ function animate(targetValue: number) {
 
 // 初始化画布
 function initCanvas() {
-	uni.createCanvasContextAsync({
-		id: canvasId,
-		component: proxy,
-		success: (context: CanvasContext) => {
-			// 设置canvas上下文
-			canvasCtx = context;
+	setTimeout(
+		() => {
+			uni.createCanvasContextAsync({
+				id: canvasId,
+				component: proxy,
+				success: (context: CanvasContext) => {
+					// 设置canvas上下文
+					canvasCtx = context;
 
-			// 获取绘图上下文
-			drawCtx = context.getContext("2d")!;
+					// 获取绘图上下文
+					drawCtx = context.getContext("2d")!;
 
-			// 设置宽高
-			drawCtx!.canvas.width = props.size * dpr;
-			drawCtx!.canvas.height = props.size * dpr;
+					// 设置宽高
+					drawCtx!.canvas.width = props.size * dpr;
+					drawCtx!.canvas.height = props.size * dpr;
 
-			// 开始动画
-			animate(props.value);
-		}
-	});
+					// 开始动画
+					animate(props.value);
+				}
+			});
+		},
+		isHarmony() ? 100 : 0
+	);
 }
 
 onMounted(() => {

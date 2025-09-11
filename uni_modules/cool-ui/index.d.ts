@@ -1,4 +1,4 @@
-import type { ClActionSheetItem, ClActionSheetOptions, PassThroughProps, Type, ClButtonType, Size, ClListViewItem, ClFilterItemType, ClSelectOption, ClFormLabelPosition, ClFormRule, ClFormValidateError, ClInputType, ClListItem, Justify, ClListViewGroup, ClListViewVirtualItem, ClListViewRefresherStatus, ClConfirmAction, ClConfirmOptions, ClToastOptions, ClPopupDirection, ClQrcodeMode, ClSelectDateShortcut, ClTabsItem, ClTextType, ClTreeItem, ClTreeNodeInfo, ClUploadItem } from "./types";
+import type { ClActionSheetItem, ClActionSheetOptions, PassThroughProps, Type, ClButtonType, Size, ClCalendarDateConfig, ClCalendarMode, ClListViewItem, ClFilterItemType, ClSelectOption, ClFormLabelPosition, ClFormRule, ClFormValidateError, ClInputType, ClListItem, Justify, ClListViewGroup, ClListViewVirtualItem, ClListViewRefresherStatus, ClConfirmAction, ClConfirmOptions, ClToastOptions, ClPopupDirection, ClQrcodeMode, ClSelectDateShortcut, ClTabsItem, ClTextType, ClTreeItem, ClTreeNodeInfo, ClUploadItem } from "./types";
 import { type UiInstance } from "./hooks";
 import { type QrcodeOptions } from "./draw";
 
@@ -8,6 +8,9 @@ import type { ClBackTopProps } from "./components/cl-back-top/props";
 import type { ClBadgeProps, ClBadgePassThrough } from "./components/cl-badge/props";
 import type { ClBannerProps, ClBannerPassThrough } from "./components/cl-banner/props";
 import type { ClButtonProps, ClButtonPassThrough } from "./components/cl-button/props";
+import type { ClCalendarProps, ClCalendarPassThrough } from "./components/cl-calendar/props";
+import type { ClCalendarPickerProps } from "./components/cl-calendar-picker/props";
+import type { ClCalendarSelectProps, ClCalendarSelectPassThrough } from "./components/cl-calendar-select/props";
 import type { ClCascaderProps, ClCascaderPassThrough } from "./components/cl-cascader/props";
 import type { ClCheckboxProps, ClCheckboxPassThrough } from "./components/cl-checkbox/props";
 import type { ClColProps, ClColPassThrough } from "./components/cl-col/props";
@@ -67,7 +70,7 @@ import type { ClTimelineProps, ClTimelinePassThrough } from "./components/cl-tim
 import type { ClTimelineItemProps, ClTimelineItemPassThrough } from "./components/cl-timeline-item/props";
 import type { ClToastProps } from "./components/cl-toast/props";
 import type { ClTopbarProps, ClTopbarPassThrough } from "./components/cl-topbar/props";
-import type { ClTreeProps } from "./components/cl-tree/props";
+import type { ClTreeProps, ClTreePassThrough } from "./components/cl-tree/props";
 import type { ClTreeItemProps, ClTreeItemPassThrough } from "./components/cl-tree-item/props";
 import type { ClUploadProps, ClUploadPassThrough } from "./components/cl-upload/props";
 import type { ClWaterfallProps, ClWaterfallPassThrough } from "./components/cl-waterfall/props";
@@ -83,6 +86,9 @@ declare module "vue" {
 		"cl-badge": (typeof import('./components/cl-badge/cl-badge.uvue')['default']) & import('vue').DefineComponent<ClBadgeProps>;
 		"cl-banner": (typeof import('./components/cl-banner/cl-banner.uvue')['default']) & import('vue').DefineComponent<ClBannerProps>;
 		"cl-button": (typeof import('./components/cl-button/cl-button.uvue')['default']) & import('vue').DefineComponent<ClButtonProps>;
+		"cl-calendar": (typeof import('./components/cl-calendar/cl-calendar.uvue')['default']) & import('vue').DefineComponent<ClCalendarProps>;
+		"cl-calendar-picker": (typeof import('./components/cl-calendar-picker/cl-calendar-picker.uvue')['default']) & import('vue').DefineComponent<ClCalendarPickerProps>;
+		"cl-calendar-select": (typeof import('./components/cl-calendar-select/cl-calendar-select.uvue')['default']) & import('vue').DefineComponent<ClCalendarSelectProps>;
 		"cl-cascader": (typeof import('./components/cl-cascader/cl-cascader.uvue')['default']) & import('vue').DefineComponent<ClCascaderProps>;
 		"cl-checkbox": (typeof import('./components/cl-checkbox/cl-checkbox.uvue')['default']) & import('vue').DefineComponent<ClCheckboxProps>;
 		"cl-col": (typeof import('./components/cl-col/cl-col.uvue')['default']) & import('vue').DefineComponent<ClColProps>;

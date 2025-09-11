@@ -6,6 +6,7 @@
 		<!-- #ifdef MP -->
 		<root-portal :enable="enablePortal">
 			<!-- #endif -->
+
 			<view
 				class="cl-popup-wrapper"
 				:class="[`cl-popup-wrapper--${direction}`]"
@@ -108,9 +109,11 @@
 					</view>
 				</view>
 			</view>
+
 			<!-- #ifdef MP -->
 		</root-portal>
 		<!-- #endif -->
+
 		<!-- #ifdef H5 -->
 	</teleport>
 	<!-- #endif -->
@@ -118,7 +121,7 @@
 
 <script lang="ts" setup>
 import { computed, reactive, ref, watch, type PropType } from "vue";
-import { getSafeAreaHeight, parsePt, parseRpx } from "@/cool";
+import { getSafeAreaHeight, isAppIOS, parsePt, parseRpx } from "@/cool";
 import type { ClPopupDirection, PassThroughProps } from "../../types";
 import { isDark, router } from "@/cool";
 import { config } from "../../config";
@@ -303,17 +306,20 @@ function open() {
 		emit("open");
 
 		// 等待DOM更新后开始动画
-		setTimeout(() => {
-			// 设置打开状态
-			status.value = 1;
+		setTimeout(
+			() => {
+				// 设置打开状态
+				status.value = 1;
 
-			// 动画结束后触发opened事件
-			// @ts-ignore
-			timer = setTimeout(() => {
-				isOpened.value = true;
-				emit("opened");
-			}, 350);
-		}, 50);
+				// 动画结束后触发opened事件
+				// @ts-ignore
+				timer = setTimeout(() => {
+					isOpened.value = true;
+					emit("opened");
+				}, 350);
+			},
+			isAppIOS() ? 100 : 50
+		);
 	}
 }
 
@@ -502,7 +508,8 @@ defineExpose({
 	}
 
 	.cl-popup {
-		@apply absolute;
+		@apply absolute duration-300;
+		transition-property: transform;
 
 		&__inner {
 			@apply bg-white h-full w-full flex flex-col;
@@ -532,19 +539,8 @@ defineExpose({
 			flex: 1;
 		}
 
-		&.is-open {
-			transform: translate(0, 0) scale(1);
-			opacity: 1;
-		}
-
-		&.is-open,
-		&.is-close {
-			transition-property: transform, opacity;
-			transition-duration: 0.3s;
-		}
-
 		&.stop-transition {
-			transition-property: none;
+			@apply transition-none;
 		}
 	}
 
@@ -552,6 +548,10 @@ defineExpose({
 		.cl-popup {
 			@apply left-0 top-0;
 			transform: translateX(-100%);
+
+			&.is-open {
+				transform: translateX(0);
+			}
 		}
 	}
 
@@ -559,18 +559,25 @@ defineExpose({
 		.cl-popup {
 			@apply right-0 top-0;
 			transform: translateX(100%);
+
+			&.is-open {
+				transform: translateX(0);
+			}
 		}
 	}
 
 	&--top {
 		.cl-popup {
 			@apply left-0 top-0;
+			transform: translateY(-100%);
 
 			.cl-popup__inner {
 				@apply rounded-b-2xl;
 			}
 
-			transform: translateY(-100%);
+			&.is-open {
+				transform: translateY(0);
+			}
 		}
 	}
 
@@ -605,6 +612,14 @@ defineExpose({
 			.cl-popup__inner {
 				@apply rounded-t-2xl;
 			}
+
+			&.is-open {
+				transform: translateY(0);
+			}
+
+			&.is-close {
+				transform: translateY(100%);
+			}
 		}
 	}
 
@@ -614,9 +629,15 @@ defineExpose({
 		& > .cl-popup {
 			transform: scale(1.3);
 			opacity: 0;
+			transition-property: transform, opacity;
 
 			.cl-popup__inner {
 				@apply rounded-2xl;
+			}
+
+			&.is-open {
+				transform: translate(0, 0) scale(1);
+				opacity: 1;
 			}
 		}
 	}

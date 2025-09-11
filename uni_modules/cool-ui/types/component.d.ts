@@ -107,6 +107,7 @@ declare type ClCollapseComponentPublicInstance = {
 };
 
 declare type ClCountdownComponentPublicInstance = {
+	next: () => void;
 	start: () => void;
 	stop: () => void;
 	done: () => void;

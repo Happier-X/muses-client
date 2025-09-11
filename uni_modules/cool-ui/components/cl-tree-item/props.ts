@@ -2,8 +2,9 @@ import type { ClTreeItem, PassThroughProps } from "../../types";
 import type { ClIconProps } from "../cl-icon/props";
 
 export type ClTreeItemPassThrough = {
-	className?: string;
-	wrapper?: PassThroughProps;
+	item?: PassThroughProps;
+	itemChecked?: PassThroughProps;
+	itemWrapper?: PassThroughProps;
 	expand?: PassThroughProps;
 	expandIcon?: ClIconProps;
 	checkbox?: PassThroughProps;

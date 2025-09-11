@@ -18,6 +18,7 @@ export type ClTextProps = {
 	maskEnd?: number;
 	maskChar?: string;
 	ellipsis?: boolean;
+	lines?: number;
 	selectable?: boolean;
 	space?: "ensp" | "emsp" | "nbsp";
 	decode?: boolean;

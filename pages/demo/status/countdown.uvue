@@ -33,6 +33,10 @@
 				<cl-countdown :second="5" @done="onDone"></cl-countdown>
 			</demo-item>
 
+			<demo-item :label="t('3秒后开始倒计时')">
+				<cl-countdown ref="countdownRef" :second="5" :auto="false"></cl-countdown>
+			</demo-item>
+
 			<demo-item :label="t('自定义样式')">
 				<cl-countdown
 					:hour="10"
@@ -56,7 +60,7 @@
 <script lang="ts" setup>
 import { t } from "@/locale";
 import DemoItem from "../components/item.uvue";
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import { dayUts, isDark, parseClass } from "@/cool";
 import { useUi } from "@/uni_modules/cool-ui";
 
@@ -69,4 +73,12 @@ function onDone() {
 		message: "倒计时完成"
 	});
 }
+
+const countdownRef = ref<ClCountdownComponentPublicInstance | null>(null);
+
+onMounted(() => {
+	setTimeout(() => {
+		countdownRef.value!.next();
+	}, 3000);
+});
 </script>

@@ -16,4 +16,5 @@ export type ClCountdownProps = {
 	minute?: number;
 	second?: number;
 	datetime?: Date | string;
+	auto?: boolean;
 };

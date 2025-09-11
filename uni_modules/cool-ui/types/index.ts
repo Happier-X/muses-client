@@ -200,3 +200,11 @@ export type ClTreeNodeInfo = {
 };
 
 export type ClCalendarMode = "single" | "multiple" | "range";
+
+export type ClCalendarDateConfig = {
+	date: string;
+	topText?: string;
+	bottomText?: string;
+	disabled?: boolean;
+	color?: string;
+};

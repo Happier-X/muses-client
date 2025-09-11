@@ -10,6 +10,6 @@ export type ClDraggableProps = {
 	pt?: ClDraggablePassThrough;
 	modelValue?: UTSJSONObject[];
 	disabled?: boolean;
-	animation?: number;
 	columns?: number;
+	longPress?: boolean;
 };

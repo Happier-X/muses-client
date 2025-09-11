@@ -14,7 +14,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, watch, nextTick, onBeforeUnmount, onBeforeMount, computed, type PropType } from "vue";
+import { ref, watch, nextTick, computed, type PropType, onMounted, onUnmounted } from "vue";
 import type { PassThroughProps } from "../../types";
 import { dayUts, get, has, isEmpty, parsePt } from "@/cool";
 
@@ -71,6 +71,11 @@ const props = defineProps({
 	datetime: {
 		type: [Date, String] as PropType<Date | string>,
 		default: null
+	},
+	// 是否自动开始倒计时
+	auto: {
+		type: Boolean,
+		default: true
 	}
 });
 
@@ -267,36 +272,43 @@ function start(options: Options | null = null) {
 		});
 
 		// 开始倒计时
-		next();
+		if (props.auto) {
+			next();
+		} else {
+			countDown();
+		}
 	});
 }
 
-// 监听时间单位变化，重新开始倒计时
-watch(
-	computed(() => [props.day, props.hour, props.minute, props.second] as number[]),
-	() => {
-		start();
-	}
-);
-
-// 监听结束时间变化，重新开始倒计时
-watch(
-	computed(() => props.datetime),
-	() => {
-		start();
-	}
-);
-
 // 组件销毁前停止倒计时
-onBeforeUnmount(() => stop());
+onUnmounted(() => stop());
 
 // 组件挂载前开始倒计时
-onBeforeMount(() => start());
+onMounted(() => {
+	start();
+
+	// 监听时间单位变化，重新开始倒计时
+	watch(
+		computed(() => [props.day, props.hour, props.minute, props.second] as number[]),
+		() => {
+			start();
+		}
+	);
+
+	// 监听结束时间变化，重新开始倒计时
+	watch(
+		computed(() => props.datetime),
+		() => {
+			start();
+		}
+	);
+});
 
 defineExpose({
 	start,
 	stop,
 	done,
+	next,
 	isRunning
 });
 </script>
