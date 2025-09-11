@@ -1,10 +1,7 @@
 <template>
 	<cl-select-trigger
 		v-if="showTrigger"
-		:pt="{
-			className: pt.trigger?.className,
-			icon: pt.trigger?.icon
-		}"
+		:pt="ptTrigger"
 		:placeholder="placeholder"
 		:disabled="disabled"
 		:focus="popupRef?.isOpen"
@@ -13,19 +10,7 @@
 		@clear="clear"
 	></cl-select-trigger>
 
-	<cl-popup
-		ref="popupRef"
-		v-model="visible"
-		:title="title"
-		:pt="{
-			className: pt.popup?.className,
-			header: pt.popup?.header,
-			container: pt.popup?.container,
-			mask: pt.popup?.mask,
-			draw: pt.popup?.draw
-		}"
-		@closed="onClosed"
-	>
+	<cl-popup ref="popupRef" v-model="visible" :title="title" :pt="ptPopup" @closed="onClosed">
 		<view class="cl-select-popup" @touchmove.stop>
 			<view class="cl-select-popup__labels">
 				<cl-tag
@@ -93,7 +78,16 @@
 
 <script setup lang="ts">
 import { ref, computed, type PropType, nextTick } from "vue";
-import { isDark, isEmpty, isMp, isNull, parseClass, parsePt, parseRpx } from "@/cool";
+import {
+	isDark,
+	isEmpty,
+	isMp,
+	isNull,
+	parseClass,
+	parsePt,
+	parseRpx,
+	parseToObject
+} from "@/cool";
 import type { ClSelectTriggerPassThrough } from "../cl-select-trigger/props";
 import type { ClPopupPassThrough } from "../cl-popup/props";
 import { t } from "@/locale";
@@ -226,6 +220,12 @@ type PassThrough = {
  * 将传入的样式配置按照指定类型进行解析和处理
  */
 const pt = computed(() => parsePt<PassThrough>(props.pt));
+
+// 解析触发器透传样式配置
+const ptTrigger = computed(() => parseToObject(pt.value.trigger));
+
+// 解析弹窗透传样式配置
+const ptPopup = computed(() => parseToObject(pt.value.popup));
 
 /**
  * 当前显示的级联层级索引

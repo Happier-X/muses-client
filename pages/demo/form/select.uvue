@@ -52,8 +52,7 @@
 			<demo-item :label="t('自定义')">
 				<cl-text
 					:pt="{
-						className:
-							'mb-3 text-sm p-3 bg-surface-100 dark:!bg-surface-700 rounded-lg'
+						className: 'mb-3 text-sm p-3 bg-surface-100 dark:!bg-surface-700 rounded-lg'
 					}"
 					v-if="form.selected4 != null && isShowValue"
 				>

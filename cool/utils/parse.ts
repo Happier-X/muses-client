@@ -1,4 +1,3 @@
-import { ref, type Ref } from "vue";
 import { forEach, forInObject, isArray, isObject, isString } from "./comm";
 
 /**
@@ -112,11 +111,11 @@ export const parseClass = (data: any): string => {
  */
 export function parseToObject<T>(data: T): UTSJSONObject {
 	// #ifdef APP-ANDROID
-	return JSON.parseObject(JSON.stringify(data)!)!;
+	return JSON.parseObject(JSON.stringify(data ?? {})!)!;
 	// #endif
 
 	// #ifndef APP-ANDROID
-	return JSON.parse(JSON.stringify(data)) as UTSJSONObject;
+	return JSON.parse(JSON.stringify(data || {})) as UTSJSONObject;
 	// #endif
 }
 

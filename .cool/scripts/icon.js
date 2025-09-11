@@ -112,7 +112,7 @@ function generateTypeScript(originalFolderName, camelCaseName, iconData) {
 
 // 生成SCSS文件
 function generateSCSS(originalFolderName, base64Data) {
-	const scssContent = `@font-face {\n\tfont-family: "${originalFolderName}";\n\tsrc: url("data:font/ttf;base64,${base64Data}") format("woff");\n}\n`;
+	const scssContent = `@font-face {\n\tfont-family: "${toCamelCase(originalFolderName)}";\n\tsrc: url("data:font/ttf;base64,${base64Data}") format("woff");\n}\n`;
 
 	const outputPath = path.join("icons", originalFolderName, "index.scss");
 	fs.writeFileSync(outputPath, scssContent);
@@ -261,9 +261,7 @@ function generateIndexTS(actualFolders) {
 
 // 生成主index.scss文件
 function generateIndexSCSS(actualFolders) {
-	const imports = actualFolders
-		.map((folder) => `@import "./${folder}/index.scss";`)
-		.join("\n");
+	const imports = actualFolders.map((folder) => `@import "./${folder}/index.scss";`).join("\n");
 
 	fs.writeFileSync("icons/index.scss", imports + "\n");
 }
@@ -315,7 +313,9 @@ function main() {
 		}
 
 		if (processedFolders.length > 0) {
-			const folderNames = processedFolders.map(f => typeof f === 'string' ? f : f.originalName);
+			const folderNames = processedFolders.map((f) =>
+				typeof f === "string" ? f : f.originalName
+			);
 			console.log(
 				`\n🎉 成功处理了 ${processedFolders.length} 个字体包: ${folderNames.join(", ")}`
 			);

@@ -1,4 +1,4 @@
-import type { ClSelectOption } from "../../types";
+import type { ClSelectOption, ClSelectValue } from "../../types";
 import type { ClSelectTriggerPassThrough } from "../cl-select-trigger/props";
 import type { ClPopupPassThrough } from "../cl-popup/props";
 
@@ -10,7 +10,7 @@ export type ClSelectPassThrough = {
 export type ClSelectProps = {
 	className?: string;
 	pt?: ClSelectPassThrough;
-	modelValue?: Value;
+	modelValue?: ClSelectValue;
 	title?: string;
 	placeholder?: string;
 	options?: ClSelectOption[];

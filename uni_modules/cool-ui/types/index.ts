@@ -33,6 +33,8 @@ export type ClCheckboxOption = {
 	disabled?: boolean;
 };
 
+export type ClSelectValue = string[] | number[] | number | string | null;
+
 export type ClSelectOption = {
 	label: string;
 	value: any;
