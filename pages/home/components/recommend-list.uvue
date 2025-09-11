@@ -1,0 +1,27 @@
+<template>
+    <view>
+        <view class="flex flex-row items-center justify-between">
+            <view class="flex flex-row items-center">
+                <cl-text :pt="{ className: '!text-lg !font-bold' }">{{ title }}</cl-text>
+                <cl-icon name="arrow-right-s-line" class="ml-1"></cl-icon>
+            </view>
+        </view>
+        <cl-row :gutter="12">
+            <cl-col class="flex flex-col items-center justify-center mt-4" :span="8" v-for="(item,index) in list" :key="index">
+                <slot :item="item"></slot>
+            </cl-col>
+        </cl-row>
+    </view>
+</template>
+<script lang="ts" setup>
+defineProps({
+    title: {
+        type: String,
+        default: ''
+    },
+    list: {
+        type: Array,
+        default: () => []
+    }
+})
+</script>

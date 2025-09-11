@@ -1,18 +1,45 @@
 <template>
 	<cl-page>
-		<cl-topbar fixed :show-back="false" safe-area-top background-color="transparent">
+		<cl-topbar fixed :show-back="false" safe-area-top>
 			<view class="flex flex-row items-center justify-between w-full flex-1 px-4">
 				<cl-text :pt="{ className: '!text-xl !font-bold' }">Muses</cl-text>
 				<cl-button text icon="search-line"></cl-button>
 			</view>
 		</cl-topbar>
 		<view class="p-4">
-			
+			<recommend-list title="推荐歌曲" :list="list">
+				<template #default="{ item }">
+					<songs-item></songs-item>
+				</template>
+			</recommend-list>
+			<recommend-list class="mt-4" title="推荐专辑" :list="list">
+				<template #default="{ item }">
+					<albums-item></albums-item>
+				</template>
+			</recommend-list>
+			<recommend-list class="mt-4" title="推荐艺术家" :list="list">
+				<template #default="{ item }">
+					<artists-item></artists-item>
+				</template>
+			</recommend-list>
+			<recommend-list class="mt-4" title="推荐歌单" :list="list">
+				<template #default="{ item }">
+					<playlists-item></playlists-item>
+				</template>
+			</recommend-list>
 		</view>
 		<footer-bar></footer-bar>
 	</cl-page>
 </template>
 
 <script lang="ts" setup>
+import recommendList from "./components/recommend-list.uvue";
+import songsItem from "./components/songs-item.uvue";
+import albumsItem from "./components/albums-item.uvue";
+import artistsItem from "./components/artists-item.uvue";
+import playlistsItem from "./components/playlists-item.uvue";
 import FooterBar from "@/components/footer-bar/index.uvue";
+import { ref } from 'vue'
+
+const list = ref(['1', '2', '3', '4', '5', '6'])
 </script>

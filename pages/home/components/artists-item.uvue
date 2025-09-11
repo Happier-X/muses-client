@@ -1,0 +1,15 @@
+<template>
+    <view class="flex flex-col items-center">
+        <cl-image src="https://unix.cool-js.com/images/demo/avatar.jpg" mode="scaleToFill" width="200rpx"
+            height="200rpx" :pt="{
+                className: '!rounded-full'
+            }"></cl-image>
+        <view class="mt-2">
+            <cl-text :pt="{
+                className: '!text-lg !font-bold'
+            }">王力宏</cl-text>
+        </view>
+    </view>
+</template>
+<script setup lang="ts">
+</script>
