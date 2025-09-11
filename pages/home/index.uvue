@@ -1,18 +1,14 @@
 <template>
 	<cl-page>
-		<cl-topbar
-			fixed
-			:show-back="false"
-			safe-area-top
-			title="首页"
-			:pt="{
-				title: {
-					className: '!text-xl !font-bold'
-				}
-			}"
-		>
+		<cl-topbar fixed :show-back="false" safe-area-top background-color="transparent">
+			<view class="flex flex-row items-center justify-between w-full flex-1 px-4">
+				<cl-text :pt="{ className: '!text-xl !font-bold' }">Muses</cl-text>
+				<cl-button text icon="search-line"></cl-button>
+			</view>
 		</cl-topbar>
-        <cl-text>开发中...</cl-text> 
+		<view class="p-4">
+			
+		</view>
 		<footer-bar></footer-bar>
 	</cl-page>
 </template>
