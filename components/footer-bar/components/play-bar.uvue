@@ -1,7 +1,8 @@
 <template>
     <view class="w-full h-[125rpx] px-4 flex flex-row items-center justify-between">
         <view class="flex-1 flex flex-row items-center" @click="showImmersionPage">
-            <cl-image src="https://unix.cool-js.com/images/demo/avatar.jpg" mode="scaleToFill" width="100rpx" height="100rpx"></cl-image>
+            <cl-image src="https://unix.cool-js.com/images/demo/avatar.jpg" mode="scaleToFill" width="100rpx"
+                height="100rpx"></cl-image>
             <view class="ml-3 flex-1">
                 <cl-text :pt="{
                     className: '!text-lg !font-bold'
@@ -20,10 +21,16 @@
             <cl-button icon="play-fill" text size="large"></cl-button>
             <cl-button icon="play-list-2-fill" text size="large"></cl-button>
         </view>
+        <immersion-page ref="immersionPageRef"></immersion-page>
     </view>
 </template>
 <script setup lang="ts">
-const showImmersionPage = ()=>{
-    console.log(111111)
+import ImmersionPage from '@/components/immersion-page/index.uvue'
+import {type ImmersionPageInstance} from '@/components/immersion-page/index.uvue'
+import { ref } from 'vue'
+
+const immersionPageRef = ref<ImmersionPageInstance | null>(null)
+const showImmersionPage = () => {
+    immersionPageRef.value?.show()
 }
 </script>

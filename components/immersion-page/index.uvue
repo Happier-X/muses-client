@@ -1,0 +1,17 @@
+<template>
+    <cl-popup v-model="visible"></cl-popup>
+</template>
+<script setup lang="ts">
+import { ref } from 'vue'
+const visible = ref(false)
+const show = ()=>{
+    visible.value = true
+}
+defineExpose({
+    show
+})
+
+export type ImmersionPageInstance = {
+    show: ()=>void
+}
+</script>
