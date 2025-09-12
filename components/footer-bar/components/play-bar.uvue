@@ -26,11 +26,11 @@
 </template>
 <script setup lang="ts">
 import ImmersionPage from '@/components/immersion-page/index.uvue'
-import {type ImmersionPageInstance} from '@/components/immersion-page/index.uvue'
-import { ref } from 'vue'
+import { ref, getCurrentInstance } from 'vue'
 
-const immersionPageRef = ref<ImmersionPageInstance | null>(null)
+const immersionPageRef = ref<ComponentPublicInstance | null>(null)
+const instance = getCurrentInstance()!.proxy!
 const showImmersionPage = () => {
-    immersionPageRef.value?.show()
+    (instance.$refs['immersionPageRef'] as ComponentPublicInstance)?.$callMethod('show')
 }
 </script>
