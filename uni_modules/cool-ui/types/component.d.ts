@@ -225,3 +225,16 @@ declare type ClTreeComponentPublicInstance = {
 	expandAll: () => void;
 	collapseAll: () => void;
 };
+
+declare type ClCalendarComponentPublicInstance = {
+	open(cb: ((value: string | string[]) => void) | null = null): void;
+	close(): void;
+};
+
+declare type ClMarqueeComponentPublicInstance = {
+	play(): void;
+	pause(): void;
+	start(): void;
+	stop(): void;
+	reset(): void;
+};

@@ -210,3 +210,30 @@ export type ClCalendarDateConfig = {
 	disabled?: boolean;
 	color?: string;
 };
+
+export type ClMarqueeDirection = "horizontal" | "vertical";
+
+export type ClMarqueeItem = {
+	url: string;
+	originalIndex: number;
+};
+
+export type ClMarqueePassThrough = {
+	className?: string;
+	container?: PassThroughProps;
+	item?: PassThroughProps;
+	image?: PassThroughProps;
+};
+
+export type ClMarqueeProps = {
+	className?: string;
+	pt?: ClMarqueePassThrough;
+	list?: string[];
+	direction?: ClMarqueeDirection;
+	speed?: number;
+	pause?: boolean;
+	pauseOnHover?: boolean;
+	itemHeight?: number;
+	itemWidth?: number;
+	gap?: number;
+};

@@ -21,7 +21,7 @@
 		<cl-text
 			:pt="{
 				className: parseClass([
-					'cl-empty__text',
+					'cl-empty__text text-sm text-surface-400',
 					{
 						'text-surface-100': isDark
 					}
@@ -97,10 +97,6 @@ const pt = computed(() => parsePt<PassThrough>(props.pt));
 
 	&__icon {
 		margin-bottom: 20rpx;
-	}
-
-	&__text {
-		@apply text-surface-400 text-sm;
 	}
 }
 </style>

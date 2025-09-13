@@ -38,6 +38,7 @@ import type { ClListItemProps, ClListItemPassThrough } from "./components/cl-lis
 import type { ClListViewProps, ClListViewPassThrough } from "./components/cl-list-view/props";
 import type { ClLoadingProps, ClLoadingPassThrough } from "./components/cl-loading/props";
 import type { ClLoadmoreProps, ClLoadmorePassThrough } from "./components/cl-loadmore/props";
+import type { ClMarqueeProps, ClMarqueePassThrough } from "./components/cl-marquee/props";
 import type { ClNoticebarProps, ClNoticebarPassThrough } from "./components/cl-noticebar/props";
 import type { ClPageProps } from "./components/cl-page/props";
 import type { ClPageThemeProps } from "./components/cl-page-theme/props";
@@ -116,6 +117,7 @@ declare module "vue" {
 		"cl-list-view": (typeof import('./components/cl-list-view/cl-list-view.uvue')['default']) & import('vue').DefineComponent<ClListViewProps>;
 		"cl-loading": (typeof import('./components/cl-loading/cl-loading.uvue')['default']) & import('vue').DefineComponent<ClLoadingProps>;
 		"cl-loadmore": (typeof import('./components/cl-loadmore/cl-loadmore.uvue')['default']) & import('vue').DefineComponent<ClLoadmoreProps>;
+		"cl-marquee": (typeof import('./components/cl-marquee/cl-marquee.uvue')['default']) & import('vue').DefineComponent<ClMarqueeProps>;
 		"cl-noticebar": (typeof import('./components/cl-noticebar/cl-noticebar.uvue')['default']) & import('vue').DefineComponent<ClNoticebarProps>;
 		"cl-page": (typeof import('./components/cl-page/cl-page.uvue')['default']) & import('vue').DefineComponent<ClPageProps>;
 		"cl-page-theme": (typeof import('./components/cl-page-theme/cl-page-theme.uvue')['default']) & import('vue').DefineComponent<ClPageThemeProps>;

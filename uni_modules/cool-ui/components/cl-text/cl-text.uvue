@@ -114,7 +114,7 @@ const props = defineProps({
 		type: Boolean,
 		default: false
 	},
-	// 最大行数
+	// 最大行数，仅在ellipsis时生效
 	lines: {
 		type: Number,
 		default: 1
@@ -190,9 +190,12 @@ const isDefaultSize = computed(() => !hasTextSize(pt.value.className ?? ""));
 
 // 文本样式
 const textStyle = computed(() => {
-	const style = {
-		lines: props.lines
-	};
+	const style = {};
+
+	// 省略号
+	if (props.ellipsis) {
+		style["lines"] = props.lines;
+	}
 
 	// 判断是不是有颜色样式
 	if (!hasTextColor(ptClassName.value)) {

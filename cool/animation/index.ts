@@ -1429,6 +1429,15 @@ export class AnimationEngine {
 	}
 
 	/**
+	 * 旋转退出动画
+	 * @param duration 持续时间
+	 * @param degrees 旋转角度
+	 */
+	rotateOut(duration: number = 500, degrees: number = 360): AnimationEngine {
+		return this.setDuration(duration).rotate("0deg", `${degrees}deg`).opacity("1", "0");
+	}
+
+	/**
 	 * 弹跳动画
 	 * @param duration 持续时间
 	 */
@@ -1619,15 +1628,6 @@ export class AnimationEngine {
 	}
 
 	/**
-	 * 旋转退出动画
-	 * @param duration 持续时间
-	 * @param degrees 旋转角度
-	 */
-	rotateOut(duration: number = 500, degrees: number = 360): AnimationEngine {
-		return this.setDuration(duration).rotate("0deg", `${degrees}deg`).opacity("1", "0");
-	}
-
-	/**
 	 * 滚动进入动画
 	 * @param duration 持续时间
 	 */
@@ -1757,7 +1757,7 @@ export class AnimationEngine {
 }
 
 /**
- * 创建动画实例的便捷函数
+ * 创建动画实例
  * @param element 目标元素
  * @param options 动画选项
  */
