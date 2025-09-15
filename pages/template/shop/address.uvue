@@ -85,12 +85,17 @@ import FooterBar from "@/components/footer-bar/index.uvue";
 
 const ui = useUi();
 
-const { refresh, list, loadMore } = usePager(async (data) => {
-	return request({
+const { refresh, list, loadMore } = usePager(async (data, { render }) => {
+	await request({
 		url: "/app/user/address/page",
 		method: "POST",
 		data
 	})
+		.then((res) => {
+			if (res != null) {
+				render(res);
+			}
+		})
 		.catch((err) => {
 			ui.showToast({
 				message: (err as Response).message!

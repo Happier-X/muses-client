@@ -16,7 +16,7 @@ type PagerResponse = {
 };
 
 // 分页回调函数类型
-type PagerCallback = (params: UTSJSONObject) => Promise<any>;
+type PagerCallback = (params: UTSJSONObject, ctx: Pager) => void | Promise<void>;
 
 // 分页器类
 export class Pager {
@@ -48,52 +48,46 @@ export class Pager {
 		this.loading.value = false;
 	}
 
+	// 渲染数据
+	public render = (res: any) => {
+		const { list, pagination } = parse<PagerResponse>(res)!;
+
+		// 更新分页信息
+		this.page = pagination.page;
+		this.size = pagination.size;
+		this.total = pagination.total;
+
+		// 更新列表数据
+		if (this.params.page == 1) {
+			this.list.value = [...list];
+		} else {
+			this.list.value.push(...list);
+		}
+
+		// 更新加载完成状态
+		this.finished.value = this.list.value.length >= this.total;
+
+		// 完成加载
+		this.done();
+	};
+
 	// 刷新数据
-	public refresh = async (params: UTSJSONObject): Promise<UTSJSONObject> => {
-		return new Promise((resolve, reject) => {
-			// 合并参数
-			this.params = assign(this.params, params);
+	public refresh = async (params: UTSJSONObject) => {
+		// 合并参数
+		this.params = assign(this.params, params);
 
-			// 构建请求参数
-			const data = {
-				page: this.page,
-				size: this.size,
-				...this.params
-			};
+		// 构建请求参数
+		const data = {
+			page: this.page,
+			size: this.size,
+			...this.params
+		};
 
-			// 设置加载状态
-			this.loading.value = true;
+		// 开始加载
+		this.loading.value = true;
 
-			// 发起请求
-			this.cb!(data)
-				.then((res) => {
-					// 解析响应数据
-					const { list, pagination } = parse<PagerResponse>(res)!;
-
-					// 更新分页信息
-					this.page = pagination.page;
-					this.size = pagination.size;
-					this.total = pagination.total;
-
-					// 更新列表数据
-					if (data.page == 1) {
-						this.list.value = [...list];
-					} else {
-						this.list.value.push(...list);
-					}
-
-					// 更新加载完成状态
-					this.finished.value = this.list.value.length >= this.total;
-
-					resolve(res);
-				})
-				.catch((err) => {
-					reject(err);
-				})
-				.finally(() => {
-					this.loading.value = false;
-				});
-		});
+		// 发起请求
+		await this.cb!(data, this);
 	};
 
 	// 加载更多数据
