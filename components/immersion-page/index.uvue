@@ -1,22 +1,46 @@
 <template>
     <cl-popup v-model="visible" size="100%" :showHeader="false" :pt="{
-        inner:{
-            className:'!rounded-t-none'
+        inner: {
+            className: '!rounded-t-none'
         },
-        draw:{
-            className:'!hidden'
+        draw: {
+            className: '!hidden'
         }
     }">
-        测试一下哈哈哈哈哈哈啦啦啦啦啦
+        <view class="size-full" :style="{
+            paddingTop: `${statusBarHeight}px`
+        }">
+            <view class="size-full p-[16px] flex flex-col items-center">
+                <cl-image src="https://unix.cool-js.com/images/demo/avatar.jpg" mode="scaleToFill" width="200px"
+                    height="200px"></cl-image>
+                <view class="flex flex-co mt-[12px]">
+                    <cl-text>测试标题</cl-text>
+                    <cl-text>歌手-专辑</cl-text>
+                </view>
+                <view class="flex-1 min-h-0">
+                    <cl-text>测试内容</cl-text>
+                    <cl-text>测试内容</cl-text>
+                    <cl-text>测试内容</cl-text>
+                    <cl-text>测试内容</cl-text>
+                </view>
+                <cl-slider></cl-slider>
+                <view class="flex flex-row items-center mt-[12px]">
+                    <cl-button icon="skip-back-fill" text size="large"></cl-button>
+                    <cl-button icon="play-fill" text size="large"></cl-button>
+                    <cl-button icon="skip-forward-fill" text size="large"></cl-button>
+                </view>
+            </view>
+        </view>
     </cl-popup>
 </template>
 <script setup lang="ts">
 import { ref } from 'vue'
 const visible = ref(false)
-const show = ()=>{
+const show = () => {
     visible.value = true
 }
 defineExpose({
     show
 })
+const { statusBarHeight } = uni.getWindowInfo();
 </script>
