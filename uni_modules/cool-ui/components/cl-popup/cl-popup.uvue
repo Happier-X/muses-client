@@ -102,7 +102,6 @@
 						<view
 							class="cl-popup__container"
 							:class="[pt.container?.className]"
-							@touchmove.stop
 						>
 							<slot></slot>
 						</view>

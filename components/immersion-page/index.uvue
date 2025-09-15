@@ -1,5 +1,14 @@
 <template>
-    <cl-popup v-model="visible"></cl-popup>
+    <cl-popup v-model="visible" size="100%" :showHeader="false" :pt="{
+        inner:{
+            className:'!rounded-t-none'
+        },
+        draw:{
+            className:'!hidden'
+        }
+    }">
+        测试一下哈哈哈哈哈哈啦啦啦啦啦
+    </cl-popup>
 </template>
 <script setup lang="ts">
 import { ref } from 'vue'
