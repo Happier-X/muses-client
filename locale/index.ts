@@ -11,6 +11,12 @@ import { config } from "@/config";
 
 // 解析语言包
 function parse(val: string[][]) {
+	const isCustom = val.length == 1 && val[0].length == 1;
+
+	if (!isCustom) {
+		return val;
+	}
+
 	return val[0][0].split("<__&__>").map((e) => e.split("<__=__>"));
 }
 
@@ -78,7 +84,7 @@ export const getLocale = (): string => {
 // 追加数据
 export const appendLocale = (name: string, data: string[][]) => {
 	if (messages[name] != null) {
-		(messages[name] as string[][]).push(...parse(data));
+		(messages[name] as string[][]).unshift(...parse(data));
 	}
 };
 

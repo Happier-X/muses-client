@@ -51,6 +51,7 @@ import type { ClProgressCircleProps, ClProgressCirclePassThrough } from "./compo
 import type { ClQrcodeProps } from "./components/cl-qrcode/props";
 import type { ClRadioProps, ClRadioPassThrough } from "./components/cl-radio/props";
 import type { ClRateProps, ClRatePassThrough } from "./components/cl-rate/props";
+import type { ClReadMoreProps, ClReadMorePassThrough } from "./components/cl-read-more/props";
 import type { ClRowProps, ClRowPassThrough } from "./components/cl-row/props";
 import type { ClSafeAreaProps, ClSafeAreaPassThrough } from "./components/cl-safe-area/props";
 import type { ClSelectProps, ClSelectPassThrough } from "./components/cl-select/props";
@@ -130,6 +131,7 @@ declare module "vue" {
 		"cl-qrcode": (typeof import('./components/cl-qrcode/cl-qrcode.uvue')['default']) & import('vue').DefineComponent<ClQrcodeProps>;
 		"cl-radio": (typeof import('./components/cl-radio/cl-radio.uvue')['default']) & import('vue').DefineComponent<ClRadioProps>;
 		"cl-rate": (typeof import('./components/cl-rate/cl-rate.uvue')['default']) & import('vue').DefineComponent<ClRateProps>;
+		"cl-read-more": (typeof import('./components/cl-read-more/cl-read-more.uvue')['default']) & import('vue').DefineComponent<ClReadMoreProps>;
 		"cl-row": (typeof import('./components/cl-row/cl-row.uvue')['default']) & import('vue').DefineComponent<ClRowProps>;
 		"cl-safe-area": (typeof import('./components/cl-safe-area/cl-safe-area.uvue')['default']) & import('vue').DefineComponent<ClSafeAreaProps>;
 		"cl-select": (typeof import('./components/cl-select/cl-select.uvue')['default']) & import('vue').DefineComponent<ClSelectProps>;

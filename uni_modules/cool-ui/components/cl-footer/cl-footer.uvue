@@ -1,7 +1,7 @@
 <template>
 	<view class="cl-footer-placeholder" :style="{ height: height + 'px' }" v-if="visible"> </view>
 
-	<view class="cl-footer-wrapper">
+	<view class="cl-footer-wrapper" :class="[pt.wrapper?.className]">
 		<view
 			class="cl-footer"
 			:class="[
@@ -51,6 +51,7 @@ const { proxy } = getCurrentInstance()!;
 type PassThrough = {
 	className?: string;
 	content?: PassThroughProps;
+	wrapper?: PassThroughProps;
 };
 
 const pt = computed(() => parsePt<PassThrough>(props.pt));
@@ -105,7 +106,7 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 .cl-footer {
-	@apply bg-white;
+	@apply bg-white overflow-visible;
 	padding-bottom: env(safe-area-inset-bottom);
 
 	&.is-dark {
@@ -113,11 +114,11 @@ onMounted(() => {
 	}
 
 	&__content {
-		@apply px-3 py-3;
+		@apply px-3 py-3 overflow-visible;
 	}
 
 	&-wrapper {
-		@apply fixed bottom-0 left-0 w-full;
+		@apply fixed bottom-0 left-0 w-full overflow-visible;
 	}
 }
 </style>

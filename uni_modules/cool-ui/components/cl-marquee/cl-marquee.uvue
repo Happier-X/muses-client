@@ -88,8 +88,6 @@ const props = defineProps({
 	}
 });
 
-const emit = defineEmits(["item-click"]);
-
 // 透传属性类型定义
 type PassThrough = {
 	className?: string;
@@ -145,13 +143,13 @@ const listStyle = computed(() => {
 const itemStyle = computed(() => {
 	const style = {};
 
-	const gap = getPx(props.gap) + "px";
+	const gap = `${getPx(props.gap)}px`;
 
 	if (props.direction == "vertical") {
-		style["height"] = getPx(props.itemHeight) + "px";
+		style["height"] = `${getPx(props.itemHeight)}px`;
 		style["marginBottom"] = gap;
 	} else {
-		style["width"] = getPx(props.itemWidth) + "px";
+		style["width"] = `${getPx(props.itemWidth)}px`;
 		style["marginRight"] = gap;
 	}
 

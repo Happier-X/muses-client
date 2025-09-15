@@ -238,3 +238,7 @@ declare type ClMarqueeComponentPublicInstance = {
 	stop(): void;
 	reset(): void;
 };
+
+declare type ClReadMoreComponentPublicInstance = {
+	toggle(): void;
+};

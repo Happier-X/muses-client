@@ -48,7 +48,7 @@
 			<view class="group" v-for="item in data" :key="item.label">
 				<cl-text :pt="{ className: '!text-sm !text-surface-400 mb-2 ml-2' }">{{
 					item.label
-				}}</cl-text>
+				}}（{{ item.children?.length ?? 0 }}）</cl-text>
 
 				<view class="list">
 					<cl-row :gutter="10">
@@ -274,6 +274,11 @@ const data = computed<Item[]>(() => {
 					label: t("头像"),
 					icon: "account-circle-line",
 					path: "/pages/demo/data/avatar"
+				},
+				{
+					label: t("查看更多"),
+					icon: "menu-add-line",
+					path: "/pages/demo/data/read-more"
 				},
 				{
 					label: t("列表"),

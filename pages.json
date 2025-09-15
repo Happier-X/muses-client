@@ -359,6 +359,12 @@
 					}
 				},
 				{
+					"path": "data/read-more",
+					"style": {
+						"navigationBarTitleText": "ReadMore 查看更多"
+					}
+				},
+				{
 					"path": "data/draggable",
 					"style": {
 						"navigationBarTitleText": "Draggable 拖拽"

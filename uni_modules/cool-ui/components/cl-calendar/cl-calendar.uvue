@@ -269,7 +269,7 @@ const cellWidth = ref(0);
 
 // 星期标签数组
 const weekLabels = computed(() => {
-	return [t("日"), t("一"), t("二"), t("三"), t("四"), t("五"), t("六")];
+	return [t("周日"), t("周一"), t("周二"), t("周三"), t("周四"), t("周五"), t("周六")];
 });
 
 // 日历日期矩阵数据（6行7列）

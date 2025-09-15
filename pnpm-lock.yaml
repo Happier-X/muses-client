@@ -25,11 +25,11 @@ importers:
         specifier: ^7.27.6
         version: 7.28.1
       '@cool-vue/ai':
-        specifier: ^1.1.6
-        version: 1.1.6
+        specifier: ^1.1.7
+        version: 1.1.7
       '@cool-vue/vite-plugin':
-        specifier: ^8.2.9
-        version: 8.2.9
+        specifier: ^8.2.10
+        version: 8.2.10
       '@dcloudio/types':
         specifier: ^3.4.16
         version: 3.4.16
@@ -84,12 +84,12 @@ packages:
     resolution: {integrity: sha512-x0LvFTekgSX+83TI28Y9wYPUfzrnl2aT5+5QLnO6v7mSJYtEEevuDRN0F0uSHRk1G1IWZC43o00Y0xDDrpBGPQ==}
     engines: {node: '>=6.9.0'}
 
-  '@cool-vue/ai@1.1.6':
-    resolution: {integrity: sha512-+5vEnjuMHhmOlAlozasGMaSkx2TZ5p45nOuLzx88ZVyqO0dMYXUJ5I8eVR5XV7huYCLCw7dYwfVg5B03ngsYwg==}
+  '@cool-vue/ai@1.1.7':
+    resolution: {integrity: sha512-zXjuydK6Rzfywr69bR9qnWueS09rqfuv4bbVKSntnHnApqpb6Dow7yOcR+CwzaCkSYJCnbM2DG2Wc0ZDQQe1oQ==}
     hasBin: true
 
-  '@cool-vue/vite-plugin@8.2.9':
-    resolution: {integrity: sha512-Dl/yW/JWWJNmChwMj5CFUV4qZRD5axXYZ1dqpuyBWDD1kWsvNY8PaL7VGDos3/8SpUsDYPXCv+yK/Fd32A6o9w==}
+  '@cool-vue/vite-plugin@8.2.10':
+    resolution: {integrity: sha512-CukFbHN5hc6l8Sv7mZrzsahUdnzc7ONHJGbD5Nv0G10YNFV6JNUpfFNjY5ilLdv8IIaTV3DD0vueqDHrMFHSRg==}
 
   '@dcloudio/types@3.4.16':
     resolution: {integrity: sha512-gJIr1OWtePTDDdjtp8Kh72S/ZGLunoSfHiUvRtXhBmAFNkDWuAKFO90hv62k3GYN/st04xUBQNtBfvhu/YHjww==}
@@ -1364,7 +1364,7 @@ snapshots:
       '@babel/helper-string-parser': 7.27.1
       '@babel/helper-validator-identifier': 7.27.1
 
-  '@cool-vue/ai@1.1.6':
+  '@cool-vue/ai@1.1.7':
     dependencies:
       axios: 1.10.0
       chalk: 4.1.2
@@ -1376,7 +1376,7 @@ snapshots:
     transitivePeerDependencies:
       - debug
 
-  '@cool-vue/vite-plugin@8.2.9':
+  '@cool-vue/vite-plugin@8.2.10':
     dependencies:
       '@vue/compiler-sfc': 3.5.17
       axios: 1.10.0
