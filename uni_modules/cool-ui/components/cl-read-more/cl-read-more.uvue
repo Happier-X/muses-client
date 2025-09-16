@@ -3,18 +3,26 @@
 		<!-- 内容区域 -->
 		<view class="cl-read-more__wrapper" :class="[pt.wrapper?.className]" :style="wrapperStyle">
 			<view class="cl-read-more__content" :class="[pt.content?.className]">
-				<slot></slot>
+				<slot>
+					<cl-text
+						:pt="{
+							className: pt.contentText?.className
+						}"
+						>{{ content }}</cl-text
+					>
+				</slot>
 			</view>
 
 			<view
 				class="cl-read-more__mask"
 				:class="[
 					{
-						'is-show': !isExpanded && showToggle,
+						'is-show': !isExpanded && isHide,
 						'is-dark': isDark
 					},
 					pt.mask?.className
 				]"
+				v-if="showMask"
 			></view>
 		</view>
 
@@ -29,7 +37,7 @@
 					pt.toggle?.className
 				]"
 				@tap="toggle"
-				v-if="showToggle"
+				v-if="showToggle && isHide"
 			>
 				<cl-text
 					color="primary"
@@ -46,7 +54,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, getCurrentInstance, ref, onMounted, watch } from "vue";
+import { computed, getCurrentInstance, ref, onMounted, watch, nextTick } from "vue";
 import { getPx, isDark, parsePt } from "@/cool";
 import type { PassThroughProps } from "../../types";
 import { t } from "@/locale";
@@ -66,6 +74,11 @@ const props = defineProps({
 	modelValue: {
 		type: Boolean,
 		default: false
+	},
+	// 内容
+	content: {
+		type: String,
+		default: ""
 	},
 	// 收起状态下的最大高度
 	height: {
@@ -96,6 +109,16 @@ const props = defineProps({
 	disabled: {
 		type: Boolean,
 		default: false
+	},
+	// 显示切换按钮
+	showToggle: {
+		type: Boolean,
+		default: true
+	},
+	// 显示遮罩
+	showMask: {
+		type: Boolean,
+		default: true
 	}
 });
 
@@ -114,6 +137,7 @@ type PassThrough = {
 	className?: string;
 	wrapper?: PassThroughProps;
 	content?: PassThroughProps;
+	contentText?: PassThroughProps;
 	mask?: PassThroughProps;
 	toggle?: PassThroughProps;
 };
@@ -127,14 +151,14 @@ const isExpanded = ref(props.modelValue);
 // 内容实际高度
 const contentHeight = ref(0);
 
-// 是否显示切换按钮
-const showToggle = ref(true);
+// 是否隐藏内容
+const isHide = ref(true);
 
 // 包裹器样式
 const wrapperStyle = computed(() => {
 	const style = {};
 
-	if (showToggle.value) {
+	if (isHide.value) {
 		style["height"] = isExpanded.value ? `${contentHeight.value}px` : `${props.height}rpx`;
 	}
 
@@ -156,38 +180,48 @@ function toggle() {
 }
 
 /**
- * 获取内容实际高度
+ * 获取内容高度
  */
 function getContentHeight() {
-	uni.createSelectorQuery()
-		.in(proxy)
-		.select(".cl-read-more__content")
-		.boundingClientRect((node) => {
-			// 获取内容高度
-			contentHeight.value = (node as NodeInfo).height ?? 0;
+	nextTick(() => {
+		uni.createSelectorQuery()
+			.in(proxy)
+			.select(".cl-read-more__content")
+			.boundingClientRect((node) => {
+				// 获取内容高度
+				contentHeight.value = (node as NodeInfo).height ?? 0;
 
-			// 实际高度是否大于折叠高度
-			showToggle.value = contentHeight.value > getPx(props.height);
-		})
-		.exec();
+				// 实际高度是否大于折叠高度
+				isHide.value = contentHeight.value > getPx(props.height);
+			})
+			.exec();
+	});
 }
 
-// 监听modelValue变化
-watch(
-	computed(() => props.modelValue),
-	(val: boolean) => {
-		isExpanded.value = val;
-	}
-);
-
-// 组件挂载后获取内容高度
 onMounted(() => {
-	getContentHeight();
+	// 监听modelValue变化
+	watch(
+		computed(() => props.modelValue),
+		(val: boolean) => {
+			isExpanded.value = val;
+		}
+	);
+
+	// 监听content变化
+	watch(
+		computed(() => props.content),
+		() => {
+			getContentHeight();
+		},
+		{
+			immediate: true
+		}
+	);
 });
 
-// 暴露方法
 defineExpose({
-	toggle
+	toggle,
+	getContentHeight
 });
 </script>
 

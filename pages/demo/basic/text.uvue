@@ -31,6 +31,45 @@
 				>
 			</demo-item>
 
+			<demo-item :label="t('字体大小')">
+				<cl-text
+					:pt="{
+						className: 'text-xs'
+					}"
+					>text-xs</cl-text
+				>
+				<cl-text
+					:pt="{
+						className: 'text-sm'
+					}"
+					>text-sm</cl-text
+				>
+				<cl-text
+					:pt="{
+						className: 'text-md'
+					}"
+					>text-md</cl-text
+				>
+				<cl-text
+					:pt="{
+						className: 'text-lg'
+					}"
+					>text-lg</cl-text
+				>
+				<cl-text
+					:pt="{
+						className: 'text-xl'
+					}"
+					>text-xl</cl-text
+				>
+			</demo-item>
+
+			<demo-item :label="t('自定义尺寸')">
+				<cl-text :size="20">20rpx</cl-text>
+				<cl-text size="30rpx">30rpx</cl-text>
+				<cl-text size="15px">15px</cl-text>
+			</demo-item>
+
 			<demo-item :label="t('金额')">
 				<cl-text type="amount" :value="10000000.0"></cl-text>
 			</demo-item>

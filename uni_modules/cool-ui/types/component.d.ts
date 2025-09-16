@@ -241,4 +241,5 @@ declare type ClMarqueeComponentPublicInstance = {
 
 declare type ClReadMoreComponentPublicInstance = {
 	toggle(): void;
+	getContentHeight(): void;
 };
