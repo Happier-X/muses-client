@@ -1,10 +1,8 @@
 <template>
 	<cl-page>
-		<cl-topbar safe-area-top background-color="transparent"></cl-topbar>
-
 		<view class="px-10">
 			<!-- Logo -->
-			<view class="flex flex-col items-center justify-center py-20">
+			<view class="flex flex-col items-center justify-center pt-40 pb-20">
 				<view class="p-3 bg-primary-500 rounded-2xl">
 					<cl-image src="/static/logo.png" mode="widthFix" :width="80" :height="80"></cl-image>
 				</view>
@@ -12,9 +10,18 @@
 				<cl-text :pt="{ className: '!text-xl font-bold mt-3' }">{{ config.name }}</cl-text>
 			</view>
 
-			<!-- 登录、注册 -->
+			<!-- 登录 -->
 			<view class="flex flex-col">
-				<view class="mb-3 flex flex-row">
+				<view class="mb-4 flex flex-row">
+					<cl-input v-model="form.serverAddress" type="nickname" :placeholder="t('请输入服务地址')" :border="false" :pt="{
+						className: parseClass([
+							'!h-[90rpx] flex-1 !rounded-xl !px-4',
+							[isDark, '!bg-surface-70', '!bg-white']
+						])
+					}"></cl-input>
+				</view>
+
+				<view class="mb-4 flex flex-row">
 					<cl-input v-model="form.username" type="nickname" :placeholder="t('请输入用户名')" :border="false" :pt="{
 						className: parseClass([
 							'!h-[90rpx] flex-1 !rounded-xl !px-4',
@@ -23,7 +30,7 @@
 					}"></cl-input>
 				</view>
 
-				<view class="mb-3 flex flex-row">
+				<view class="mb-4 flex flex-row">
 					<cl-input v-model="form.password" type="safe-password" password :placeholder="t('请输入密码')" :border="false"
 						:pt="{
 							className: parseClass([
@@ -37,25 +44,8 @@
 				<cl-button :pt="{
 					className: '!h-[90rpx] !rounded-xl'
 				}" :loading="loading" :disabled="disabled" @tap="handleSubmit">
-					{{ t("登录/注册") }}
+					{{ t("登录") }}
 				</cl-button>
-			</view>
-
-			<!-- 协议 -->
-			<view class="mt-6 flex flex-row flex-wrap items-center justify-center">
-				<cl-checkbox v-model="agree" :pt="{ icon: { size: 28 } }" active-icon="checkbox-circle-fill"
-					inactive-icon="checkbox-blank-circle-line">
-				</cl-checkbox>
-				<cl-text color="info" :pt="{ className: '!text-xs' }">{{
-					t("已阅读并同意")
-				}}</cl-text>
-				<cl-text :pt="{ className: '!text-xs' }" @tap.stop="toDoc(t('用户协议'), 'userAgreement')">
-					《{{ t("用户协议") }}》
-				</cl-text>
-				<cl-text color="info" :pt="{ className: '!text-xs' }">、</cl-text>
-				<cl-text :pt="{ className: '!text-xs' }" @tap.stop="toDoc(t('隐私政策'), 'privacyPolicy')">
-					《{{ t("隐私政策") }}》
-				</cl-text>
 			</view>
 		</view>
 	</cl-page>
@@ -72,25 +62,24 @@ const { user } = useStore();
 const ui = useUi();
 
 type Form = {
+	serverAddress: string;
 	username: string;
 	password: string;
 };
 
 // 表单
 const form = ref<Form>({
+	serverAddress: "",
 	username: "",
 	password: ""
 });
-
-// 是否同意
-const agree = ref(true);
 
 // 是否加载中
 const loading = ref(false);
 
 // 是否禁用
 const disabled = computed(() => {
-	return form.value.username == "" || form.value.password == "";
+	return form.value.serverAddress == "" || form.value.username == "" || form.value.password == "";
 });
 
 // 提交成功
@@ -98,28 +87,9 @@ async function toLogin(res: any) {
 	user.setToken(parse<Token>(res)!);
 	router.nextLogin();
 }
-
-// 跳转文档
-function toDoc(name: string, path: string) { }
-
-// 是否同意
-function isAgree(){
-	if (!agree.value) {
-		ui.showToast({
-			message: t("请先阅读并同意《用户协议》和《隐私政策》")
-		});
-
-		return false;
-	}
-
-	return true;
-}
 // 触发提交
 const handleSubmit = async () => {
 	loading.value = true;
-	if (!isAgree()) {
-		return;
-	}
 	await toLogin('test');
 	loading.value = false;
 }
