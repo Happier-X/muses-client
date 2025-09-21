@@ -71,43 +71,9 @@ export function request(options: RequestOptions): Promise<any | null> {
 						return resolve(res);
 					}
 				}
-				// 502 服务异常
-				else if (res.statusCode == 502) {
-					reject({
-						message: t("服务异常")
-					} as Response);
-				}
-				// 404 未找到
-				else if (res.statusCode == 404) {
-					return reject({
-						message: `[404] ${url}`
-					} as Response);
-				}
 				// 200 正常响应
 				else if (res.statusCode == 200) {
-					if (res.header.authorization) {
-						storage.set("token", res.header.authorization, 0);
-					}
-					if (res.header.refreshToken) {
-						storage.set("refreshToken", res.header.refreshToken, 0);
-					}
-					if (res.data == null) {
-						resolve(null);
-					} else if (!isObject(res.data as any)) {
-						resolve(res.data);
-					} else {
-						// 解析响应数据
-						const { code, message, data } = parse<Response>(res.data ?? { code: 0 })!;
-
-						switch (code) {
-							case 1000:
-								resolve(data);
-								break;
-							default:
-								reject({ message, code } as Response);
-								break;
-						}
-					}
+					resolve(res.data);
 				} else {
 					reject({ message: t("服务异常") } as Response);
 				}

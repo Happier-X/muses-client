@@ -13,7 +13,7 @@
 			<!-- 登录 -->
 			<view class="flex flex-col">
 				<view class="mb-4 flex flex-row">
-					<cl-input v-model="form.serverAddress" type="nickname" :placeholder="t('请输入服务地址')" :border="false" :pt="{
+					<cl-input v-model="form.serviceUrl" type="text" :placeholder="t('请输入服务地址')" :border="false" :pt="{
 						className: parseClass([
 							'!h-[90rpx] flex-1 !rounded-xl !px-4',
 							[isDark, '!bg-surface-70', '!bg-white']
@@ -22,7 +22,7 @@
 				</view>
 
 				<view class="mb-4 flex flex-row">
-					<cl-input v-model="form.username" type="nickname" :placeholder="t('请输入用户名')" :border="false" :pt="{
+					<cl-input v-model="form.username" type="text" :placeholder="t('请输入用户名')" :border="false" :pt="{
 						className: parseClass([
 							'!h-[90rpx] flex-1 !rounded-xl !px-4',
 							[isDark, '!bg-surface-70', '!bg-white']
@@ -31,7 +31,7 @@
 				</view>
 
 				<view class="mb-4 flex flex-row">
-					<cl-input v-model="form.password" type="safe-password" password :placeholder="t('请输入密码')" :border="false"
+					<cl-input v-model="form.password" type="text" password :placeholder="t('请输入密码')" :border="false"
 						:pt="{
 							className: parseClass([
 								'!h-[90rpx] flex-1 !rounded-xl !px-4',
@@ -55,21 +55,29 @@
 import { config } from "@/config";
 import { isDark, parse, router, parseClass, useStore, type Token } from "@/cool";
 import { t } from "@/locale";
-import { computed, ref } from "vue";
+import { computed, ref, onMounted } from "vue";
 import { useUi } from "@/uni_modules/cool-ui";
+import { login } from "@/api/auth";
+import { storage } from '@/cool'
 
-const { user } = useStore();
 const ui = useUi();
 
 type Form = {
-	serverAddress: string;
+	serviceUrl: string;
 	username: string;
 	password: string;
 };
 
+onMounted(() => {
+	const serviceUrl = storage.get('serviceUrl');
+	if (serviceUrl) {
+		form.value.serviceUrl = serviceUrl;
+	}
+})
+
 // 表单
 const form = ref<Form>({
-	serverAddress: "",
+	serviceUrl: "",
 	username: "",
 	password: ""
 });
@@ -79,18 +87,18 @@ const loading = ref(false);
 
 // 是否禁用
 const disabled = computed(() => {
-	return form.value.serverAddress == "" || form.value.username == "" || form.value.password == "";
+	return form.value.serviceUrl == "" || form.value.username == "" || form.value.password == "";
 });
 
-// 提交成功
-async function toLogin(res: any) {
-	user.setToken(parse<Token>(res)!);
-	router.nextLogin();
-}
 // 触发提交
 const handleSubmit = async () => {
+	storage.set('serviceUrl', form.value.serviceUrl, 0);
 	loading.value = true;
-	await toLogin('test');
+	const res = await login({
+		username: form.value.username,
+		password: form.value.password
+	})
+	console.log(111111, res);
 	loading.value = false;
 }
 </script>
