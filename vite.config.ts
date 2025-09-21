@@ -33,12 +33,5 @@ export default defineConfig({
 		postcss: {
 			plugins: [tailwindcss({ config: resolve("./tailwind.config.ts") })]
 		}
-	},
-
-	resolve: {
-		alias: {
-			"@": resolve("./"),
-			$: resolve("./uni_modules/")
-		}
 	}
 });

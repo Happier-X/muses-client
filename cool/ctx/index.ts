@@ -1,4 +1,4 @@
-import { isArray, isEmpty, isNull } from "../utils";
+import { isArray, parse } from "../utils";
 
 type Page = {
 	path: string;
@@ -49,7 +49,9 @@ export type Ctx = {
 };
 
 // 初始化 ctx 对象，不可修改！！
-export const ctx = {} as Ctx;
+export const ctx = parse<Ctx>({})!;
+
+console.log(ctx);
 
 // PAGES 用于存储所有页面的路径及样式信息
 export let PAGES: Page[] = [...ctx.pages];
@@ -77,8 +79,8 @@ PAGES.forEach((e) => {
 export let TABS: TabBarItem[] = [];
 
 // 如果 tabBar 配置存在且列表不为空，则初始化 TABS
-if (!isNull(ctx.tabBar) && !isEmpty(ctx.tabBar.list!)) {
-	TABS = ctx.tabBar.list!;
+if (ctx.tabBar.list != null) {
+	TABS = ctx.tabBar.list;
 
 	// 确保每个 tabBar 页面的路径都以 "/" 开头
 	TABS.forEach((e) => {
