@@ -7,9 +7,9 @@
 			</view>
 		</cl-topbar>
 		<view class="p-4">
-			<recommend-list title="推荐歌曲" :list="list">
+			<recommend-list title="推荐歌曲" :list="songs">
 				<template #default="{ item }">
-					<songs-item></songs-item>
+					<songs-item :item="item"></songs-item>
 				</template>
 			</recommend-list>
 			<recommend-list class="mt-4" title="推荐专辑" :list="list">
@@ -33,13 +33,22 @@
 </template>
 
 <script lang="ts" setup>
-import recommendList from "./components/recommend-list.uvue";
-import songsItem from "./components/songs-item.uvue";
+import FooterBar from "@/components/footer-bar/index.uvue";
+import { onMounted, ref } from 'vue';
 import albumsItem from "./components/albums-item.uvue";
 import artistsItem from "./components/artists-item.uvue";
 import playlistsItem from "./components/playlists-item.uvue";
-import FooterBar from "@/components/footer-bar/index.uvue";
-import { ref } from 'vue'
+import recommendList from "./components/recommend-list.uvue";
+import songsItem from "./components/songs-item.uvue";
 
 const list = ref(['1', '2', '3', '4', '5', '6'])
+
+import { getSongs } from "@/api/songs";
+
+const songs = ref([]);
+onMounted(async () => {
+    const res = await getSongs();
+    songs.value = res.data;
+})
+
 </script>

@@ -1,14 +1,20 @@
 <template>
     <view class="flex flex-col">
-        <cl-image src="https://unix.cool-js.com/images/demo/avatar.jpg" mode="scaleToFill" width="200rpx"
+        <cl-image :src="item.cover" mode="scaleToFill" width="200rpx"
             height="200rpx"></cl-image>
         <view class="mt-2">
             <cl-text :pt="{
                 className: '!text-lg !font-bold'
-            }">爱无所不在</cl-text>
-            <cl-text>王力宏</cl-text>
+            }">{{ item.title }}</cl-text>
+            <cl-text>{{ item.artist }}</cl-text>
         </view>
     </view>
 </template>
 <script setup lang="ts">
+defineProps({
+    item: {
+        type: Object,
+        default: () => ({})
+    }
+})
 </script>

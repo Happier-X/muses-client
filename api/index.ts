@@ -42,7 +42,7 @@ export function request(options: RequestOptions): Promise<any | null> {
 	}
 
 	// 获取token
-	let Authorization: string | null = `Bear ${storage.get("accessToken")}`;
+	let Authorization: string | null = `Bearer ${storage.get("accessToken")}`;
 
 	return new Promise((resolve, reject) => {
 		uni.request({
@@ -67,7 +67,7 @@ export function request(options: RequestOptions): Promise<any | null> {
 						router.login();
 						reject({ message: t("无权限") } as Response);
 					} else {
-						options.header.Authorization = `Bearer ${storage.get("accessToken")}`;
+						options.header.Authorization = `Bearerer ${storage.get("accessToken")}`;
 						const res = await request(options);
 						return resolve(res);
 					}
