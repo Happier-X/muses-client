@@ -42,7 +42,7 @@ export function request(options: RequestOptions): Promise<any | null> {
 	}
 
 	// 获取token
-	let Authorization: string | null = `Bear ${storage.get("token")}`;
+	let Authorization: string | null = `Bear ${storage.get("accessToken")}`;
 
 	return new Promise((resolve, reject) => {
 		uni.request({
@@ -61,12 +61,13 @@ export function request(options: RequestOptions): Promise<any | null> {
 				if (res.statusCode == 401 && !url.includes("/auth/refresh-token")) {
 					const res = await refreshToken();
 					if (res.code == 401) {
-						storage.remove("token");
+						storage.remove("accessToken");
+						storage.remove("refreshToken");
 						storage.remove("userInfo");
 						router.login();
 						reject({ message: t("无权限") } as Response);
 					} else {
-						options.header.Authorization = `Bearer ${storage.get("token")}`;
+						options.header.Authorization = `Bearer ${storage.get("accessToken")}`;
 						const res = await request(options);
 						return resolve(res);
 					}

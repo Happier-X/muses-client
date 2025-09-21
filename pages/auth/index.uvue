@@ -52,13 +52,12 @@
 </template>
 
 <script setup lang="ts">
-import { config } from "@/config";
-import { isDark, parse, router, parseClass, useStore, type Token } from "@/cool";
-import { t } from "@/locale";
-import { computed, ref, onMounted } from "vue";
-import { useUi } from "@/uni_modules/cool-ui";
 import { login } from "@/api/auth";
-import { storage } from '@/cool'
+import { config } from "@/config";
+import { isDark, parseClass, router, storage } from "@/cool";
+import { t } from "@/locale";
+import { useUi } from "@/uni_modules/cool-ui";
+import { computed, onMounted, ref } from "vue";
 
 const ui = useUi();
 
@@ -93,12 +92,19 @@ const disabled = computed(() => {
 // 触发提交
 const handleSubmit = async () => {
 	storage.set('serviceUrl', form.value.serviceUrl, 0);
-	loading.value = true;
-	const res = await login({
-		username: form.value.username,
-		password: form.value.password
-	})
-	console.log(111111, res);
-	loading.value = false;
+	try {
+		loading.value = true;
+		const res = await login({
+			username: form.value.username,
+			password: form.value.password
+		})
+		storage.set('accessToken', res.data.accessToken, 0);
+		storage.set('refreshToken', res.data.refreshToken, 0);
+		router.nextLogin();
+	} catch (e) {
+		loading.value = false;
+	} finally {
+		loading.value = false;
+	}
 }
 </script>
