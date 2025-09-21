@@ -55,10 +55,6 @@ const list = computed<Item[]>(() => [
 				icon: "scan-line"
 			},
 			{
-				label: t("统计数据"),
-				icon: "line-chart-line"
-			},
-			{
 				label: t("用户管理"),
 				icon: "user-settings-line"
 			},
