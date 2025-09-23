@@ -4,7 +4,7 @@ import { request } from "./index";
  * 获取下一个队列项
  * @param currentQueueItemId 当前队列项ID
  * @param playMode 当前播放模式
- * @returns String 下一首歌曲ID
+ * @returns Promise<Response>
  */
 export function getNextQueueItem(
 	currentQueueItemId: string,
@@ -13,7 +13,7 @@ export function getNextQueueItem(
 	return request({
 		url: "/queue-items/next",
 		method: "GET",
-		params: {
+		data: {
 			currentQueueItemId,
 			playMode
 		}
@@ -23,7 +23,7 @@ export function getNextQueueItem(
  * 获取上一个队列项
  * @param currentQueueItemId 当前队列项ID
  * @param playMode 当前播放模式
- * @returns String 上一首歌曲ID
+ * @returns Promise<Response>
  */
 export function getPreviousQueueItem(
 	currentQueueItemId: string,
@@ -32,7 +32,7 @@ export function getPreviousQueueItem(
 	return request({
 		url: "/queue-items/previous",
 		method: "GET",
-		params: {
+		data: {
 			currentQueueItemId,
 			playMode
 		}

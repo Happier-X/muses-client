@@ -11,14 +11,15 @@
     </view>
 </template>
 <script setup lang="ts">
-import { loadSong } from '@/stores/player'
+import { loadSong,play } from '@/stores/player'
 defineProps({
     item: {
         type: Object,
         default: () => ({})
     }
 })
-const handleClick = (item)=>{
-    loadSong(item.id)
+const handleClick = async (item)=>{
+    await loadSong(item.id)
+    play()
 }
 </script>

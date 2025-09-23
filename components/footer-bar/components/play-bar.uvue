@@ -1,12 +1,11 @@
 <template>
     <view class="w-full h-[125rpx] px-4 flex flex-row items-center justify-between">
         <view class="flex-1 flex flex-row items-center" @click="showImmersionPage">
-            <cl-image src="https://unix.cool-js.com/images/demo/avatar.jpg" mode="scaleToFill" width="100rpx"
-                height="100rpx"></cl-image>
+            <cl-image :src="currentSongInfo.cover" mode="scaleToFill" width="100rpx" height="100rpx"></cl-image>
             <view class="ml-3 flex-1">
                 <cl-text :pt="{
                     className: '!text-lg !font-bold'
-                }">爱无所不在</cl-text>
+                }">{{ currentSongInfo.title }}</cl-text>
                 <cl-noticebar direction="vertical" :text="[
                     '江南可采莲，莲叶何田田',
                     '鱼戏莲叶间',
@@ -18,7 +17,8 @@
             </view>
         </view>
         <view class="flex flex-row items-center ml-2">
-            <cl-button icon="play-fill" text size="large"></cl-button>
+            <cl-button :icon="isPlaying ? 'pause-fill' : 'play-fill'" text size="large"
+                @click="isPlaying ? pause() : play()"></cl-button>
             <cl-button icon="play-list-2-fill" text size="large"></cl-button>
         </view>
         <immersion-page ref="immersionPageRef"></immersion-page>
@@ -27,6 +27,7 @@
 <script setup lang="ts">
 import ImmersionPage from '@/components/immersion-page/index.uvue'
 import { ref, getCurrentInstance } from 'vue'
+import { currentSongInfo, isPlaying, play, pause } from '@/stores/player'
 
 const immersionPageRef = ref<ComponentPublicInstance | null>(null)
 const instance = getCurrentInstance()!.proxy!

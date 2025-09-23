@@ -6,8 +6,7 @@ import { refreshToken } from "./auth";
 export type RequestOptions = {
 	url: string; // 请求地址
 	method?: RequestMethod; // 请求方法
-	data?: any; // 请求体数据
-	params?: any; // URL参数
+	data?: any; // 请求参数
 	header?: any; // 请求头
 	timeout?: number; // 超时时间
 	withCredentials?: boolean; // 是否携带凭证

@@ -21,3 +21,18 @@ export function getSongStream(id: string): string {
 	const serviceUrl = storage.get("serviceUrl");
 	return `${serviceUrl}/songs/stream?id=${id}`;
 }
+
+/**
+ * 获取歌曲详情
+ * @param songId 歌曲ID
+ * @returns Promise<Response>
+ */
+export function getSongDetail(songId: string): Promise<Response> {
+	return request({
+		url: '/songs/detail',
+		method: "GET",
+        data: {
+            songId
+        }
+	});
+}
