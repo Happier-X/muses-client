@@ -1,13 +1,23 @@
 import { request } from "./index";
+import { storage } from "@/cool";
 
 /**
  * 获取歌曲
- * @param params { username: string, password: string }
  * @returns Promise<Response>
  */
 export function getSongs(): Promise<Response> {
-    return request({
-        url: "/songs",
-        method: "GET",
-    });
+	return request({
+		url: "/songs",
+		method: "GET"
+	});
+}
+
+/**
+ * 获取歌曲流
+ * @param id 歌曲ID
+ * @returns String 歌曲流地址
+ */
+export function getSongStream(id: string): string {
+	const serviceUrl = storage.get("serviceUrl");
+	return `${serviceUrl}/songs/stream?id=${id}`;
 }
