@@ -66,9 +66,10 @@ export function request(options: RequestOptions): Promise<any | null> {
 						router.login();
 						reject({ message: t("无权限") } as Response);
 					} else {
-						options.header.Authorization = `Bearerer ${storage.get("accessToken")}`;
-						const res = await request(options);
-						return resolve(res);
+						storage.set("accessToken", res.data.accessToken, 0);
+						storage.set("refreshToken", res.data.refreshToken, 0);
+						const response = await request(options);
+						return resolve(response);
 					}
 				}
 				// 200 正常响应
