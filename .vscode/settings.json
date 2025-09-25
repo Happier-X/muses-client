@@ -14,5 +14,6 @@
 	"prettier.requireConfig": true,
 	"[ets]": {
 		"editor.defaultFormatter": "NailyZero.vscode-naily-ets"
-	}
+	},
+	"scss.lint.unknownAtRules": "ignore"
 }

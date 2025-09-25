@@ -13,7 +13,7 @@ const ignoreToken = [
 	"/pages/music/recentlyPlayed/index"
 ];
 
-router.beforeEach((to, next) => {
+router.beforeEach((to,from, next) => {
 	next();
 	// const { user } = useStore();
 
