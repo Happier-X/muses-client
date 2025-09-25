@@ -21,7 +21,6 @@ export function login(params: { username: string; password: string }): Promise<R
 export function refreshToken(): Promise<Response> {
 	return request({
 		url: "/auth/refresh-token",
-		method: "POST",
         header: {
             'Authorization': `Bearer ${storage.get('refreshToken')}`
         },

@@ -8,7 +8,6 @@ import { storage } from "@/cool";
 export function getSongs(): Promise<Response> {
 	return request({
 		url: "/songs",
-		method: "GET"
 	});
 }
 
@@ -19,7 +18,7 @@ export function getSongs(): Promise<Response> {
  */
 export function getSongStream(id: string): string {
 	const serviceUrl = storage.get("serviceUrl");
-	return `${serviceUrl}/songs/stream?id=${id}`;
+	return `${serviceUrl}/songs/stream?id=${id}&accessToken=${storage.get("accessToken")}`;
 }
 
 /**
@@ -30,7 +29,6 @@ export function getSongStream(id: string): string {
 export function getSongDetail(songId: string): Promise<Response> {
 	return request({
 		url: '/songs/detail',
-		method: "GET",
         data: {
             songId
         }

@@ -12,7 +12,6 @@ export function getNextQueueItem(
 ): Promise<Response> {
 	return request({
 		url: "/queue-items/next",
-		method: "GET",
 		data: {
 			currentQueueItemId,
 			playMode
@@ -31,7 +30,6 @@ export function getPreviousQueueItem(
 ): Promise<Response> {
 	return request({
 		url: "/queue-items/previous",
-		method: "GET",
 		data: {
 			currentQueueItemId,
 			playMode
