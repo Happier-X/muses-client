@@ -58,7 +58,7 @@ export function request(options: RequestOptions): Promise<any | null> {
 			async success(res) {
 				// 401 无权限
 				if (res.statusCode == 401 && !url.includes("/auth/refresh-token")) {
-					const res = await refreshToken();
+					const res = await refreshToken() as Response;
 					if (res.code == 401) {
 						storage.remove("accessToken");
 						storage.remove("refreshToken");
