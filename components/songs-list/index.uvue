@@ -26,57 +26,17 @@
 import { ref } from "vue";
 import { useListView, type ClListViewItem } from "@/uni_modules/cool-ui";
 import SongsItem from "./components/songs-item.uvue";
-import { rpx2px } from "@/cool";
+import { rpx2px,usePager } from "@/cool";
 
 const data = ref<ClListViewItem[]>([]);
-data.value = useListView([
-    {
-        label: "福建",
-    },
-    {
-        label: "广东",
-    },
-    {
-        label: "江西",
-    },
-    {
-        label: "北京",
-    },
-    {
-        label: "上海",
-    },
-    {
-        label: "河南",
-    },
-    {
-        label: "宁夏",
-    },
-    {
-        label: "浙江",
-    },
-    {
-        label: "天津",
-    },
-    {
-        label: "新疆",
-    },
-    {
-        label: "云南",
-    },
-    {
-        label: "重庆",
-    },
-    {
-        label: "安徽",
-    },
-    {
-        label: "湖南",
-    },
-    {
-        label: "广西",
-    },
-    {
-        label: "海南",
-    },
-]);
+data.value = useListView([]);
+const props = defineProps({
+    list: {
+        type: Array,
+        default: () => []
+    }
+})
+const { refresh,list,listView,loading,loadMore} = usePager(()=>{
+    
+})
 </script>

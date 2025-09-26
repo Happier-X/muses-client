@@ -1,6 +1,6 @@
 <template>
     <view class="w-full h-[125rpx] px-4 flex flex-row items-center justify-between">
-        <view class="flex-1 flex flex-row items-center" @click="showImmersionPage">
+        <view class="flex-1 flex flex-row items-center" @tap="showImmersionPage">
             <cl-image :src="currentSongInfo.cover" mode="scaleToFill" width="100rpx" height="100rpx"></cl-image>
             <view class="ml-3 flex-1">
                 <cl-text :pt="{
@@ -18,7 +18,7 @@
         </view>
         <view class="flex flex-row items-center ml-2">
             <cl-button :icon="isPlaying ? 'pause-fill' : 'play-fill'" text size="large"
-                @click="isPlaying ? pause() : play()"></cl-button>
+                @tap="isPlaying ? pause() : play()"></cl-button>
             <cl-button icon="play-list-2-fill" text size="large"></cl-button>
         </view>
         <immersion-page ref="immersionPageRef"></immersion-page>

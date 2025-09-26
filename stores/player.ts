@@ -90,6 +90,11 @@ audioContext.onPlay(()=>{
 })
 audioContext.onEnded(()=>{
     isPlaying.value = false
+	if(loopMode.value === 'listLoop'){
+		playNext()
+	}else if(loopMode.value === 'singleLoop'){
+		play()
+	}
 })
 audioContext.onError(()=>{
     isPlaying.value = false

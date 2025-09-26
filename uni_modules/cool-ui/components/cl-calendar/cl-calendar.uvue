@@ -75,7 +75,7 @@
 						height: cellHeight + 'px',
 						backgroundColor: getCellBgColor(dateCell)
 					}"
-					@click.stop="selectDateCell(dateCell)"
+					@tap.stop="selectDateCell(dateCell)"
 				>
 					<!-- 顶部文本 -->
 					<cl-text

@@ -5,9 +5,13 @@ import { storage } from "@/cool";
  * 获取歌曲
  * @returns Promise<Response>
  */
-export function getSongs(): Promise<Response> {
+export function getSongs(page: number = 1, size: number = 10): Promise<Response> {
 	return request({
 		url: "/songs",
+		data: {
+			page,
+			size
+		}
 	});
 }
 
@@ -28,9 +32,9 @@ export function getSongStream(id: string): string {
  */
 export function getSongDetail(songId: string): Promise<Response> {
 	return request({
-		url: '/songs/detail',
-        data: {
-            songId
-        }
+		url: "/songs/detail",
+		data: {
+			songId
+		}
 	});
 }

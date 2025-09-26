@@ -6,11 +6,76 @@
             }
         }">
         </cl-topbar>
-        <songs-list class="flex-1 min-h-0"></songs-list>
+        <view class="flex-1 min-h-0 px-4 flex flex-col">
+            <view class="py-4 flex flex-row items-start">
+                <cl-image src="https://unix.cool-js.com/images/demo/avatar.jpg" mode="scaleToFill" width="250rpx"
+                    height="250rpx"></cl-image>
+                <view class="ml-4 h-full flex flex-col items-start justify-between">
+                    <view>
+                        <cl-text :pt="{
+                            className: '!text-xl !font-bold'
+                        }">全部歌曲</cl-text>
+                        <cl-text class="mt-2">共{{ songs?.length ?? 0 }}首</cl-text>
+                    </view>
+                    <cl-button rounded icon="play-fill">播放</cl-button>
+                </view>
+            </view>
+            <view class="flex-1 min-h-0">
+                <cl-list-view ref="listViewRef" :data="listView" :pt="{
+                    refresher: {
+                        className: 'pt-3',
+                    },
+                }" :refresher-enabled="true" @pull="handleRefresh" @bottom="handleLoadMore" :itemHeight="rpx2px(125)"
+                    :bottomHeight="rpx2px(125)">
+                    <template #item="{ value }">
+                        <songs-item :item="value"></songs-item>
+                    </template>
+                    <template #bottom>
+                        <view class="py-3">
+                            <cl-loadmore :loading="loading" v-if="listView.length > 0"></cl-loadmore>
+                        </view>
+                    </template>
+                </cl-list-view>
+            </view>
+        </view>
         <footer-bar></footer-bar>
     </cl-page>
 </template>
 <script setup lang="ts">
 import FooterBar from "@/components/footer-bar/index.uvue";
-import SongsList from "@/components/songs-list/index.uvue";
+import SongsItem from "@/components/songs-item.uvue";
+import { getSongs } from "@/api/songs";
+import { ref } from "vue";
+import { rpx2px, usePager } from "@/cool";
+
+const listViewRef = ref<ClListViewComponentPublicInstance | null>(null)
+const { refresh, listView, loading, loadMore: handleLoadMore } = usePager(
+    async (params, { render }) => {
+        const res = await getSongs(
+            params.page,
+            params.size
+        );
+        render({
+            list: res.data.items,
+            pagination: {
+                page: res.data.pagination.page,
+                size: res.data.pagination.size,
+                total: res.data.pagination.total
+            }
+        });
+    }
+)
+onReady(() => {
+    refresh({
+        page: 1,
+        size: 10
+    });
+})
+const handleRefresh = async () => {
+    await refresh({
+        page: 1,
+        size: 10
+    });
+    listViewRef.value!.stopRefresh();
+}
 </script>
