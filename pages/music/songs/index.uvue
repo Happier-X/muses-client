@@ -45,7 +45,7 @@ import FooterBar from "@/components/footer-bar/index.uvue";
 import SongsItem from "@/components/songs-item.uvue";
 // import { getSongs } from "@/api/songs";
 import { ref } from "vue";
-import { rpx2px, usePager } from "@/cool";
+import { rpx2px, usePager,storage } from "@/cool";
 import { getServiceUrl } from "@/utils";
 
 type Pagination = {
@@ -76,6 +76,9 @@ const { refresh, listView, loading, loadMore: handleLoadMore } = usePager(
         }
         uni.request<SongsResponse>({
             url: serviceUrl + "/songs",
+            header: {
+                'Authorization': `Bearer ${storage.get("accessToken")}`
+            },
             data: {
                 page: params.page,
                 size: params.size

@@ -1,6 +1,6 @@
 <template>
     <view class="flex flex-row items-center justify-between size-full">
-        <view class="flex flex-row items-center">
+        <view class="flex flex-row items-center" @tap="handleTap">
             <cl-image :src="item?.cover" mode="scaleToFill" width="100rpx"
                 height="100rpx"></cl-image>
             <view class="ml-3">
@@ -16,6 +16,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { parse } from '@/cool'
+import { loadSong,play } from '@/stores/player'
 
 type SongsItem = {
     id: number,
@@ -31,4 +32,8 @@ const props = defineProps({
     }
 })
 const item = computed(() => parse<SongsItem>(props.item))
+const handleTap = async()=>{
+    await loadSong(item.value.id)
+    play()
+}
 </script>

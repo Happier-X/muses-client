@@ -34,7 +34,7 @@ export const loadSong = async (id: string) => {
 	if (serviceUrl == null) {
 		return;
 	}
-	audioContext.src = `${serviceUrl}/songs/stream?id=${id}$accessToken=${storage.get("accessToken")}`;
+	audioContext.src = `${serviceUrl}/songs/stream?id=${id}&accessToken=${storage.get("accessToken")}`;
 	// uni.request<SongDetailResponse>({
 	// 	url: serviceUrl + "/songs/detail",
 	// 	data: {
