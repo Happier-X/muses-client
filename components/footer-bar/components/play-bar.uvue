@@ -1,11 +1,11 @@
 <template>
     <view class="w-full h-[125rpx] px-4 flex flex-row items-center justify-between">
         <view class="flex-1 flex flex-row items-center" @tap="showImmersionPage">
-            <cl-image :src="currentSongInfo.cover" mode="scaleToFill" width="100rpx" height="100rpx"></cl-image>
+            <cl-image :src="currentSongDetail?.cover" mode="scaleToFill" width="100rpx" height="100rpx"></cl-image>
             <view class="ml-3 flex-1">
                 <cl-text :pt="{
                     className: '!text-lg !font-bold'
-                }">{{ currentSongInfo.title }}</cl-text>
+                }">{{ currentSongDetail?.title }}</cl-text>
                 <cl-noticebar direction="vertical" :text="[
                     '江南可采莲，莲叶何田田',
                     '鱼戏莲叶间',
@@ -27,7 +27,7 @@
 <script setup lang="ts">
 import ImmersionPage from '@/components/immersion-page/index.uvue'
 import { ref, getCurrentInstance } from 'vue'
-import { currentSongInfo, isPlaying, play, pause } from '@/stores/player'
+import { currentSongDetail, isPlaying, play, pause } from '@/stores/player'
 
 const immersionPageRef = ref<ComponentPublicInstance | null>(null)
 const instance = getCurrentInstance()!.proxy!

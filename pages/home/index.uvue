@@ -7,11 +7,11 @@
 			</view>
 		</cl-topbar>
 		<view class="p-4">
-			<recommend-list title="推荐歌曲" :list="songs">
+			<!-- <recommend-list title="推荐歌曲" :list="songs">
 				<template #default="{ item }">
 					<songs-item :item="item"></songs-item>
 				</template>
-			</recommend-list>
+			</recommend-list> -->
 			<recommend-list class="mt-4" title="推荐专辑" :list="list">
 				<template #default="{ item }">
 					<albums-item></albums-item>
@@ -43,12 +43,12 @@ import songsItem from "./components/songs-item.uvue";
 
 const list = ref(['1', '2', '3', '4', '5', '6'])
 
-import { getSongs } from "@/api/songs";
+// import { getSongs } from "@/api/songs";
 
-const songs = ref([]);
-onMounted(async () => {
-    const res = await getSongs();
-    songs.value = res.data;
-})
+// const songs = ref([]);
+// onMounted(async () => {
+//     const res = await getSongs();
+//     songs.value = res.data;
+// })
 
 </script>

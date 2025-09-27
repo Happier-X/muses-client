@@ -52,12 +52,12 @@
 </template>
 
 <script setup lang="ts">
-import { login } from "@/api/auth";
 import { config } from "@/config";
-import { isDark, parseClass, router, storage } from "@/cool";
+import { isDark, parseClass, router, storage, isNull } from "@/cool";
 import { t } from "@/locale";
 import { useUi } from "@/uni_modules/cool-ui";
 import { computed, onMounted, ref } from "vue";
+import { getServiceUrl } from "@/utils";
 
 const ui = useUi();
 
@@ -66,13 +66,15 @@ type Form = {
 	username: string;
 	password: string;
 };
-
-onMounted(() => {
-	const serviceUrl = storage.get('serviceUrl');
-	if (serviceUrl) {
-		form.value.serviceUrl = serviceUrl;
-	}
-})
+type LoginResponseData = {
+	accessToken?: string;
+	refreshToken?: string;
+};
+type LoginResponse = {
+	code?: number;
+	message?: string;
+	data?: LoginResponseData;
+};
 
 // 表单
 const form = ref<Form>({
@@ -80,6 +82,11 @@ const form = ref<Form>({
 	username: "",
 	password: ""
 });
+
+onMounted(() => {
+	const serviceUrl = storage.get('serviceUrl') as string | null;
+	form.value.serviceUrl = serviceUrl ?? "";
+})
 
 // 是否加载中
 const loading = ref(false);
@@ -90,21 +97,31 @@ const disabled = computed(() => {
 });
 
 // 触发提交
-const handleSubmit = async () => {
+const handleSubmit = () => {
 	storage.set('serviceUrl', form.value.serviceUrl, 0);
-	try {
-		loading.value = true;
-		const res = await login({
+	let serviceUrl = getServiceUrl();
+	if (serviceUrl == null) {
+		return;
+	}
+	loading.value = true;
+	uni.request<LoginResponse>({
+		url: serviceUrl + "/auth/login",
+		method: "POST",
+		data: {
 			username: form.value.username,
 			password: form.value.password
-		})
-		storage.set('accessToken', res.data.accessToken, 0);
-		storage.set('refreshToken', res.data.refreshToken, 0);
-		router.nextLogin();
-	} catch (e) {
-		loading.value = false;
-	} finally {
-		loading.value = false;
-	}
+		},
+		success: (res) => {
+			storage.set('accessToken', res.data?.data.accessToken ?? '', 0);
+			storage.set('refreshToken', res.data?.data.refreshToken ?? '', 0);
+			router.nextLogin();
+		},
+		fail: (err) => {
+			console.log("登录失败", err);
+		},
+		complete: () => {
+			loading.value = false;
+		}
+	})
 }
 </script>

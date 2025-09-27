@@ -2,7 +2,6 @@ import { storage, isNull, router, isObject, parse } from "@/cool";
 import { locale, t } from "@/locale";
 import { refreshToken } from "./auth";
 
-// 请求参数类型定义
 export type RequestOptions = {
 	url: string; // 请求地址
 	method?: RequestMethod; // 请求方法
@@ -15,7 +14,7 @@ export type RequestOptions = {
 };
 
 // 响应数据类型定义
-export type Response = {
+type Response = {
 	code?: number;
 	message?: string;
 	data?: any;
@@ -32,12 +31,12 @@ export function request(options: RequestOptions): Promise<any | null> {
 	const serviceUrl = storage.get("serviceUrl");
 
 	if (isNull(serviceUrl)) {
-		return Promise.reject({ message: t("服务地址未配置") } as Response);
+		return Promise.reject({ message: t("服务地址未配置") } as Response) as Promise<any | null>;
 	}
 
 	// 拼接基础url
 	if (!url.startsWith("http")) {
-		url = serviceUrl + url;
+		url = `${serviceUrl}${url}`;
 	}
 
 	// 获取token
@@ -55,26 +54,14 @@ export function request(options: RequestOptions): Promise<any | null> {
 			},
 			timeout,
 
-			async success(res) {
+			success: (res) => {
 				// 401 无权限
 				if (res.statusCode == 401 && !url.includes("/auth/refresh-token")) {
-					const res = await refreshToken() as Response;
-					if (res.code == 401) {
-						storage.remove("accessToken");
-						storage.remove("refreshToken");
-						storage.remove("userInfo");
-						router.login();
-						reject({ message: t("无权限") } as Response);
-					} else {
-						storage.set("accessToken", res.data.accessToken, 0);
-						storage.set("refreshToken", res.data.refreshToken, 0);
-						const response = await request(options);
-						return resolve(response);
-					}
+					handleRefreshToken();
 				}
 				// 200 正常响应
 				else if (res.statusCode == 200) {
-					resolve(res.data);
+					resolve(res.data as any | null);
 				} else {
 					reject({ message: t("服务异常") } as Response);
 				}
@@ -87,3 +74,19 @@ export function request(options: RequestOptions): Promise<any | null> {
 		});
 	});
 }
+
+const handleRefreshToken = () => {
+	return new Promise(async (resolve, reject) => {
+		const res = (await refreshToken()) as Response;
+		if (res.code == 401) {
+			storage.remove("accessToken");
+			storage.remove("refreshToken");
+			storage.remove("userInfo");
+			router.login();
+		} else {
+			storage.set("accessToken", res.data.accessToken, 0);
+			storage.set("refreshToken", res.data.refreshToken, 0);
+			resolve(res);
+		}
+	});
+};

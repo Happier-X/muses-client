@@ -1,13 +1,13 @@
 <template>
     <view class="flex flex-col">
-        <cl-image :src="item.cover" mode="scaleToFill" width="200rpx"
+        <!-- <cl-image :src="item.cover" mode="scaleToFill" width="200rpx"
             height="200rpx" @tap="handleClick(item)"></cl-image>
         <view class="mt-2">
             <cl-text :pt="{
                 className: '!text-lg !font-bold'
             }">{{ item.title }}</cl-text>
             <cl-text>{{ item.artist }}</cl-text>
-        </view>
+        </view> -->
     </view>
 </template>
 <script setup lang="ts">
@@ -18,8 +18,8 @@ defineProps({
         default: () => ({})
     }
 })
-const handleClick = async (item)=>{
-    await loadSong(item.id)
-    play()
-}
+// const handleClick = async (item)=>{
+//     await loadSong(item.id)
+//     play()
+// }
 </script>

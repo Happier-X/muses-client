@@ -8,14 +8,13 @@
         </cl-topbar>
         <view class="flex-1 min-h-0 px-4 flex flex-col">
             <view class="py-4 flex flex-row items-start">
-                <cl-image src="https://unix.cool-js.com/images/demo/avatar.jpg" mode="scaleToFill" width="250rpx"
-                    height="250rpx"></cl-image>
+                <cl-image :src="cover" mode="scaleToFill" width="250rpx" height="250rpx"></cl-image>
                 <view class="ml-4 h-full flex flex-col items-start justify-between">
                     <view>
                         <cl-text :pt="{
                             className: '!text-xl !font-bold'
                         }">全部歌曲</cl-text>
-                        <cl-text class="mt-2">共{{ songs?.length ?? 0 }}首</cl-text>
+                        <cl-text class="mt-2">共{{ total }}首</cl-text>
                     </view>
                     <cl-button rounded icon="play-fill">播放</cl-button>
                 </view>
@@ -44,25 +43,60 @@
 <script setup lang="ts">
 import FooterBar from "@/components/footer-bar/index.uvue";
 import SongsItem from "@/components/songs-item.uvue";
-import { getSongs } from "@/api/songs";
+// import { getSongs } from "@/api/songs";
 import { ref } from "vue";
 import { rpx2px, usePager } from "@/cool";
+import { getServiceUrl } from "@/utils";
 
+type Pagination = {
+    page?: number;
+    size?: number;
+    total?: number;
+}
+
+type SongsResponseData = {
+    items?: any,
+    pagination?: Pagination
+};
+
+type SongsResponse = {
+    code?: number;
+    message?: string;
+    data?: SongsResponseData;
+};
+
+const total = ref(0)
+const cover = ref('https://unix.cool-js.com/images/demo/avatar.jpg')
 const listViewRef = ref<ClListViewComponentPublicInstance | null>(null)
 const { refresh, listView, loading, loadMore: handleLoadMore } = usePager(
     async (params, { render }) => {
-        const res = await getSongs(
-            params.page,
-            params.size
-        );
-        render({
-            list: res.data.items,
-            pagination: {
-                page: res.data.pagination.page,
-                size: res.data.pagination.size,
-                total: res.data.pagination.total
+        let serviceUrl = getServiceUrl();
+        if (serviceUrl == null) {
+            return;
+        }
+        uni.request<SongsResponse>({
+            url: serviceUrl + "/songs",
+            data: {
+                page: params.page,
+                size: params.size
+            },
+            success: (res) => {
+                total.value = res.data?.data.pagination.total ?? 0;
+                render({
+                    list: res.data?.data.items,
+                    pagination: {
+                        page: res.data?.data.pagination.page,
+                        size: res.data?.data.pagination.size,
+                        total: res.data?.data.pagination.total
+                    }
+                });
+            },
+            fail: (err) => {
+
+            },
+            complete: () => {
             }
-        });
+        })
     }
 )
 onReady(() => {
