@@ -1,0 +1,26 @@
+<template>
+    <text style="font-family:mingcute">{{ char }}</text>
+</template>
+<script setup>
+import config from '../static/font/config.json'
+const props = defineProps({
+    name: {
+        type: String,
+        default: ''
+    }
+})
+const map = {}
+const fontConfig = JSON.parseObject(JSON.stringify(config))
+const glyphs = JSON.parseArray(JSON.stringify(fontConfig?.glyphs))
+glyphs?.forEach(g=>{
+    const gItem = JSON.parseObject(JSON.stringify(g))
+    map[gItem?.css as string] = String.fromCharCode(gItem?.code as number,16)
+})
+const char = map[props.name]
+</script>
+<style>
+  	@font-face{
+        font-family: "mingcute";
+        src: url("../static/font/fontello.ttf");
+    }
+</style>

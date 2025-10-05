@@ -1,6 +1,6 @@
 <template>
   <view class="flex-1">
-    <muses-navbar title="首页"></muses-navbar>
+    <m-navbar title="首页"></m-navbar>
     <view class="flex-1">
     </view>
     <view class="h-[56px]">123</view>
@@ -8,5 +8,5 @@
 </template>
 
 <script setup lang="uts">
-  import MusesNavbar from '@/components/MusesNavbar.uvue'
+  import MNavbar from '@/components/MNavbar.uvue'
 </script>
