@@ -1,13 +1,33 @@
 <template>
   <view class="flex-1">
     <m-navbar title="首页"></m-navbar>
-    <view class="flex-1 min-h-0 bg-pink-200">
+    <view class="flex-1 min-h-0">
       开发中
     </view>
-    <view class="h-[56px]">123</view>
+    <view class="h-[56px] flex-row">
+      <view class="flex-1 items-center justify-center">
+          <m-icon name="home_2_line"></m-icon>
+          <text class="tab-item-text">
+            首页
+          </text>
+      </view>
+      <view class="flex-1 items-center justify-center">
+          <m-icon name="music_line"></m-icon>
+          <text class="tab-item-text">
+            音乐
+          </text>
+      </view>
+      <view class="flex-1 items-center justify-center">
+          <m-icon name="user_2_line"></m-icon>
+          <text class="tab-item-text">
+            我的
+          </text>
+      </view>
+    </view>
   </view>
 </template>
 
 <script setup lang="uts">
-  import MNavbar from '@/components/MNavbar.uvue'
+import MNavbar from '@/components/MNavbar.uvue'
+import MIcon from '@/components/MIcon.uvue'
 </script>

@@ -21,7 +21,7 @@
 </template>
 
 <script setup lang="uts">
-import { login } from '../../api/auth'
+import { login } from '@/api/auth'
 
 type loginFormType = {
     serviceUrl: string,

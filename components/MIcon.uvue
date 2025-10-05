@@ -1,5 +1,5 @@
 <template>
-    <text style="font-family:mingcute">{{ char }}</text>
+    <text style="font-family:mingcute;">{{ char }}</text>
 </template>
 <script setup lang="uts">
 import config from './font/config.json'
@@ -14,7 +14,7 @@ const fontConfig = JSON.parseObject(JSON.stringify(config))
 const glyphs = JSON.parseArray(JSON.stringify(fontConfig?.glyphs))
 glyphs?.forEach(g=>{
     const gItem = JSON.parseObject(JSON.stringify(g))
-    map[gItem?.css as string] = String.fromCharCode(gItem?.code as number,16)
+    map[gItem?.css as string] = String.fromCharCode(gItem?.code as number)
 })
 const char = map[props.name]
 </script>
