@@ -45,4 +45,7 @@
 	.uni-column {
 		flex-direction: column;
 	}
+	@tailwind base;
+	@tailwind components;
+	@tailwind utilities;
 </style>
