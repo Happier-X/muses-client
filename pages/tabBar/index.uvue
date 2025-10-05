@@ -1,23 +1,25 @@
 <template>
   <view class="flex-1">
-    <m-navbar title="首页"></m-navbar>
+    <m-navbar :title="tabList[selectedIndex].title"></m-navbar>
     <view class="flex-1 min-h-0">
-      开发中
+      <home ref="homeRef" class="size-full absolute" v-if="tabList[0].init"  :style="{visibility:(selectedIndex==0?'visible':'hidden')}"></home>
+      <music ref="musicRef" class="size-full absolute" v-if="tabList[1].init" :style="{visibility:(selectedIndex==1?'visible':'hidden')}"></music>
+      <my ref="myRef" class="size-full absolute" v-if="tabList[2].init" :style="{visibility:(selectedIndex==2?'visible':'hidden')}"></my>
     </view>
     <view class="h-[56px] flex-row">
-      <view class="flex-1 items-center justify-center">
+      <view class="flex-1 items-center justify-center" @click="handleTabClick(0)">
           <m-icon name="home_2_line"></m-icon>
           <text class="tab-item-text">
             首页
           </text>
       </view>
-      <view class="flex-1 items-center justify-center">
+      <view class="flex-1 items-center justify-center" @click="handleTabClick(1)">
           <m-icon name="music_line"></m-icon>
           <text class="tab-item-text">
             音乐
           </text>
       </view>
-      <view class="flex-1 items-center justify-center">
+      <view class="flex-1 items-center justify-center" @click="handleTabClick(2)">
           <m-icon name="user_2_line"></m-icon>
           <text class="tab-item-text">
             我的
@@ -30,4 +32,38 @@
 <script setup lang="uts">
 import MNavbar from '@/components/MNavbar.uvue'
 import MIcon from '@/components/MIcon.uvue'
+import Home from './home.uvue'
+import Music from './music.uvue'
+import My from './my.uvue'
+
+type TabItem = {
+  init : boolean,
+  title : string,
+}
+
+const tabList = ref<TabItem[]>([
+  {
+    init: true,
+    title: '首页'
+  } as TabItem,
+  {
+    init: false,
+    title: '音乐'
+  } as TabItem,
+  {
+    init: false,
+    title: '我的'
+  } as TabItem,
+])
+const selectedIndex = ref(0)
+
+const handleTabClick = (index: number) => {
+  if (selectedIndex.value === index) {
+    return
+  }
+  if (!tabList.value[index].init) {
+    tabList.value[index].init = true
+  }
+  selectedIndex.value = index
+}
 </script>

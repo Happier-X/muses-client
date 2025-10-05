@@ -1,3 +1,5 @@
 <template>
-    音乐
+    <view>
+        音乐
+    </view>
 </template>
