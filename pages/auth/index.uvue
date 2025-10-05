@@ -1,0 +1,39 @@
+<template>
+	<view class="flex-1">
+	  <form @submit="onFormSubmit">
+        <view>
+          <text>服务地址</text>
+          <input name="serviceUrl" :value="serviceUrl" placeholder="请输入服务地址" />
+        </view>
+		<view>
+          <text>用户名</text>
+          <input name="username" :value="username" placeholder="请输入用户名" />
+        </view>
+		<view>
+          <text>密码</text>
+          <input name="password" :value="password" placeholder="请输入密码" />
+        </view>
+        <view>
+          <button form-type="submit" type="primary">登录</button>
+        </view>
+      </form>
+	</view>
+</template>
+
+<script setup lang="uts">
+type loginFormType = {
+    serviceUrl: string,
+    username: string,
+    password: string
+}
+
+const serviceUrl = ref('')
+const username = ref('')
+const password = ref('')
+
+const loginForm = ref<UTSJSONObject>({})
+
+const onFormSubmit = (e: UniFormSubmitEvent) => {
+    loginForm.value = e.detail.value
+}
+</script>

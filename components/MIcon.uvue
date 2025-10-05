@@ -1,8 +1,8 @@
 <template>
     <text style="font-family:mingcute">{{ char }}</text>
 </template>
-<script setup>
-import config from '../static/font/config.json'
+<script setup lang="uts">
+import config from './font/config.json'
 const props = defineProps({
     name: {
         type: String,
@@ -21,6 +21,6 @@ const char = map[props.name]
 <style>
   	@font-face{
         font-family: "mingcute";
-        src: url("../static/font/fontello.ttf");
+        src: url("./font/fontello.ttf");
     }
 </style>

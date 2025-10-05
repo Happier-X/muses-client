@@ -1,7 +1,8 @@
 <template>
   <view class="flex-1">
     <m-navbar title="首页"></m-navbar>
-    <view class="flex-1">
+    <view class="flex-1 min-h-0 bg-pink-200">
+      开发中
     </view>
     <view class="h-[56px]">123</view>
   </view>

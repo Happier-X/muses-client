@@ -14,7 +14,7 @@
     </view>
 </template>
 
-<script setup>
+<script setup lang="uts">
 import MIcon from '@/components/MIcon.uvue'
     const props = defineProps({
         title:{
@@ -23,8 +23,8 @@ import MIcon from '@/components/MIcon.uvue'
         }
     })
     const statusBarHeight = ref(0);
-        const sys = uni.getSystemInfoSync();
-        statusBarHeight.value = sys.statusBarHeight;
+    const sys = uni.getSystemInfoSync();
+    statusBarHeight.value = sys.statusBarHeight;
     const back = ()=>{
         uni.navigateBack({})
     }
