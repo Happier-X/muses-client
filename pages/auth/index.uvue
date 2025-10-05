@@ -21,6 +21,8 @@
 </template>
 
 <script setup lang="uts">
+import { login } from '../../api/auth'
+
 type loginFormType = {
     serviceUrl: string,
     username: string,
@@ -33,7 +35,24 @@ const password = ref('')
 
 const loginForm = ref<UTSJSONObject>({})
 
-const onFormSubmit = (e: UniFormSubmitEvent) => {
+serviceUrl.value = uni.getStorageSync("serviceUrl") as string
+
+const onFormSubmit = async(e: UniFormSubmitEvent) => {
     loginForm.value = e.detail.value
+    uni.setStorageSync("serviceUrl", loginForm.value.serviceUrl as string)
+    try {
+        const res = await login({
+          username: loginForm.value.username,
+          password: loginForm.value.password
+        })
+        const resData = JSON.parseObject(JSON.stringify(res.data)) as UTSJSONObject
+        uni.setStorageSync("accessToken", resData.accessToken as string)
+        uni.setStorageSync("refreshToken", resData.refreshToken as string)
+        uni.navigateTo({
+          url: "/pages/tabBar/index"
+        })
+    } catch (error) {
+      console.error('登录失败', error)
+    }
 }
 </script>

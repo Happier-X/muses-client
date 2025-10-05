@@ -1,0 +1,47 @@
+import { request, RequestOptions } from "./index";
+
+/**
+ * 获取下一个队列项
+ * @param data { currentSongId: string, playMode: "orderPlay" | "randomPlay" }
+ * @returns Promise<UTSJSONObject>
+ */
+export function getNextQueueItem(data: UTSJSONObject): Promise<UTSJSONObject> {
+	const requestOptions: RequestOptions = {
+		url: "/play-queue/next",
+		data
+	};
+	return request(requestOptions);
+}
+/**
+ * 获取上一个队列项
+ * @param data { currentSongId: string, playMode: "orderPlay" | "randomPlay" }
+ * @returns Promise<UTSJSONObject>
+ */
+export function getPreviousQueueItem(data: UTSJSONObject): Promise<UTSJSONObject> {
+	const requestOptions: RequestOptions = {
+		url: "/play-queue/previous",
+		data
+	};
+	return request(requestOptions);
+}
+/**
+ * 将全部歌曲添加到播放队列
+ * @returns Promise<UTSJSONObject>
+ */
+export function addAllSongsToPlayQueue(): Promise<UTSJSONObject> {
+	const requestOptions: RequestOptions = {
+		url: "/play-queue/add-all",
+		method: "POST"
+	};
+	return request(requestOptions);
+}
+/**
+ * 获取播放队列
+ * @returns Promise<UTSJSONObject>
+ */
+export function getPlayQueue(): Promise<UTSJSONObject> {
+	const requestOptions: RequestOptions = {
+		url: "/play-queue"
+	};
+	return request(requestOptions);
+}

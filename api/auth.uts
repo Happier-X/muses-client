@@ -1,0 +1,29 @@
+import { request, RequestOptions } from "./index";
+
+/**
+ * 登录
+ * @param data { username: string, password: string }
+ * @returns Promise<UTSJSONObject>
+ */
+export function login(data: UTSJSONObject): Promise<UTSJSONObject> {
+	const requestOptions: RequestOptions = {
+		url: "/auth/login",
+		method: "POST",
+		data
+	};
+	return request(requestOptions);
+}
+
+/**
+ * 刷新token
+ * @returns Promise<Response>
+ */
+export function refreshToken() {
+	const requestOptions: RequestOptions = {
+		url: "/auth/refresh-token",
+		header: {
+			"refresh-token": uni.getStorageSync("refreshToken")
+		}
+	};
+	return request(requestOptions);
+}

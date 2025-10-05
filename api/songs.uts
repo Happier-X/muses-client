@@ -1,0 +1,41 @@
+import { request, RequestOptions } from "./index";
+
+/**
+ * 获取歌曲
+ * @param data { page: number, size: number }
+ * @returns Promise<UTSJSONObject>
+ */
+export function getSongs(data: UTSJSONObject): Promise<UTSJSONObject> {
+	const requestOptions: RequestOptions = {
+		url: "/songs",
+		data
+	};
+	return request(requestOptions);
+}
+
+/**
+ * 获取歌曲详情
+ * @param data { songId: string }
+ * @returns Promise<UTSJSONObject>
+ */
+export function getSongDetail(data: UTSJSONObject): Promise<UTSJSONObject> {
+	const requestOptions: RequestOptions = {
+		url: "/songs/detail",
+		data
+	};
+	return request(requestOptions);
+}
+
+/**
+ * 扫描歌曲
+ * @param data { scanAll: boolean }
+ * @returns Promise<UTSJSONObject>
+ */
+export function scanSongs(data: UTSJSONObject): Promise<UTSJSONObject> {
+	const requestOptions: RequestOptions = {
+		url: "/songs/scan",
+		method: "POST",
+		data
+	};
+	return request(requestOptions);
+}

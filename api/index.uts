@@ -1,0 +1,107 @@
+import { refreshToken } from "./auth";
+
+export type RequestOptions = {
+	url: string; // 请求地址
+	method?: RequestMethod; // 请求方法
+	data?: any; // 请求参数
+	header?: UTSJSONObject; // 请求头
+	timeout?: number; // 超时时间
+	withCredentials?: boolean; // 是否携带凭证
+	firstIpv4?: boolean; // 是否优先使用IPv4
+	enableChunked?: boolean; // 是否启用分块传输
+};
+
+export const request = (requestOptions: RequestOptions): Promise<UTSJSONObject> => {
+	return new Promise((resolve, reject) => {
+		let serviceUrl = uni.getStorageSync("serviceUrl");
+		if (serviceUrl == null) {
+			uni.showToast({
+				icon: "error",
+				title: "服务地址未配置",
+			});
+			uni.navigateTo({
+				url: "/pages/auth/index"
+			});
+			reject({
+				message: "服务地址未配置"
+			} as UTSJSONObject);
+		}
+
+		uni.request({
+			url: `${serviceUrl}${requestOptions.url}`,
+			method: requestOptions.method ?? "GET",
+			data: requestOptions.data ?? null,
+			header: requestOptions.header ?? {
+				Authorization: `Bearer ${uni.getStorageSync("accessToken")}`
+			},
+			timeout: requestOptions.timeout ?? 60000,
+			withCredentials: requestOptions.withCredentials ?? false,
+			firstIpv4: requestOptions.firstIpv4 ?? false,
+			enableChunked: requestOptions.enableChunked ?? false,
+			success: (res) => {
+				if (res.statusCode == 200) {
+					resolve(res.data as UTSJSONObject);
+				} else if (res.statusCode == 401) {
+					const resData = JSON.parseObject(JSON.stringify(res.data)) as UTSJSONObject;
+					if (resData.code == 40101) {
+						// 用户名或密码错误
+						const errorData = JSON.parseObject(JSON.stringify(resData)) as UTSJSONObject;
+						uni.showToast({
+							title: errorData.message as string,
+							icon: "error",
+						});
+						reject(errorData);
+					} else if (resData.code == 40102) {
+						// 刷新token失败
+						uni.removeStorageSync("accessToken");
+						uni.removeStorageSync("refreshToken");
+						uni.navigateTo({
+							url:"/pages/auth/index"
+						})
+						const errorData = JSON.parseObject(JSON.stringify(resData)) as UTSJSONObject;
+						uni.showToast({
+							title: errorData.message as string,
+							icon: "error",
+						});
+						reject(errorData);
+					} else {
+						// refreshToken()
+						// 	.then((res) => {
+						// 		const resData = parseToObject(res.data) as UTSJSONObject;
+						// 		storage.set("accessToken", resData.accessToken ?? "", 0);
+						// 		storage.set("refreshToken", resData.refreshToken ?? "", 0);
+						// 		request(requestOptions).then(resolve).catch(reject);
+						// 	})
+						// 	.catch((error) => {
+						// 		const errorData = parseToObject(error) as UTSJSONObject;
+						// 		ui.showToast({
+						// 			message: (errorData.message as string) ?? "",
+						// 			type: "error",
+						// 			clear: true
+						// 		});
+						// 		reject(error);
+						// 	});
+					}
+				} else {
+					uni.showToast({
+						title: "服务异常",
+						icon: "error",
+					});
+					reject({
+						message: "服务异常"
+					} as UTSJSONObject);
+				}
+			},
+			fail: (err) => {
+				const errorData = JSON.parseObject(JSON.stringify(err)) as UTSJSONObject;
+				uni.showToast({
+					title: errorData.errMsg as string,
+					icon: "error",
+				});
+				reject({
+					message: errorData.errMsg
+				} as UTSJSONObject);
+			}
+		});
+	});
+};
