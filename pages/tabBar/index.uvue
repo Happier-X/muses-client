@@ -1,6 +1,10 @@
 <template>
   <view class="flex-1">
-    <m-navbar :title="tabList[selectedIndex].title"></m-navbar>
+    <m-navbar :title="tabList[selectedIndex].title">
+      <template #left>
+        <view></view>
+      </template>
+    </m-navbar>
     <view class="flex-1 min-h-0">
       <home ref="homeRef" class="size-full absolute" v-if="tabList[0].init"  :style="{visibility:(selectedIndex==0?'visible':'hidden')}"></home>
       <music ref="musicRef" class="size-full absolute" v-if="tabList[1].init" :style="{visibility:(selectedIndex==1?'visible':'hidden')}"></music>
@@ -8,20 +12,20 @@
     </view>
     <view class="h-[56px] flex-row">
       <view class="flex-1 items-center justify-center" @click="handleTabClick(0)">
-          <m-icon name="home_2_line"></m-icon>
-          <text class="tab-item-text">
+          <m-icon name="home_2_line" :class="selectedIndex == 0 ? 'text-blue-500' : ''"></m-icon>
+          <text :class="selectedIndex == 0 ? 'text-blue-500' : ''">
             首页
           </text>
       </view>
       <view class="flex-1 items-center justify-center" @click="handleTabClick(1)">
-          <m-icon name="music_line"></m-icon>
-          <text class="tab-item-text">
+          <m-icon name="music_line"  :class="selectedIndex == 1 ? 'text-blue-500' : ''"></m-icon>
+          <text  :class="selectedIndex == 1 ? 'text-blue-500' : ''">
             音乐
           </text>
       </view>
       <view class="flex-1 items-center justify-center" @click="handleTabClick(2)">
-          <m-icon name="user_2_line"></m-icon>
-          <text class="tab-item-text">
+          <m-icon name="user_2_line" :class="selectedIndex == 2 ? 'text-blue-500' : ''"></m-icon>
+          <text :class="selectedIndex == 2 ? 'text-blue-500' : ''">
             我的
           </text>
       </view>
