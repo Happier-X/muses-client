@@ -10,6 +10,12 @@
       <music ref="musicRef" class="size-full absolute" v-if="tabList[1].init" :style="{visibility:(selectedIndex==1?'visible':'hidden')}"></music>
       <my ref="myRef" class="size-full absolute" v-if="tabList[2].init" :style="{visibility:(selectedIndex==2?'visible':'hidden')}"></my>
     </view>
+    <view class="h-[72px]"></view>
+    <share-element class="w-full h-[72px] fixed bottom-[56px]" share-key="playBar" :transitionOnGesture="true">
+      <view class="size-full items-center justify-center bg-blue-500">
+        <text>播放条</text>
+      </view>
+    </share-element>
     <view class="h-[56px] flex-row">
       <view class="flex-1 items-center justify-center" @click="handleTabClick(0)">
           <m-icon name="home_2_line" :class="selectedIndex == 0 ? 'text-blue-500' : ''"></m-icon>

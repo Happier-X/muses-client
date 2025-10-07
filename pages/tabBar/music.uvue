@@ -1,5 +1,13 @@
 <template>
     <view>
         音乐
+        <button @tap="test">进入歌曲</button>
     </view>
 </template>
+<script setup lang="uts">
+    const test = ()=>{
+        uni.navigateTo({
+            url:'/pages/music/song/index'
+        })
+    }
+</script>

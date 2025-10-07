@@ -1,0 +1,17 @@
+<template>
+    <view class="flex-1">
+        <m-navbar title="歌曲"></m-navbar>
+        <view class="flex-1 min-h-0">
+            开发中
+        </view>
+        <view class="h-[72px]"></view>
+        <share-element class="w-full h-[72px] fixed bottom-0" share-key="playBar" :transitionOnGesture="true">
+        <view class="size-full items-center justify-center bg-blue-500">
+            <text>播放条</text>
+        </view>
+        </share-element>
+    </view>
+</template>
+<script setup lang="uts">
+import MNavbar from '@/components/MNavbar.uvue'
+</script>
