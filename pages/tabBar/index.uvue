@@ -16,19 +16,19 @@
     </share-element>
     <view class="h-[56px] flex-row">
       <view class="flex-1 items-center justify-center" @click="handleTabClick(0)">
-          <m-icon src="/static/icon/Home2Fill.svg" :class="selectedIndex == 0 ? 'text-blue-500' : ''"></m-icon>
+          <m-icon name="&#xeeda;" :class="selectedIndex == 0 ? 'text-blue-500' : ''"></m-icon>
           <text :class="selectedIndex == 0 ? 'text-blue-500' : ''">
             首页
           </text>
       </view>
       <view class="flex-1 items-center justify-center" @click="handleTabClick(1)">
-          <m-icon src="/static/icon/MusicFill.svg"  :class="selectedIndex == 1 ? 'text-blue-500' : ''"></m-icon>
+          <m-icon name="&#xf086;"  :class="selectedIndex == 1 ? 'text-blue-500' : ''"></m-icon>
           <text  :class="selectedIndex == 1 ? 'text-blue-500' : ''">
             音乐
           </text>
       </view>
       <view class="flex-1 items-center justify-center" @click="handleTabClick(2)">
-          <m-icon src="/static/icon/User2Fill.svg" :class="selectedIndex == 2 ? 'text-blue-500' : ''"></m-icon>
+          <m-icon name="&#xf454;" :class="selectedIndex == 2 ? 'text-blue-500' : ''"></m-icon>
           <text :class="selectedIndex == 2 ? 'text-blue-500' : ''">
             我的
           </text>

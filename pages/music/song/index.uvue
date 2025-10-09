@@ -16,12 +16,12 @@
                         <text class="font-bold">{{ item.title }}</text>
                         <text class="font-normal">{{ item.artist }}</text>
                     </view>
-                    <m-icon src="/static/icon/More2Fill.svg"></m-icon>
+                    <m-icon name="&#xf066;"></m-icon>
                 </view>
             </scroll-view>
         </view>
         <view class="h-[72px]"></view>
-        <share-element class="w-full h-[72px] fixed bottom-0" share-key="playBar1" :transitionOnGesture="true">
+        <share-element class="w-full h-[72px] fixed bottom-0" share-key="playBar" :transitionOnGesture="true">
             <m-play-bar></m-play-bar>
         </share-element>
     </view>

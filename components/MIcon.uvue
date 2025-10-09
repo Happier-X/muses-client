@@ -1,11 +1,17 @@
 <template>
-    <image class="size-[24px]" :src="src"></image>
+    <text style="font-family:mingcute;">{{ name }}</text>
 </template>
 <script setup lang="uts">
 const props = defineProps({
-    src: {
+    name: {
         type: String,
         default: ''
     }
 })
 </script>
+<style>
+  	@font-face{
+        font-family: "mingcute";
+        src: url("/static/fonts/icomoon.ttf");
+    }
+</style>
