@@ -1,5 +1,5 @@
 <template>
-    <view class="flex-row items-center justify-between pt-[8px] px-[16px] pb-[16px]">
+    <view class="flex-row items-center justify-between pt-[8px] px-[16px] pb-[16px]" @tap="handleShowImmersion()">
         <image class="size-[48px] rounded-[8px]" :src="`${serviceUrl}${playerCurrentSongDetail?.cover}`"></image>
         <view class="px-[16px] flex-1">
             <text class="font-bold">{{ playerCurrentSongDetail?.title }}</text>
@@ -8,18 +8,19 @@
         <m-icon :name="playerIsPlaying ? '&#xf0f6;' : '&#xf148;'" class="pr-[16px] text-[24px]" @tap="playerIsPlaying ? playerPause() : playerPlay()"></m-icon>
         <m-icon name="&#xefb4;" class="text-[24px]"></m-icon>
     </view>
-    <immersion-page ref="immersionPageRef"></immersion-page>
+    <m-immersion ref="immersionRef"></m-immersion>
     <play-queue ref="playQueueRef" @tap="handleShowPlayQueue()"></play-queue>
 </template>
 
 <script setup lang="uts">
 import MIcon from '@/components/MIcon.uvue'
+import MImmersion from '@/components/MImmersion.uvue'
 import { playerCurrentSongDetail, playerIsPlaying, playerPause, playerPlay } from '@/stores/player'
 
 const serviceUrl = computed(()=>uni.getStorageSync("serviceUrl") ?? "")
 const instance = getCurrentInstance()!.proxy!
-const handleShowImmersionPage = () => {
-    (instance.$refs['immersionPageRef'] as ComponentPublicInstance)?.$callMethod('show')
+const handleShowImmersion = () => {
+    (instance.$refs['immersionRef'] as ComponentPublicInstance)?.$callMethod('show')
 }
 const handleShowPlayQueue = ()=>{
     (instance.$refs['playQueueRef'] as ComponentPublicInstance)?.$callMethod('show')
