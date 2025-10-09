@@ -16,7 +16,7 @@ export const playerIsPlaying = ref(false);
 /**
  * 加载歌曲
  */
-export const playerLoadSong = async (id: string) => {
+export const playerLoadSong = async (songId: string) => {
 	let serviceUrl = uni.getStorageSync("serviceUrl");
 	if (serviceUrl == null) {
 		uni.navigateTo({
@@ -24,10 +24,10 @@ export const playerLoadSong = async (id: string) => {
 		});
 		throw new Error("服务地址未配置");
 	} else {
-		audio.src = `${serviceUrl}/songs/stream?id=${id}&accessToken=${uni.getStorageSync("accessToken")}`;
+		audio.src = `${serviceUrl}/songs/stream?songId=${songId}&accessToken=${uni.getStorageSync("accessToken")}`;
 		try {
 			const res = await getSongDetail({
-				songId: id
+				songId
 			});
 			const resData = parseToObject(res.data);
 			playerCurrentSongDetail.value = resData;

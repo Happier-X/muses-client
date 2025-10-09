@@ -10,7 +10,7 @@
                 </view>
             </view>
             <scroll-view class="flex-1 min-h-0">
-                <view v-for="item in list" :key="item.id" class="h-[72px] flex-row items-center justify-between p-[16px]">
+                <view v-for="item in list" :key="item.id" class="h-[72px] flex-row items-center justify-between p-[16px]" @click="handlePlaySong(item)">
                     <image class="size-[48px] rounded-[8px]" :src="`${serviceUrl}${item.cover}`"></image>
                     <view class="px-[16px] flex-1">
                         <text class="font-bold">{{ item.title }}</text>
@@ -32,14 +32,8 @@ import MPlayBar from '@/components/MPlayBar.uvue'
 import MIcon from '@/components/MIcon.uvue'
 import { getSongs } from '@/api/songs';
 import { parseToObject } from '@/utils/parse';
-
-type ItemType = {
-    id: number,
-    title: string,
-    album: string,
-    artist: string,
-    cover: string,
-}
+import { playerLoadSong, playerPlay } from '@/stores/player.uts'
+import { addAllSongsToPlayQueue } from '../../../api/playQueue';
 
 const list = ref<UTSJSONObject[]>([]);
 
@@ -60,4 +54,18 @@ onLoad(() => {
 const serviceUrl = computed(()=>{
     return uni.getStorageSync("serviceUrl") ?? ""
 })
+
+const handlePlaySong = async(item:UTSJSONObject)=>{
+    try{
+        await playerLoadSong(item.id as string)
+    }catch(error){
+        console.error("加载歌曲失败",error)
+    }
+    playerPlay()
+    try{
+        await addAllSongsToPlayQueue()
+    }catch(error){
+        console.error("添加全部歌曲到播放队列失败",error)
+    }
+}
 </script>
