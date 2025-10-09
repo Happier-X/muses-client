@@ -1,0 +1,16 @@
+<template>
+    <MPopup v-model="visible"></MPopup>
+</template>
+<script setup lang="uts">
+import MPopup from '@/components/MPopup.uvue'
+
+const visible = ref(false)
+
+const show = ()=>{
+    visible.value = true
+}
+
+defineExpose({
+    show
+})
+</script>

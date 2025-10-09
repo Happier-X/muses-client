@@ -5,16 +5,17 @@
             <text class="font-bold">{{ playerCurrentSongDetail?.title }}</text>
             <text class="font-normal">{{ playerCurrentSongDetail?.artist }}</text>
         </view>
-        <m-icon :name="playerIsPlaying ? '&#xf0f6;' : '&#xf148;'" class="pr-[16px] text-[24px]" @tap="playerIsPlaying ? playerPause() : playerPlay()"></m-icon>
-        <m-icon name="&#xefb4;" class="text-[24px]"></m-icon>
+        <m-icon :name="playerIsPlaying ? '&#xf0f6;' : '&#xf148;'" class="pr-[16px] text-[24px]" @tap.stop="playerIsPlaying ? playerPause() : playerPlay()"></m-icon>
+        <m-icon name="&#xefb4;" class="text-[24px]" @tap.stop="handleShowPlayQueue()"></m-icon>
     </view>
     <m-immersion ref="immersionRef"></m-immersion>
-    <play-queue ref="playQueueRef" @tap="handleShowPlayQueue()"></play-queue>
+    <m-play-queue ref="playQueueRef"></m-play-queue>
 </template>
 
 <script setup lang="uts">
 import MIcon from '@/components/MIcon.uvue'
 import MImmersion from '@/components/MImmersion.uvue'
+import MPlayQueue from '@/components/MPlayQueue.uvue'
 import { playerCurrentSongDetail, playerIsPlaying, playerPause, playerPlay } from '@/stores/player'
 
 const serviceUrl = computed(()=>uni.getStorageSync("serviceUrl") ?? "")
