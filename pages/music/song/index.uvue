@@ -51,9 +51,7 @@ onLoad(() => {
     handleGetList();
 })
 
-const serviceUrl = computed(()=>{
-    return uni.getStorageSync("serviceUrl") ?? ""
-})
+const serviceUrl = computed(()=>uni.getStorageSync("serviceUrl") ?? "")
 
 const handlePlaySong = async(item:UTSJSONObject)=>{
     try{

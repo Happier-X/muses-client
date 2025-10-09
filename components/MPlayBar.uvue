@@ -1,15 +1,27 @@
 <template>
     <view class="flex-row items-center justify-between pt-[8px] px-[16px] pb-[16px]">
-        <image class="size-[48px] rounded-[8px]" src="https://cdn.pixabay.com/photo/2019/11/07/13/45/meditation-4608914_1280.jpg"></image>
+        <image class="size-[48px] rounded-[8px]" :src="`${serviceUrl}${playerCurrentSongDetail?.cover}`"></image>
         <view class="px-[16px] flex-1">
-            <text class="font-bold">未知标题</text>
-            <text class="font-normal">未知作者</text>
+            <text class="font-bold">{{ playerCurrentSongDetail?.title }}</text>
+            <text class="font-normal">{{ playerCurrentSongDetail?.artist }}</text>
         </view>
-        <m-icon name="&#xf148;" class="pr-[16px] text-[24px]"></m-icon>
+        <m-icon :name="playerIsPlaying ? '&#xf0f6;' : '&#xf148;'" class="pr-[16px] text-[24px]" @tap="playerIsPlaying ? playerPause() : playerPlay()"></m-icon>
         <m-icon name="&#xefb4;" class="text-[24px]"></m-icon>
     </view>
+    <immersion-page ref="immersionPageRef"></immersion-page>
+    <play-queue ref="playQueueRef" @tap="handleShowPlayQueue()"></play-queue>
 </template>
 
 <script setup lang="uts">
 import MIcon from '@/components/MIcon.uvue'
+import { playerCurrentSongDetail, playerIsPlaying, playerPause, playerPlay } from '@/stores/player'
+
+const serviceUrl = computed(()=>uni.getStorageSync("serviceUrl") ?? "")
+const instance = getCurrentInstance()!.proxy!
+const handleShowImmersionPage = () => {
+    (instance.$refs['immersionPageRef'] as ComponentPublicInstance)?.$callMethod('show')
+}
+const handleShowPlayQueue = ()=>{
+    (instance.$refs['playQueueRef'] as ComponentPublicInstance)?.$callMethod('show')
+}
 </script>

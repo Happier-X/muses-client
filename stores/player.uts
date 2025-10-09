@@ -1,6 +1,5 @@
 import { getNextQueueItem, getPreviousQueueItem } from "@/api/playQueue";
 import { getSongDetail } from "@/api/songs";
-import { ref } from "vue";
 import { parseToObject } from "@/utils/parse";
 
 type LoopModeType = "listLoop" | "singleLoop";
