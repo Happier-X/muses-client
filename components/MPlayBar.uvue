@@ -5,8 +5,8 @@
             <text class="font-bold">未知标题</text>
             <text class="font-normal">未知作者</text>
         </view>
-        <m-icon name="play_fill" class="pr-[16px] text-[24px]"></m-icon>
-        <m-icon name="list_check_fill" class="text-[24px]"></m-icon>
+        <m-icon src="/static/icon/PlayFill.svg" class="pr-[16px]"></m-icon>
+        <m-icon src="/static/icon/ListCheckFill.svg"></m-icon>
     </view>
 </template>
 

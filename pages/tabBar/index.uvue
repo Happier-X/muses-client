@@ -11,24 +11,24 @@
       <my ref="myRef" class="size-full absolute" v-if="tabList[2].init" :style="{visibility:(selectedIndex==2?'visible':'hidden')}"></my>
     </view>
     <view class="h-[72px]"></view>
-    <!-- <share-element class="w-full h-[72px] fixed bottom-[56px]" share-key="playBar" :transitionOnGesture="true">
+    <share-element class="w-full h-[72px] fixed bottom-[56px]" share-key="playBar" :transitionOnGesture="true">
       <m-play-bar></m-play-bar>
-    </share-element> -->
+    </share-element>
     <view class="h-[56px] flex-row">
       <view class="flex-1 items-center justify-center" @click="handleTabClick(0)">
-          <m-icon name="home_2_line" :class="selectedIndex == 0 ? 'text-blue-500' : ''"></m-icon>
+          <m-icon src="/static/icon/Home2Fill.svg" :class="selectedIndex == 0 ? 'text-blue-500' : ''"></m-icon>
           <text :class="selectedIndex == 0 ? 'text-blue-500' : ''">
             首页
           </text>
       </view>
       <view class="flex-1 items-center justify-center" @click="handleTabClick(1)">
-          <m-icon name="music_line"  :class="selectedIndex == 1 ? 'text-blue-500' : ''"></m-icon>
+          <m-icon src="/static/icon/MusicFill.svg"  :class="selectedIndex == 1 ? 'text-blue-500' : ''"></m-icon>
           <text  :class="selectedIndex == 1 ? 'text-blue-500' : ''">
             音乐
           </text>
       </view>
       <view class="flex-1 items-center justify-center" @click="handleTabClick(2)">
-          <m-icon name="user_2_line" :class="selectedIndex == 2 ? 'text-blue-500' : ''"></m-icon>
+          <m-icon src="/static/icon/User2Fill.svg" :class="selectedIndex == 2 ? 'text-blue-500' : ''"></m-icon>
           <text :class="selectedIndex == 2 ? 'text-blue-500' : ''">
             我的
           </text>

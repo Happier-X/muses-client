@@ -1,26 +1,11 @@
 <template>
-    <text style="font-family:mingcute;">{{ char }}</text>
+    <image class="size-[24px]" :src="src"></image>
 </template>
 <script setup lang="uts">
-import config from './font/config.json'
 const props = defineProps({
-    name: {
+    src: {
         type: String,
         default: ''
     }
 })
-const map = {}
-const fontConfig = JSON.parseObject(JSON.stringify(config))
-const glyphs = JSON.parseArray(JSON.stringify(fontConfig?.glyphs))
-glyphs?.forEach(g=>{
-    const gItem = JSON.parseObject(JSON.stringify(g))
-    map[gItem?.css as string] = String.fromCharCode(gItem?.code as number)
-})
-const char = map[props.name]
 </script>
-<style>
-  	@font-face{
-        font-family: "mingcute";
-        src: url("./font/fontello.ttf");
-    }
-</style>
