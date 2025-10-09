@@ -1,0 +1,150 @@
+import { getNextQueueItem, getPreviousQueueItem } from "@/api/playQueue";
+import { getSongDetail } from "@/api/songs";
+import { ref } from "vue";
+import { parseToObject } from "@/utils/parse";
+
+type LoopModeType = "listLoop" | "singleLoop";
+type PlayModeType = "orderPlay" | "randomPlay";
+
+const audio = uni.getBackgroundAudioManager();
+
+export const playerLoopMode = ref<LoopModeType>("listLoop");
+export const playerPlayMode = ref<PlayModeType>("orderPlay");
+export const playerCurrentSongDetail = ref<UTSJSONObject>({});
+export const playerIsPlaying = ref(false);
+
+/**
+ * 加载歌曲
+ */
+export const playerLoadSong = async (id: string) => {
+	let serviceUrl = uni.getStorageSync("serviceUrl");
+	if (serviceUrl == null) {
+		uni.navigateTo({
+			url: "/pages/auth/index"
+		});
+		throw new Error("服务地址未配置");
+	} else {
+		audio.src = `${serviceUrl}/songs/stream?id=${id}&accessToken=${uni.getStorageSync("accessToken")}`;
+		try {
+			const res = await getSongDetail({
+				songId: id
+			});
+			const resData = parseToObject(res.data);
+			playerCurrentSongDetail.value = resData;
+			audio.title = resData.title as string;
+			audio.epname = resData.album as string;
+			audio.singer = resData.artist as string;
+			audio.coverImgUrl = `${serviceUrl}${resData.cover}`;
+		} catch (error) {
+			console.error("获取歌曲详情失败", error);
+		}
+	}
+};
+/**
+ * 播放
+ */
+export const playerPlay = () => {
+	playerIsPlaying.value = true;
+	playerIsPlaying.value = !audio.paused;
+	audio.play();
+};
+/**
+ * 暂停
+ */
+export const playerPause = () => {
+	audio.pause();
+	playerIsPlaying.value = false;
+	playerIsPlaying.value = !audio.paused;
+};
+/**
+ * 切换循环模式
+ */
+export const playerChangeLoopMode = () => {
+	playerLoopMode.value = playerLoopMode.value === 'listLoop' ? 'singleLoop' : 'listLoop';
+};
+/**
+ * 切换播放模式
+ */
+export const playerChangePlayMode = () => {
+	playerPlayMode.value = playerPlayMode.value === 'orderPlay' ? 'randomPlay' : 'orderPlay';
+};
+/**
+ * 播放下一首
+ */
+export const playerPlayNext = async () => {
+	audio.stop();
+	playerIsPlaying.value = false;
+	playerIsPlaying.value = !audio.paused;
+	try {
+		const res = await getNextQueueItem({
+			currentSongId: playerCurrentSongDetail.value.id,
+			playMode: playerPlayMode.value
+		});
+		const resData = parseToObject(res.data);
+		try {
+			await playerLoadSong(resData.songId as string);
+			playerPlay();
+		} catch (error) {
+			console.error("加载歌曲失败", error);
+		}
+	} catch (error) {
+		console.error("获取下一首失败", error);
+	}
+};
+/**
+ * 播放上一首
+ */
+export const playerPlayPrevious = async () => {
+	audio.stop();
+	playerIsPlaying.value = false;
+	playerIsPlaying.value = !audio.paused;
+	try {
+		const res = await getPreviousQueueItem({
+			currentSongId: playerCurrentSongDetail.value.id,
+			playMode: playerPlayMode.value
+		});
+		const resData = parseToObject(res.data);
+		try {
+			await playerLoadSong(resData.songId as string);
+			playerPlay();
+		} catch (error) {
+			console.error("加载歌曲失败", error);
+		}
+	} catch (error) {
+		console.error("获取上一首失败", error);
+	}
+};
+audio.onCanplay(() => {
+	console.log("canplay");
+});
+audio.onPlay(() => {
+	playerIsPlaying.value = true;
+	playerIsPlaying.value = !audio.paused;
+});
+audio.onPause(() => {
+	playerIsPlaying.value = false;
+	playerIsPlaying.value = !audio.paused;
+});
+audio.onStop(() => {
+	playerIsPlaying.value = false;
+	playerIsPlaying.value = !audio.paused;
+});
+audio.onEnded(() => {
+	playerIsPlaying.value = false;
+	playerIsPlaying.value = !audio.paused;
+	if (playerLoopMode.value === "listLoop") {
+		playerPlayNext();
+	} else if (playerLoopMode.value === "singleLoop") {
+		playerPlay();
+	}
+});
+audio.onError(() => {
+	playerIsPlaying.value = false;
+	playerIsPlaying.value = !audio.paused;
+});
+audio.onNext(() => {
+	playerPlayNext();
+});
+audio.onPrev(() => {
+	playerPlayPrevious();
+});

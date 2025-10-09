@@ -2,16 +2,62 @@
     <view class="flex-1">
         <m-navbar title="歌曲"></m-navbar>
         <view class="flex-1 min-h-0">
-            开发中
+            <view class="flex-row p-[16px]">
+                <image class="size-[120px] rounded-[8px]" src="https://cdn.pixabay.com/photo/2019/11/07/13/45/meditation-4608914_1280.jpg"></image>
+                <view class="pl-[16px]">
+                    <text class="font-bold">全部歌曲</text>
+                    <text class="font-normal">共0首</text>
+                </view>
+            </view>
+            <scroll-view class="flex-1 min-h-0">
+                <view v-for="item in list" :key="item.id" class="h-[72px] flex-row items-center justify-between p-[16px]">
+                    <image class="size-[48px] rounded-[8px]" :src="`${serviceUrl}${item.cover}`"></image>
+                    <view class="px-[16px] flex-1">
+                        <text class="font-bold">{{ item.title }}</text>
+                        <text class="font-normal">{{ item.artist }}</text>
+                    </view>
+                    <m-icon name="more_2_fill"></m-icon>
+                </view>
+            </scroll-view>
         </view>
         <view class="h-[72px]"></view>
-        <share-element class="w-full h-[72px] fixed bottom-0" share-key="playBar" :transitionOnGesture="true">
-        <view class="size-full items-center justify-center bg-blue-500">
-            <text>播放条</text>
-        </view>
-        </share-element>
+        <!-- <share-element class="w-full h-[72px] fixed bottom-0" share-key="playBar1" :transitionOnGesture="true">
+            <m-play-bar></m-play-bar>
+        </share-element> -->
     </view>
 </template>
 <script setup lang="uts">
 import MNavbar from '@/components/MNavbar.uvue'
+import MPlayBar from '@/components/MPlayBar.uvue'
+import MIcon from '@/components/MIcon.uvue'
+import { getSongs } from '@/api/songs';
+import { parseToObject } from '@/utils/parse';
+
+type ItemType = {
+    id: number,
+    title: string,
+    album: string,
+    artist: string,
+    cover: string,
+}
+
+const list = ref<UTSJSONObject[]>([]);
+
+const handleGetList = async () => {
+    try{
+        const res = await getSongs({})
+        const resData = parseToObject(res.data);
+        list.value = resData.items as UTSJSONObject[];
+    }catch(error){
+        console.error('获取歌曲列表失败', error)
+    }
+}
+
+onLoad(() => {
+    handleGetList();
+})
+
+const serviceUrl = computed(()=>{
+    return uni.getStorageSync("serviceUrl") ?? ""
+})
 </script>

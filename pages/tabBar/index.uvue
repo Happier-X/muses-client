@@ -11,11 +11,9 @@
       <my ref="myRef" class="size-full absolute" v-if="tabList[2].init" :style="{visibility:(selectedIndex==2?'visible':'hidden')}"></my>
     </view>
     <view class="h-[72px]"></view>
-    <share-element class="w-full h-[72px] fixed bottom-[56px]" share-key="playBar" :transitionOnGesture="true">
-      <view class="size-full items-center justify-center bg-blue-500">
-        <text>播放条</text>
-      </view>
-    </share-element>
+    <!-- <share-element class="w-full h-[72px] fixed bottom-[56px]" share-key="playBar" :transitionOnGesture="true">
+      <m-play-bar></m-play-bar>
+    </share-element> -->
     <view class="h-[56px] flex-row">
       <view class="flex-1 items-center justify-center" @click="handleTabClick(0)">
           <m-icon name="home_2_line" :class="selectedIndex == 0 ? 'text-blue-500' : ''"></m-icon>
@@ -42,6 +40,7 @@
 <script setup lang="uts">
 import MNavbar from '@/components/MNavbar.uvue'
 import MIcon from '@/components/MIcon.uvue'
+import MPlayBar from '@/components/MPlayBar.uvue'
 import Home from './home.uvue'
 import Music from './music.uvue'
 import My from './my.uvue'

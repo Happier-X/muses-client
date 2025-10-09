@@ -2,12 +2,18 @@
     <view>
         音乐
         <button @tap="test">进入歌曲</button>
+        <button @tap="login">登录</button>
     </view>
 </template>
 <script setup lang="uts">
     const test = ()=>{
         uni.navigateTo({
             url:'/pages/music/song/index'
+        })
+    }
+    const login = ()=>{
+        uni.navigateTo({
+            url:'/pages/auth/index'
         })
     }
 </script>
