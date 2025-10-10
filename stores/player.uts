@@ -5,7 +5,13 @@ import { parseToObject } from "@/utils/parse";
 type LoopModeType = "listLoop" | "singleLoop";
 type PlayModeType = "orderPlay" | "randomPlay";
 
+// #ifndef WEB
 const audio = uni.getBackgroundAudioManager();
+// #endif
+
+// #ifdef WEB
+const audio = uni.createInnerAudioContext();
+// #endif
 
 export const playerLoopMode = ref<LoopModeType>("listLoop");
 export const playerPlayMode = ref<PlayModeType>("orderPlay");
@@ -141,9 +147,11 @@ audio.onError(() => {
 	playerIsPlaying.value = false;
 	playerIsPlaying.value = !audio.paused;
 });
+// #ifndef WEB 
 audio.onNext(() => {
 	playerPlayNext();
-});
+}); 
 audio.onPrev(() => {
 	playerPlayPrevious();
 });
+// #endif

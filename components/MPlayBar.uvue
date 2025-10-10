@@ -5,8 +5,8 @@
             <text class="font-bold">{{ playerCurrentSongDetail?.title }}</text>
             <text class="font-normal">{{ playerCurrentSongDetail?.artist }}</text>
         </view>
-        <m-icon :name="playerIsPlaying ? '&#xf0f6;' : '&#xf148;'" class="pr-[16px] text-[24px]" @tap.stop="playerIsPlaying ? playerPause() : playerPlay()"></m-icon>
-        <m-icon name="&#xefb4;" class="text-[24px]" @tap.stop="handleShowPlayQueue()"></m-icon>
+        <m-icon :name="playerIsPlaying ? 'f0f6' : 'f148'" class="pr-[16px] text-[24px]" @tap.stop="playerIsPlaying ? playerPause() : playerPlay()"></m-icon>
+        <m-icon name="efb4" class="text-[24px]" @tap.stop="handleShowPlayQueue()"></m-icon>
     </view>
     <m-immersion ref="immersionRef"></m-immersion>
     <m-play-queue ref="playQueueRef"></m-play-queue>

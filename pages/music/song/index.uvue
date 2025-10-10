@@ -9,16 +9,16 @@
                     <text class="font-normal">共0首</text>
                 </view>
             </view>
-            <scroll-view class="flex-1 min-h-0">
-                <view v-for="item in list" :key="item.id" class="h-[72px] flex-row items-center justify-between p-[16px]" @click="handlePlaySong(item)">
+            <list-view class="flex-1 min-h-0" :bounces="false" :show-scrollbar="false" :refresher-enabled="true" :refresher-triggered="refresherTriggered" @refresherrefresh="handleRefreshList" @scrolltolower="handleGetMoreList">
+                <list-item v-for="item in list" :key="item.id" class="h-[72px] flex-row items-center justify-between p-[16px]" @tap="handlePlaySong(item)" @longpress="handleShowAction(item)">
                     <image class="size-[48px] rounded-[8px]" :src="`${serviceUrl}${item.cover}`"></image>
                     <view class="px-[16px] flex-1">
                         <text class="font-bold">{{ item.title }}</text>
                         <text class="font-normal">{{ item.artist }}</text>
                     </view>
-                    <m-icon name="&#xf066;"></m-icon>
-                </view>
-            </scroll-view>
+                    <m-icon name="f066" @tap.stop="handleShowAction(item)"></m-icon>
+                </list-item>
+            </list-view>
         </view>
         <view class="h-[72px]"></view>
         <share-element class="w-full h-[72px] fixed bottom-0" share-key="playBar" :transitionOnGesture="true">
@@ -37,20 +37,42 @@ import { addAllSongsToPlayQueue } from '../../../api/playQueue';
 
 const list = ref<UTSJSONObject[]>([]);
 
-const handleGetList = async () => {
+const searchParams = ref<UTSJSONObject>({
+    page: 1,
+    size: 20,
+})
+
+const refresherTriggered = ref(false);
+
+const handleGetList = async (searchParams:UTSJSONObject) => {
     try{
-        const res = await getSongs({})
+        const res = await getSongs(searchParams)
         const resData = parseToObject(res.data);
-        list.value = resData.items as UTSJSONObject[];
+        list.value = list.value.concat(resData.items as UTSJSONObject[]);
     }catch(error){
         console.error('获取歌曲列表失败', error)
     }
 }
 
 onLoad(() => {
-    handleGetList();
+    handleGetList(searchParams.value);
 })
 
+const handleRefreshList = async()=>{
+    try{
+        refresherTriggered.value = true;
+        searchParams.value.page = 1;
+        await handleGetList(searchParams.value);
+    }catch(error){
+        console.error('刷新歌曲列表失败', error)
+    }finally{
+        refresherTriggered.value = false;
+    }
+}
+const handleGetMoreList = async () => {
+    searchParams.value.page = searchParams.value.page as number + 1;
+    handleGetList(searchParams.value);
+}
 const serviceUrl = computed(()=>uni.getStorageSync("serviceUrl") ?? "")
 
 const handlePlaySong = async(item:UTSJSONObject)=>{
@@ -65,5 +87,9 @@ const handlePlaySong = async(item:UTSJSONObject)=>{
     }catch(error){
         console.error("添加全部歌曲到播放队列失败",error)
     }
+}
+
+const handleShowAction = async(item:UTSJSONObject)=>{
+    console.log((1111,item))
 }
 </script>

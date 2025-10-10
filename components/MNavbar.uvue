@@ -2,7 +2,7 @@
     <view class="h-[56px] justify-between border-b-[1px] border-solid border-transparent border-b-[#eee] flex-row items-center" :style="{marginTop:`${statusBarHeight}px`}">
             <view class="w-[45px] h-full items-center justify-center">
                 <slot name="left">
-                    <m-icon name="&#xef86;" @click="back"></m-icon>
+                    <m-icon name="ef86" @click="back"></m-icon>
                 </slot>
             </view>
             <view class="h-full items-center justify-center">

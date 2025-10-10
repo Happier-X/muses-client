@@ -1,5 +1,5 @@
 <template>
-    <text style="font-family:mingcute;">{{ name }}</text>
+    <text style="font-family:mingcute;">{{ iconCode }}</text>
 </template>
 <script setup lang="uts">
 const props = defineProps({
@@ -7,6 +7,9 @@ const props = defineProps({
         type: String,
         default: ''
     }
+})
+const iconCode = computed(() => {
+    return String.fromCharCode(parseInt(props.name, 16))
 })
 </script>
 <style>
