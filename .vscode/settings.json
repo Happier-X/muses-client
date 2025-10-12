@@ -1,6 +1,0 @@
-{
-    "tailwindCSS.includeLanguages": {
-        "uvue": "html",
-        "uts": "javascript"
-    }
-}

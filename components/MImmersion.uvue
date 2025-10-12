@@ -1,8 +1,9 @@
 <template>
-    <MPopup v-model="visible"></MPopup>
+    <!-- <rice-popup v-model:show="visible" position="bottom" overlay-bg-color="rgba(0,0,0,0.5)" :safe-area-inset-top="true">
+        <view>测试内容</view>
+    </rice-popup> -->
 </template>
 <script setup lang="uts">
-import MPopup from '@/components/MPopup.uvue'
 
 const visible = ref(false)
 

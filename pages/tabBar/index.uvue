@@ -12,15 +12,15 @@
     </share-element>
     <view class="h-[56px] flex-row">
       <view class="flex-1 items-center justify-center" @click="handleTabClick(0)">
-          <rice-icon name="eeda" font-family="mingcute" size="24px"></rice-icon>
+          <rice-icon name="eeda" font-family="mingcute" size="20px"></rice-icon>
           <text :class="selectedIndex == 0 ? 'text-blue-500' : ''">首页</text>
       </view>
       <view class="flex-1 items-center justify-center" @click="handleTabClick(1)">
-          <rice-icon name="f086" font-family="mingcute" size="24px"></rice-icon>
-          <text  :class="selectedIndex == 1 ? 'text-blue-500' : ''">音乐</text>
+          <rice-icon name="f086" font-family="mingcute" size="20px"></rice-icon>
+          <text :class="selectedIndex == 1 ? 'text-blue-500' : ''">音乐</text>
       </view>
       <view class="flex-1 items-center justify-center" @click="handleTabClick(2)">
-          <rice-icon name="f454" font-family="mingcute" size="24px"></rice-icon>
+          <rice-icon name="f454" font-family="mingcute" size="20px"></rice-icon>
           <text :class="selectedIndex == 2 ? 'text-blue-500' : ''">我的</text>
       </view>
     </view>
