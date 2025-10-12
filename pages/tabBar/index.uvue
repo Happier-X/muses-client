@@ -1,10 +1,6 @@
 <template>
   <view class="flex-1">
-    <m-navbar :title="tabList[selectedIndex].title">
-      <template #left>
-        <view></view>
-      </template>
-    </m-navbar>
+    <rice-navbar :title="tabList[selectedIndex].title" :left-arrow="false"></rice-navbar>
     <view class="flex-1 min-h-0">
       <home ref="homeRef" class="size-full absolute" v-if="tabList[0].init"  :style="{visibility:(selectedIndex==0?'visible':'hidden')}"></home>
       <music ref="musicRef" class="size-full absolute" v-if="tabList[1].init" :style="{visibility:(selectedIndex==1?'visible':'hidden')}"></music>
@@ -16,15 +12,15 @@
     </share-element>
     <view class="h-[56px] flex-row">
       <view class="flex-1 items-center justify-center" @click="handleTabClick(0)">
-          <m-icon name="eeda" :class="selectedIndex == 0 ? 'text-blue-500' : ''"></m-icon>
+          <rice-icon name="eeda" font-family="mingcute" size="24px"></rice-icon>
           <text :class="selectedIndex == 0 ? 'text-blue-500' : ''">首页</text>
       </view>
       <view class="flex-1 items-center justify-center" @click="handleTabClick(1)">
-          <m-icon name="f086"  :class="selectedIndex == 1 ? 'text-blue-500' : ''"></m-icon>
+          <rice-icon name="f086" font-family="mingcute" size="24px"></rice-icon>
           <text  :class="selectedIndex == 1 ? 'text-blue-500' : ''">音乐</text>
       </view>
       <view class="flex-1 items-center justify-center" @click="handleTabClick(2)">
-          <m-icon name="f454" :class="selectedIndex == 2 ? 'text-blue-500' : ''"></m-icon>
+          <rice-icon name="f454" font-family="mingcute" size="24px"></rice-icon>
           <text :class="selectedIndex == 2 ? 'text-blue-500' : ''">我的</text>
       </view>
     </view>
@@ -32,8 +28,6 @@
 </template>
 
 <script setup lang="uts">
-import MNavbar from '@/components/MNavbar.uvue'
-import MIcon from '@/components/MIcon.uvue'
 import MPlayBar from '@/components/MPlayBar.uvue'
 import Home from './home.uvue'
 import Music from './music.uvue'

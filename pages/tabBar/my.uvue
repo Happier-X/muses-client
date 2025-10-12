@@ -1,5 +1,19 @@
 <template>
     <view>
         我的
+        <button @tap="test">扫描歌曲</button>
     </view>
 </template>
+
+<script setup lang="uts">
+    import { scanSongs } from '@/api/songs';
+    const test = async ()=>{
+        try{
+            await scanSongs({
+                scanAll: true
+            })
+        }catch(error){
+            console.error("扫描歌曲失败",error)
+        }
+    }
+</script>

@@ -40,4 +40,9 @@
 	@tailwind base;
 	@tailwind components;
 	@tailwind utilities;
+	@import "@/uni_modules/rice-ui/libs/style/index.css";
+	@font-face{
+        font-family: "mingcute";
+        src: url("/static/fonts/icomoon.ttf");
+    }
 </style>
