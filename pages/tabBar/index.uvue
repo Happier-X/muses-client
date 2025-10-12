@@ -1,26 +1,26 @@
 <template>
-  <view class="flex-1">
-    <rice-navbar :title="tabList[selectedIndex].title" :left-arrow="false"></rice-navbar>
-    <view class="flex-1 min-h-0">
-      <home ref="homeRef" class="size-full absolute" v-if="tabList[0].init"  :style="{visibility:(selectedIndex==0?'visible':'hidden')}"></home>
-      <music ref="musicRef" class="size-full absolute" v-if="tabList[1].init" :style="{visibility:(selectedIndex==1?'visible':'hidden')}"></music>
-      <my ref="myRef" class="size-full absolute" v-if="tabList[2].init" :style="{visibility:(selectedIndex==2?'visible':'hidden')}"></my>
+  <view class="m-page">
+    <m-navbar :title="tabList[selectedIndex].title" :left-arrow="false"></m-navbar>
+    <view class="index-container">
+      <home ref="homeRef" class="index-content" v-if="tabList[0].init"  :style="{visibility:(selectedIndex==0?'visible':'hidden')}"></home>
+      <music ref="musicRef" class="index-content" v-if="tabList[1].init" :style="{visibility:(selectedIndex==1?'visible':'hidden')}"></music>
+      <my ref="myRef" class="index-content" v-if="tabList[2].init" :style="{visibility:(selectedIndex==2?'visible':'hidden')}"></my>
     </view>
-    <view class="h-[72px]"></view>
-    <share-element class="w-full h-[72px] fixed bottom-[56px]" share-key="playBar" :transitionOnGesture="true">
+    <view class="bottom-placeholder"></view>
+    <share-element class="bottom-share-element" share-key="playBar" :transitionOnGesture="true">
       <m-play-bar></m-play-bar>
     </share-element>
-    <view class="h-[56px] flex-row">
-      <view class="flex-1 items-center justify-center" @click="handleTabClick(0)">
-          <rice-icon name="eeda" font-family="mingcute" size="20px"></rice-icon>
+    <view class="tab-bar">
+      <view class="tab-bar-item" @click="handleTabClick(0)">
+          <m-icon name="eeda"></m-icon>
           <text :class="selectedIndex == 0 ? 'text-blue-500' : ''">首页</text>
       </view>
-      <view class="flex-1 items-center justify-center" @click="handleTabClick(1)">
-          <rice-icon name="f086" font-family="mingcute" size="20px"></rice-icon>
+      <view class="tab-bar-item" @click="handleTabClick(1)">
+          <m-icon name="f086"></m-icon>
           <text :class="selectedIndex == 1 ? 'text-blue-500' : ''">音乐</text>
       </view>
-      <view class="flex-1 items-center justify-center" @click="handleTabClick(2)">
-          <rice-icon name="f454" font-family="mingcute" size="20px"></rice-icon>
+      <view class="tab-bar-item" @click="handleTabClick(2)">
+          <m-icon name="f454"></m-icon>
           <text :class="selectedIndex == 2 ? 'text-blue-500' : ''">我的</text>
       </view>
     </view>
@@ -28,7 +28,9 @@
 </template>
 
 <script setup lang="uts">
+import MNavbar from '@/components/ui/MNavbar.uvue'
 import MPlayBar from '@/components/MPlayBar.uvue'
+import MIcon from '@/components/ui/MIcon.uvue'
 import Home from './home.uvue'
 import Music from './music.uvue'
 import My from './my.uvue'
@@ -64,3 +66,37 @@ const handleTabClick = (index: number) => {
   selectedIndex.value = index
 }
 </script>
+
+<style lang="scss">
+  .index-container {
+    flex: 1;
+    min-height: 0;
+    .index-content{
+      width: 100%;
+      height: 100%;
+      position: absolute;
+    }
+  }
+  .bottom-placeholder {
+    height: 72px;
+  }
+  .bottom-share-element {
+    width: 100%;
+    height: 72px;
+    position: fixed;
+    bottom: 56px;
+  }
+  .tab-bar {
+    height: 56px;
+    flex-direction: row;
+    border-top: 1px solid #e5e7eb;
+    background-color: #ffffff;
+    align-items: center;
+    justify-content: space-around;
+    .tab-bar-item {
+      flex: 1;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+</style>

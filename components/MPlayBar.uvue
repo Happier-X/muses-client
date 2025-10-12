@@ -1,18 +1,19 @@
 <template>
-    <view class="flex-row items-center justify-between pt-[8px] px-[16px] pb-[16px]" @tap="handleShowImmersion()">
-        <image class="size-[48px] rounded-[8px]" :src="`${serviceUrl}${playerCurrentSongDetail?.cover}`"></image>
-        <view class="px-[16px] flex-1">
-            <text class="font-bold">{{ playerCurrentSongDetail?.title }}</text>
-            <text class="font-normal">{{ playerCurrentSongDetail?.artist }}</text>
+    <view class="m-play-bar" @tap="handleShowImmersion()">
+        <image class="cover" :src="`${serviceUrl}${playerCurrentSongDetail?.cover}`"></image>
+        <view class="info">
+            <text>{{ playerCurrentSongDetail?.title }}</text>
+            <text>{{ playerCurrentSongDetail?.artist }}</text>
         </view>
-        <rice-icon :name="playerIsPlaying ? 'f0f6' : 'f148'" font-family="mingcute" class="pr-[16px] text-[24px]" @tap.stop="playerIsPlaying ? playerPause() : playerPlay()"></rice-icon>
-        <rice-icon name="efb4" class="text-[24px]" font-family="mingcute" @tap.stop="handleShowPlayQueue()"></rice-icon>
+        <m-icon :name="playerIsPlaying ? 'f0f6' : 'f148'" class="play-control-icon" @tap.stop="playerIsPlaying ? playerPause() : playerPlay()"></m-icon>
+        <m-icon name="efb4" class="play-queue-icon" @tap.stop="handleShowPlayQueue()"></m-icon>
     </view>
     <m-immersion ref="immersionRef"></m-immersion>
     <m-play-queue ref="playQueueRef"></m-play-queue>
 </template>
 
 <script setup lang="uts">
+import MIcon from '@/components/ui/MIcon.uvue'
 import MImmersion from '@/components/MImmersion.uvue'
 import MPlayQueue from '@/components/MPlayQueue.uvue'
 import { playerCurrentSongDetail, playerIsPlaying, playerPause, playerPlay } from '@/stores/player'
@@ -26,3 +27,31 @@ const handleShowPlayQueue = ()=>{
     (instance.$refs['playQueueRef'] as ComponentPublicInstance)?.$callMethod('show')
 }
 </script>
+
+<style lang="scss">
+    .m-play-bar{
+        height: 72px;
+        border-top: 1px solid #eee;
+        background-color: #fff;
+        flex-direction: row;
+        align-items: center;
+        justify-content:space-between;
+        padding: 8px 16px 16px 16px;
+        .cover{
+            width: 48px;
+            height: 48px;
+            border-radius: 8px;
+        }
+        .info{
+            flex: 1;
+            padding: 0 16px;
+        }
+        .play-control-icon {
+            padding-right: 16px;
+            font-size: 24px;
+        }
+        .play-queue-icon {
+            font-size: 24px;
+        }
+    }
+</style>

@@ -1,36 +1,34 @@
 <template>
-    <view class="flex-1">
-        <rice-navbar title="歌曲">
-            <template #left>
-                <rice-icon name="ef86" font-family="mingcute" size="24px"></rice-icon>
-            </template>
-        </rice-navbar>
-        <view class="flex-1 min-h-0">
-            <view class="flex-row p-[16px]">
+    <view class="m-page">
+        <m-navbar title="歌曲"></m-navbar>
+        <view class="song-container">
+            <!-- <view class="flex-row p-[16px]">
                 <image class="size-[120px] rounded-[8px]" src="https://cdn.pixabay.com/photo/2019/11/07/13/45/meditation-4608914_1280.jpg"></image>
                 <view class="pl-[16px]">
                     <text class="font-bold">全部歌曲</text>
                     <text class="font-normal">共0首</text>
                 </view>
-            </view>
-            <z-paging-x class="flex-1 min-h-0" ref="pagingXRef" v-model="list" @query="queryList" :refresher-threshold="50" :show-back-to-top="true" :default-page-size="20" :rebound="false" :show-scrollbar="false">
-                <list-item v-for="item in list" :key="item.id" class="h-[72px] flex-row items-center justify-between p-[16px]" @tap="handlePlaySong(item)" @longpress="handleShowAction(item)">
-                    <image class="size-[48px] rounded-[8px]" :src="`${serviceUrl}${item.cover}`"></image>
-                    <view class="px-[16px] flex-1">
-                        <text class="font-bold">{{ item.title }}</text>
-                        <text class="font-normal">{{ item.artist }}</text>
+            </view> -->
+            <z-paging-x class="song-list" ref="pagingXRef" v-model="list" @query="queryList" :refresher-threshold="50" :show-back-to-top="true" :default-page-size="20" :rebound="false" :show-scrollbar="false">
+                <list-item v-for="item in list" :key="item.id" class="song-item" @tap="handlePlaySong(item)" @longpress="handleShowAction(item)">
+                    <image class="cover" :src="`${serviceUrl}${item.cover}`"></image>
+                    <view class="info">
+                        <text>{{ item.title }}</text>
+                        <text>{{ item.artist }}</text>
                     </view>
-                    <rice-icon name="f066" @tap.stop="handleShowAction(item)" font-family="mingcute"></rice-icon>
+                    <m-icon name="f066" @tap.stop="handleShowAction(item)"></m-icon>
                 </list-item>
             </z-paging-x>
         </view>
-        <view class="h-[72px]"></view>
-        <share-element class="w-full h-[72px] fixed bottom-0" share-key="playBar" :transitionOnGesture="true">
+        <view class="bottom-placeholder"></view>
+        <share-element class="bottom-share-element" share-key="playBar" :transitionOnGesture="true">
             <m-play-bar></m-play-bar>
         </share-element>
     </view>
 </template>
 <script setup lang="uts">
+import MIcon from '@/components/ui/MIcon.uvue'
+import MNavbar from '@/components/ui/MNavbar.uvue'
 import MPlayBar from '@/components/MPlayBar.uvue'
 import { getSongs } from '@/api/songs';
 import { parseToObject } from '@/utils/parse';
@@ -74,3 +72,38 @@ const handleShowAction = async(item:UTSJSONObject)=>{
     console.log((1111,item))
 }
 </script>
+<style lang="scss">
+    .song-container{
+        flex: 1;
+        min-height: 0;
+    }
+    .song-list{
+        flex: 1;
+        min-height: 0;
+        .song-item{
+            height: 72px;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px;
+            .cover{
+                width: 48px;
+                height: 48px;
+                border-radius: 8px;
+            }
+            .info{
+                flex: 1;
+                padding: 0 16px;
+            }
+        }
+    }
+    .bottom-placeholder {
+        height: 72px;
+    }
+    .bottom-share-element {
+        width: 100%;
+        height: 72px;
+        position: fixed;
+        bottom: 0px;
+    }
+</style>

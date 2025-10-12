@@ -1,6 +1,6 @@
 <template>
-	<view class="flex-1">
-	  <form @submit="onFormSubmit" class="pt-[80px]">
+	<view class="m-page">
+	  <form @submit="onFormSubmit" style="padding: 80px;">
         <view>
           <text>服务地址</text>
           <input name="serviceUrl" :value="serviceUrl" placeholder="请输入服务地址" />

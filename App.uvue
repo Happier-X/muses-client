@@ -37,4 +37,7 @@
 </script>
 
 <style>
+	.m-page {
+		flex: 1;
+	}
 </style>

@@ -1,0 +1,53 @@
+<template>
+    <view class="m-navbar" :style="{marginTop:`${statusBarHeight}px`}">
+            <view class="left">
+                <slot name="left">
+                    <m-icon v-if="props.leftArrow" name="ef86" @click="back"></m-icon>
+                </slot>
+            </view>
+            <view class="center">
+                <slot>{{title}}</slot>
+            </view>
+            <view class="right">
+                <slot name="right"></slot>
+            </view>
+    </view>
+</template>
+
+<script setup lang="uts">
+    import MIcon from '@/components/ui/MIcon.uvue'
+    const props = defineProps({
+        title:{
+            type:String,
+            default:""
+        },
+        leftArrow:{
+            type:Boolean,
+            default:true
+        }
+    })
+    const statusBarHeight = ref(0);
+    const sys = uni.getSystemInfoSync();
+    statusBarHeight.value = sys.statusBarHeight;
+    const back = ()=>{
+        uni.navigateBack({})
+    }
+</script>
+
+<style lang="scss">
+    .m-navbar{
+        height: 56px;
+        border-bottom: 1px solid #eee;
+        flex-direction: row;
+        align-items: center;
+        justify-content:space-between;
+        .left,.center,.right{
+            height: 100%;
+            align-items: center;
+            justify-content: center;
+        }
+        .left,.right{
+            width: 48px;
+        }
+    }
+</style>

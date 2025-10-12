@@ -1,7 +1,7 @@
 <template>
-    <rice-popup v-model:show="visible" position="bottom" overlay-bg-color="rgba(0,0,0,0.5)">
+    <m-popup v-model:show="visible" position="bottom" overlay-bg-color="rgba(0,0,0,0.5)">
         测试内容
-    </rice-popup>
+    </m-popup>
 </template>
 <script setup lang="uts">
 
