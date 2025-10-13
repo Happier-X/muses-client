@@ -13,8 +13,8 @@ const iconCode = computed(() => {
 })
 </script>
 <style>
-  	@font-face{
-        font-family: "mingcute";
-        src: url("/static/fonts/icomoon.ttf");
-    }
+@font-face {
+    font-family: "mingcute";
+    src: url("/static/fonts/icomoon.ttf");
+}
 </style>

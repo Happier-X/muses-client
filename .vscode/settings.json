@@ -1,0 +1,11 @@
+{
+	"editor.defaultFormatter": "esbenp.prettier-vscode",
+	"[uts]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode"
+	},
+	"[uvue]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode"
+	},
+	"prettier.documentSelectors": ["**/*.uvue", "**/*.uts"],
+	"prettier.requireConfig": true,
+}

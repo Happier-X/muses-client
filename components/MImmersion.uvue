@@ -1,13 +1,14 @@
 <template>
-    <!-- <m-popup v-model:show="visible" position="bottom" overlay-bg-color="rgba(0,0,0,0.5)" :safe-area-inset-top="true">
-        <view>测试内容</view>
-    </m-popup> -->
+    <m-popup v-model="visible" size="30%">
+        <view style="height:100%">测试内容</view>
+    </m-popup>
 </template>
 <script setup lang="uts">
+import MPopup from '@/components/ui/MPopup.uvue'
 
 const visible = ref(false)
-
 const show = ()=>{
+    console.log(11111111111111)
     visible.value = true
 }
 

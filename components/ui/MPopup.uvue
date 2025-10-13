@@ -1,28 +1,71 @@
 <template>
-    <view class="size-full fixed top-0 right-0 bottom-0 left-0 pointer-events-none z-[999]" :style="{pointerEvents:'auto'}" v-show="visible" @touchmove.stop.prevent>
-				<view class="size-full absolute top-0 right-0 bottom-0 left-0 bg-black opacity-0 transition-opacity" :class="{ 'opacity-40': status == 1 }" @tap="maskClose"></view>
-				<view class="absolute bottom-0 transition-transform bg-white" :class="{ 'translate-y-0': status == 1,'translate-y-full': status == 2}"
-					:style="popupStyle"
-					@touchstart="onTouchStart"
-					@touchmove="onTouchMove"
-					@touchend="onTouchEnd"
-					@touchcancel="onTouchEnd">
-					<view :style="{ paddingBottom }">
-						<view>
-							<slot></slot>
-						</view>
-					</view>
-				</view>
-			</view>
+	<view
+		class="m-popup-container"
+		:class="`${direction}`"
+		v-show="visible"
+		@touchmove.stop.prevent
+	>
+		<view
+			class="m-popup-mask"
+			:class="{
+				'is-open': status == 1,
+				'is-close': status == 2
+			}"
+			@tap="maskClose"
+			v-if="showMask"
+		></view>
+		<view
+			class="m-popup"
+			:class="[
+				{
+					'is-open': status == 1,
+					'is-close': status == 2,
+					'stop-transition': swipe.isTouch
+				}
+			]"
+			:style="popupStyle"
+			@touchstart="onTouchStart"
+			@touchmove="onTouchMove"
+			@touchend="onTouchEnd"
+			@touchcancel="onTouchEnd"
+		>
+			<slot></slot>
+		</view>
+	</view>
 </template>
-<script setup lang="uts">
 
+<script setup lang="uts">
 // 组件属性定义
 const props = defineProps({
 	// 是否可见
 	modelValue: {
 		type: Boolean,
 		default: false
+	},
+	// 弹出方向
+	direction: {
+		type: String,
+		default: "bottom"
+	},
+	// 弹出框宽度
+	size: {
+		type: String,
+		default: "30%"
+	},
+	// 是否显示遮罩层
+	showMask: {
+		type: Boolean,
+		default: true
+	},
+	// 是否点击遮罩层关闭弹窗
+	maskClosable: {
+		type: Boolean,
+		default: true
+	},
+	// 拖拽关闭的阈值
+	swipeCloseThreshold: {
+		type: Number,
+		default: 150
 	}
 });
 
@@ -41,20 +84,33 @@ const isOpen = ref(false);
 // 标记弹出层是否已完全打开(动画结束)
 const isOpened = ref(false);
 
-// 弹出层z-index值
-const zIndex = ref(1000);
-
 // 计算弹出层高度
-const height = ref("200px");
+const height = computed(() => {
+	switch (props.direction) {
+		case "top":
+		case "bottom":
+			return props.size; // 顶部和底部弹出时使用传入的size
+		case "left":
+		case "right":
+			return "100%"; // 左右弹出时占满全高
+		default:
+			return "";
+	}
+});
 
 // 计算弹出层宽度
-const width = ref("100%")
-
-// 底部安全距离
-const paddingBottom = computed(() => {
-	let h = 0;
-	h += 20;
-	return h + "px";
+const width = computed(() => {
+	switch (props.direction) {
+		case "top":
+		case "bottom":
+			return "100%"; // 顶部和底部弹出时占满全宽
+		case "left":
+		case "right":
+		case "center":
+			return props.size; // 其他方向使用传入的size
+		default:
+			return "";
+	}
 });
 
 // 动画定时器
@@ -74,12 +130,11 @@ function open() {
 				// 设置打开状态
 				status.value = 1;
 				// 动画结束后触发opened事件
-				// @ts-ignore
 				timer = setTimeout(() => {
 					isOpened.value = true;
 					emit("opened");
 				}, 350);
-			},
+			},50
 		);
 	}
 }
@@ -89,27 +144,20 @@ function close() {
 	if (status.value == 1) {
 		// 重置打开状态
 		isOpened.value = false;
-
 		// 设置关闭状态
 		status.value = 2;
-
 		// 触发事件
 		emit("close");
-
 		// 清除未完成的定时器
 		if (timer != 0) {
 			clearTimeout(timer);
 		}
-
 		// 动画结束后隐藏弹出层
-		// @ts-ignore
 		timer = setTimeout(() => {
 			// 隐藏弹出层
 			visible.value = false;
-
 			// 重置状态
 			status.value = 0;
-
 			// 触发事件
 			emit("update:modelValue", false);
 			emit("closed");
@@ -119,22 +167,26 @@ function close() {
 
 // 点击遮罩层关闭
 function maskClose() {
-	close();
+	if (props.maskClosable) {
+		close();
+	}
+	emit("maskClose");
 }
-
+// 滑动状态类型定义
 type Swipe = {
-	isTouch: false, // 是否正在触摸
-	isMove: false, // 是否正在移动
-	startY: 0, // 触摸起始Y坐标
-	offsetY: 0, // 滑动偏移量
-}
+	isMove: boolean; // 是否移动
+	isTouch: boolean; // 是否处于触摸状态
+	startY: number; // 开始触摸的Y坐标
+	offsetY: number; // Y轴偏移量
+};
 
-const swipe = ref<Swipe>({
-		isTouch: false, // 是否正在触摸
-		isMove: false, // 是否正在移动
-		startY: 0, // 触摸起始Y坐标
-		offsetY: 0, // 滑动偏移量
-	});
+// 初始化滑动状态数据
+const swipe = reactive<Swipe>({
+	isMove: false, // 是否移动
+	isTouch: false, // 默认非触摸状态
+	startY: 0, // 初始Y坐标为0
+	offsetY: 0 // 初始偏移量为0
+});
 
 /**
  * 触摸开始事件处理
@@ -142,10 +194,13 @@ const swipe = ref<Swipe>({
  * 当弹出层获得焦点且允许滑动关闭时,记录触摸起始位置
  */
 function onTouchStart(e: UniTouchEvent) {
-	// if (isOpened.value) {
-		swipe.value.isTouch = true; // 标记开始触摸
-		swipe.value.startY = e.touches[0].clientY; // 记录起始Y坐标
-	// }
+	if (props.direction != "bottom") {
+		return;
+	}
+	if (isOpened.value) {
+		swipe.isTouch = true; // 标记开始触摸
+		swipe.startY = e.touches[0].clientY; // 记录起始Y坐标
+	}
 }
 
 /**
@@ -154,16 +209,14 @@ function onTouchStart(e: UniTouchEvent) {
  * 计算手指移动距离,更新弹出层位置
  */
 function onTouchMove(e: UniTouchEvent) {
-	if (swipe.value.isTouch) {
+	if (swipe.isTouch) {
 		// 标记为移动状态
-		swipe.value.isMove = true;
-
+		swipe.isMove = true;
 		// 计算Y轴偏移量
-		const offsetY = (e.touches[0] as UniTouch).pageY - swipe.value.startY;
-
+		const offsetY = (e.touches[0] as UniTouch).pageY - swipe.startY;
 		// 只允许向下滑动(offsetY > 0)
 		if (offsetY > 0) {
-			swipe.value.offsetY = offsetY;
+			swipe.offsetY = offsetY;
 		}
 	}
 }
@@ -173,20 +226,17 @@ function onTouchMove(e: UniTouchEvent) {
  * 根据滑动距离判断是否关闭弹出层
  */
 function onTouchEnd() {
-	if (swipe.value.isTouch) {
+	if (swipe.isTouch) {
 		// 结束触摸状态
-		swipe.value.isTouch = false;
-
+		swipe.isTouch = false;
 		// 结束移动状态
-		swipe.value.isMove = false;
-
+		swipe.isMove = false;
 		// 如果滑动距离超过阈值,则关闭弹出层
-		if (swipe.value.offsetY > 50) {
+		if (swipe.offsetY > props.swipeCloseThreshold) {
 			close();
 		}
-
 		// 重置偏移量
-		swipe.value.offsetY = 0;
+		swipe.offsetY = 0;
 	}
 }
 
@@ -196,16 +246,13 @@ function onTouchEnd() {
  */
 const popupStyle = computed(() => {
 	const style = {};
-
 	// 基础样式
 	style["height"] = height.value;
 	style["width"] = width.value;
-
 	// 处于触摸状态时添加位移效果
-	if (swipe.value.isTouch) {
-		style["transform"] = `translateY(${swipe.value.offsetY}px)`;
+	if (swipe.isTouch) {
+		style["transform"] = `translateY(${swipe.offsetY}px)`;
 	}
-
 	return style;
 });
 
@@ -224,6 +271,11 @@ watch(
 	}
 );
 
+// 监听状态变化
+watch(status, (val: number) => {
+	isOpen.value = val == 1;
+});
+
 defineExpose({
 	isOpened,
 	isOpen,
@@ -231,3 +283,118 @@ defineExpose({
 	close
 });
 </script>
+
+<style lang="scss" scoped>
+.m-popup-container {
+	width: 100%;
+	height: 100%;
+	position: fixed;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	pointer-events: auto;
+
+	.m-popup-mask {
+		width: 100%;
+		height: 100%;
+		position: absolute;
+		top: 0;
+		left: 0;
+		bottom: 0;
+		right: 0;
+		background-color: #000000;
+		opacity: 0;
+		transition-property: opacity;
+
+		&.is-open {
+			opacity: 0.4;
+		}
+
+		&.is-open,
+		&.is-close {
+			transition-duration: 0.3s;
+		}
+	}
+
+	.m-popup {
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		background-color: #fff;
+		transition-duration: 0.3s;
+		transition-property: transform;
+
+		&.stop-transition {
+			transition: none;
+		}
+	}
+
+	&.left {
+		.m-popup {
+			left: 0;
+			top: 0;
+			transform: translateX(-100%);
+
+			&.is-open {
+				transform: translateX(0);
+			}
+		}
+	}
+
+	&.right {
+		.m-popup {
+			right: 0;
+			top: 0;
+			transform: translateX(100%);
+
+			&.is-open {
+				transform: translateX(0);
+			}
+		}
+	}
+
+	&.top {
+		.m-popup {
+			left: 0;
+			top: 0;
+			transform: translateY(-100%);
+
+			&.is-open {
+				transform: translateY(0);
+			}
+		}
+	}
+
+	&.bottom {
+		& .m-popup {
+			left: 0;
+			bottom: 0;
+			transform: translateY(100%);
+
+			&.is-open {
+				transform: translateY(0);
+			}
+
+			&.is-close {
+				transform: translateY(100%);
+			}
+		}
+	}
+
+	&.center {
+		align-items: center;
+		justify-content: center;
+
+		&.m-popup {
+			transform: scale(1.3);
+			opacity: 0;
+			transition-property: transform, opacity;
+			&.is-open {
+				transform: translate(0, 0) scale(1);
+				opacity: 1;
+			}
+		}
+	}
+}
+</style>
