@@ -12,15 +12,15 @@
     </share-element>
     <view class="tab-bar">
       <view class="tab-bar-item" @tap="handleTabClick(0)">
-          <m-icon name="eeda"></m-icon>
+          <m-icon :name="selectedIndex == 0 ? 'eeda' : 'eedb'"></m-icon>
           <text :class="selectedIndex == 0 ? 'text-blue-500' : ''">首页</text>
       </view>
       <view class="tab-bar-item" @tap="handleTabClick(1)">
-          <m-icon name="f086"></m-icon>
+          <m-icon :name="selectedIndex == 1 ? 'f086' : 'f087'"></m-icon>
           <text :class="selectedIndex == 1 ? 'text-blue-500' : ''">音乐</text>
       </view>
       <view class="tab-bar-item" @tap="handleTabClick(2)">
-          <m-icon name="f454"></m-icon>
+          <m-icon :name="selectedIndex == 2 ? 'f454' : 'f455'"></m-icon>
           <text :class="selectedIndex == 2 ? 'text-blue-500' : ''">我的</text>
       </view>
     </view>

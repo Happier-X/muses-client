@@ -1,5 +1,5 @@
 <template>
-    <text style="font-family:mingcute;">{{ iconCode }}</text>
+    <text style="font-family:MingCute;">{{ iconCode }}</text>
 </template>
 <script setup lang="uts">
 const props = defineProps({
@@ -14,7 +14,7 @@ const iconCode = computed(() => {
 </script>
 <style>
 @font-face {
-    font-family: "mingcute";
-    src: url("/static/fonts/icomoon.ttf");
+    font-family: "MingCute";
+    src: url("/static/fonts/MingCute.ttf");
 }
 </style>

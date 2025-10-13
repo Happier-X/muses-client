@@ -2,7 +2,7 @@
     <view class="m-navbar" :style="{marginTop:`${statusBarHeight}px`}">
             <view class="left">
                 <slot name="left">
-                    <m-icon v-if="props.leftArrow" name="ef86" @tap="back"></m-icon>
+                    <m-icon v-if="props.leftArrow" name="ef87" @tap="back"></m-icon>
                 </slot>
             </view>
             <view class="center">
