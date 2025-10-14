@@ -1,29 +1,40 @@
 <template>
 	<m-popup v-model="visible" size="100%">
-		<view :style="`height:100%; padding-top: ${statusBarHeight}px;`">
-			<image class="cover" :src="`${serviceUrl}${playerCurrentSongDetail?.cover}`"></image>
+		<view
+			class="m-immersion-container"
+			:style="`padding-top: ${statusBarHeight}px;`"
+		>
+			<image class="cover" :src="`${serviceUrl}${playerCurrentSongDetail?.cover}`" mode="aspectFit"></image>
 			<view class="info">
 				<text>{{ playerCurrentSongDetail?.title }}</text>
 				<text>{{ playerCurrentSongDetail?.artist }}</text>
 			</view>
-			<view class="flex-1 min-h-0">
+			<view>
 				<text>测试内容</text>
 				<text>测试内容</text>
 				<text>测试内容</text>
 				<text>测试内容</text>
 			</view>
 			<slider></slider>
-			<view></view>
-			<m-icon
-				:name="playerIsPlaying ? 'f0f6' : 'f148'"
-				class="play-control-icon"
-				@tap.stop="playerIsPlaying ? playerPause() : playerPlay()"
-			></m-icon>
-			<m-icon name="efb4" class="play-queue-icon" @tap.stop="handleShowPlayQueue()"></m-icon>
-			<m-icon name="f2cc" class="play-queue-icon" @tap.stop="playerPlayPrevious()"></m-icon>
-			<m-icon name="f2ca" class="play-queue-icon" @tap.stop="playerPlayNext()"></m-icon>
-			<m-icon :name="playerPlayMode === 'orderPlay' ? 'efba' : 'f2b8'" class="play-queue-icon" @tap.stop="playerChangePlayMode()"></m-icon>
-			<m-icon :name="playerLoopMode === 'listLoop' ? 'f1ca' : 'f1cc'" class="play-queue-icon" @tap.stop="playerChangeLoopMode()"></m-icon>
+			<view class="play-control-bar">
+				<m-icon name="f2cc" @tap.stop="playerPlayPrevious()"></m-icon>
+				<m-icon
+					:name="playerIsPlaying ? 'f0f6' : 'f148'"
+					@tap.stop="playerIsPlaying ? playerPause() : playerPlay()"
+				></m-icon>
+				<m-icon name="f2ca" @tap.stop="playerPlayNext()"></m-icon>
+			</view>
+			<view class="other-control-bar">
+				<m-icon
+					:name="playerPlayMode === 'orderPlay' ? 'efba' : 'f2b8'"
+					@tap.stop="playerChangePlayMode()"
+				></m-icon>
+				<m-icon
+					:name="playerLoopMode === 'listLoop' ? 'f1ca' : 'f1cc'"
+					@tap.stop="playerChangeLoopMode()"
+				></m-icon>
+				<m-icon name="efb4" @tap.stop="handleShowPlayQueue()"></m-icon>
+			</view>
 		</view>
 	</m-popup>
 </template>
@@ -49,12 +60,29 @@ defineExpose({
 </script>
 
 <style lang="scss">
-.cover {
-	width: 200px;
-	height: 200px;
-	border-radius: 8px;
-}
-.info {
-	padding: 0 16px;
+.m-immersion-container {
+	align-items: center;
+	width: 100%;
+	height: 100%;
+	padding: 0 10%;
+	.cover {
+		width: 100%;
+		border-radius: 20px;
+		flex: 1;
+	}
+	.info {
+		padding: 0 16px;
+	}
+	.play-control-bar {
+		width: 100%;
+		flex-direction: row;
+		justify-content: space-around;
+	}
+	.other-control-bar {
+		width: 100%;
+		flex-direction: row;
+		justify-content: space-around;
+		margin-top: 16px;
+	}
 }
 </style>
