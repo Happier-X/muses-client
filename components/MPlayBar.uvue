@@ -5,8 +5,8 @@
             <text>{{ playerCurrentSongDetail?.title }}</text>
             <text>{{ playerCurrentSongDetail?.artist }}</text>
         </view>
-        <m-icon :name="playerIsPlaying ? 'f0f6' : 'f148'" class="play-pause-icon" @tap.stop="playerIsPlaying ? playerPause() : playerPlay()"></m-icon>
-        <m-icon name="efb4" class="play-queue-icon" @tap.stop="handleShowPlayQueue()"></m-icon>
+        <m-icon :size="24" :name="playerIsPlaying ? 'f0f6' : 'f148'" class="play-pause-icon" @tap.stop="playerIsPlaying ? playerPause() : playerPlay()"></m-icon>
+        <m-icon :size="24" name="efb4" @tap.stop="handleShowPlayQueue()"></m-icon>
     </view>
     <m-immersion ref="immersionRef"></m-immersion>
     <m-play-queue ref="playQueueRef"></m-play-queue>
@@ -48,10 +48,6 @@ const handleShowPlayQueue = ()=>{
         }
         .play-pause-icon {
             padding-right: 16px;
-            font-size: 24px;
-        }
-        .play-queue-icon {
-            font-size: 24px;
         }
     }
 </style>
