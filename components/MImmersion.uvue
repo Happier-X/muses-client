@@ -24,7 +24,7 @@
 				<text>测试内容</text>
 			</view>
 			<view style="width: 100%" :style="`padding-top: ${windowWidth * 0.08}px;`">
-				<slider></slider>
+				<slider :block-size="12" @touchmove.stop.prevent></slider>
 			</view>
 			<view class="play-control-bar" :style="`padding-top: ${windowWidth * 0.08}px;`">
 				<m-icon :size="32" name="f2cc" @tap.stop="playerPlayPrevious()"></m-icon>
