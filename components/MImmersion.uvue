@@ -1,25 +1,32 @@
 <template>
 	<m-popup v-model="visible" size="100%">
 		<view class="m-immersion-container" :style="`padding-top: ${statusBarHeight}px;`">
-			<image
-				class="cover"
-				:style="`width: ${windowWidth * 0.85}px;height: ${windowWidth * 0.85}px;`"
-				:src="`${serviceUrl}${playerCurrentSongDetail?.cover}`"
-				mode="aspectFit"
-			></image>
-			<view class="info">
-				<text>{{ playerCurrentSongDetail?.title }}</text>
+			<view
+				class="info"
+				:style="`padding-top: ${windowWidth * 0.08}px;padding-bottom: ${
+					windowWidth * 0.08
+				}px;`"
+			>
+				<text class="m-font-bold">{{ playerCurrentSongDetail?.title }}</text>
 				<text>{{ playerCurrentSongDetail?.artist }}</text>
 			</view>
-			<view>
+			<view class="cover">
+				<image
+					class="cover-img"
+					:style="`width: ${windowWidth * 0.84}px;height: ${windowWidth * 0.84}px;`"
+					:src="`${serviceUrl}${playerCurrentSongDetail?.cover}`"
+					mode="aspectFit"
+				></image>
+			</view>
+			<view class="lyric" :style="`padding-top: ${windowWidth * 0.08}px;`">
 				<text>测试内容</text>
 				<text>测试内容</text>
 				<text>测试内容</text>
 			</view>
-			<view style="width: 100%">
+			<view style="width: 100%" :style="`padding-top: ${windowWidth * 0.08}px;`">
 				<slider></slider>
 			</view>
-			<view class="play-control-bar">
+			<view class="play-control-bar" :style="`padding-top: ${windowWidth * 0.08}px;`">
 				<m-icon :size="32" name="f2cc" @tap.stop="playerPlayPrevious()"></m-icon>
 				<m-icon
 					:size="40"
@@ -28,7 +35,12 @@
 				></m-icon>
 				<m-icon :size="32" name="f2ca" @tap.stop="playerPlayNext()"></m-icon>
 			</view>
-			<view class="other-control-bar">
+			<view
+				class="other-control-bar"
+				:style="`padding-top: ${windowWidth * 0.08}px;padding-bottom: ${
+					windowWidth * 0.08
+				}px;`"
+			>
 				<m-icon
 					:size="24"
 					:name="playerPlayMode === 'orderPlay' ? 'efbb' : 'f2b9'"
@@ -71,12 +83,18 @@ defineExpose({
 	align-items: center;
 	width: 100%;
 	height: 100%;
-	padding: 0 7.5%;
-	.cover {
-		border-radius: 12px;
-	}
+	padding: 0 8%;
 	.info {
-		padding: 0 16px;
+		align-self: flex-start;
+	}
+	.cover {
+		flex: 1;
+		min-height: 0;
+		align-items: center;
+		justify-content: center;
+		.cover-img {
+			border-radius: 12px;
+		}
 	}
 	.play-control-bar {
 		width: 100%;
@@ -89,7 +107,6 @@ defineExpose({
 		flex-direction: row;
 		align-items: center;
 		justify-content: space-between;
-		margin-top: 16px;
 	}
 }
 </style>

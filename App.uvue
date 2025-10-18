@@ -40,4 +40,7 @@
 	.m-page {
 		flex: 1;
 	}
+	.m-font-bold {
+		font-weight: bold;
+	}
 </style>
