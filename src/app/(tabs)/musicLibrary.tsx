@@ -1,34 +1,32 @@
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
-import { Link, Stack } from 'expo-router'
+import { View } from 'react-native'
+import MusesCell from '@/components/shared/MusesCell'
+import MusesCellGroup from '@/components/shared/MusesCellGroup'
 
 export default function MusicLibrary() {
+  const menuList = [
+    {
+      id: 1,
+      title: '歌曲',
+      value: '123',
+    },
+    {
+      id: 2,
+      title: '专辑',
+      value: '456',
+    },
+    {
+      id: 3,
+      title: '艺术家',
+      value: '789',
+    },
+  ]
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>这里是音乐库页</Text>
+    <View className="flex-1">
+      <MusesCellGroup title="音乐库">
+        {menuList.map((item) => (
+          <MusesCell key={item.id} title={item.title} value={item.value} />
+        ))}
+      </MusesCellGroup>
     </View>
   )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  title: {
-    fontSize: 40,
-    fontWeight: 'bold',
-    color: '#e29447',
-  },
-  link: {
-    marginTop: 20,
-    fontSize: 20,
-    color: '#1f99b0',
-  },
-  buttonText: {
-    marginTop: 20,
-    fontSize: 20,
-    color: '#ff7f6f',
-  },
-})

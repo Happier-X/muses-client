@@ -2,19 +2,19 @@ import createIconSetFromIcoMoon from '@expo/vector-icons/createIconSetFromIcoMoo
 import { useFonts } from 'expo-font'
 import React from 'react'
 
+type MusesIconProps = {
+  name: string
+  size?: number
+  color?: string
+}
+
 const Icon = createIconSetFromIcoMoon(
   require('@/assets/icomoon/selection.json'),
   'IcoMoon',
   'icomoon.ttf',
 )
 
-interface IcoMoonIconProps {
-  name: string
-  size?: number
-  color?: string
-}
-
-export default function IcoMoonIcon({ name, size = 30, color = '#000' }: IcoMoonIconProps) {
+const MusesIcon: React.FC<MusesIconProps> = ({ name, size = 24, color = '#000' }) => {
   const [fontsLoaded] = useFonts({
     IcoMoon: require('@/assets/icomoon/icomoon.ttf'),
   })
@@ -23,3 +23,5 @@ export default function IcoMoonIcon({ name, size = 30, color = '#000' }: IcoMoon
 
   return <Icon name={name} size={size} color={color} />
 }
+
+export default MusesIcon

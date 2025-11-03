@@ -1,4 +1,4 @@
-import IcoMoonIcon from '@/components/shared/IcoMoonIcon'
+import MusesIcon from '@/components/shared/MusesIcon'
 import { Tabs } from 'expo-router'
 
 export default function TabLayout() {
@@ -12,21 +12,21 @@ export default function TabLayout() {
         name="index"
         options={{
           title: '首页',
-          tabBarIcon: ({ color }) => <IcoMoonIcon name="home_3_line" size={25} color={color} />,
+          tabBarIcon: ({ color }) => <MusesIcon name="home_3_line" color={color} />,
         }}
       />
       <Tabs.Screen
         name="musicLibrary"
         options={{
           title: '音乐库',
-          tabBarIcon: ({ color }) => <IcoMoonIcon name="music_line" size={25} color={color} />,
+          tabBarIcon: ({ color }) => <MusesIcon name="music_line" color={color} />,
         }}
       />
       <Tabs.Screen
         name="my"
         options={{
           title: '我的',
-          tabBarIcon: ({ color }) => <IcoMoonIcon name="user_2_line" size={25} color={color} />,
+          tabBarIcon: ({ color }) => <MusesIcon name="user_2_line" color={color} />,
         }}
       />
     </Tabs>
