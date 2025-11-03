@@ -1,22 +1,42 @@
 {
   "name": "muses-client",
   "version": "1.0.0",
-  "main": "index.ts",
+  "main": "expo-router/entry",
   "scripts": {
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
-    "web": "expo start --web"
+    "web": "expo start --web",
+    "format": "prettier --write \"**/*.{js,json,md,ts,jsx,tsx}\""
   },
   "dependencies": {
-    "expo": "~54.0.20",
+    "babel-preset-expo": "~54.0.0",
+    "expo": "^54.0.21",
+    "expo-constants": "~18.0.10",
+    "expo-linking": "~8.0.8",
+    "expo-router": "~6.0.14",
     "expo-status-bar": "~3.0.8",
+    "nativewind": "^5.0.0-preview.2",
     "react": "19.1.0",
-    "react-native": "0.81.5"
+    "react-dom": "19.1.0",
+    "react-native": "0.81.5",
+    "react-native-css": "^3.0.1",
+    "react-native-reanimated": "~4.1.1",
+    "react-native-safe-area-context": "~5.6.0",
+    "react-native-screens": "~4.16.0",
+    "urlcat": "^3.1.0"
   },
   "devDependencies": {
+    "@tailwindcss/postcss": "^4.1.16",
     "@types/react": "~19.1.0",
+    "babel-plugin-module-resolver": "^5.0.2",
+    "postcss": "^8.5.6",
+    "prettier": "^3.6.2",
+    "tailwindcss": "^4.1.16",
     "typescript": "~5.9.2"
   },
-  "private": true
+  "private": true,
+  "overrides": {
+    "lightningcss": "1.30.1"
+  }
 }
