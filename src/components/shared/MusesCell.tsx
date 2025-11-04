@@ -15,14 +15,14 @@ const MusesCell: React.FC<MusesCellProps> = ({ icon, title, value, arrow, isFirs
     <View
       className={`flex-row items-center justify-between bg-white p-4 ${isFirst ? 'rounded-t-lg' : ''} ${isLast ? 'rounded-b-lg' : ''}`}
     >
-      <>
+      <View className="flex-row items-center justify-center gap-4">
         {icon && <MusesIcon name={icon} />}
         <Text>{title}</Text>
-      </>
-      <>
+      </View>
+      <View className="flex-row items-center justify-center gap-4">
         {value && <Text className="ml-auto text-right text-gray-500">{value}</Text>}
         {arrow && <MusesIcon name="right_line" color="gray" />}
-      </>
+      </View>
     </View>
   )
 }
