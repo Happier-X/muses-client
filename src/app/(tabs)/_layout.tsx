@@ -1,5 +1,5 @@
-import MusesIcon from '@/components/shared/MusesIcon'
 import { Tabs } from 'expo-router'
+import { House as HouseIcon, Music4 as MusicIcon, User as MyIcon } from 'lucide-react-native'
 
 export default function TabLayout() {
   return (
@@ -12,21 +12,21 @@ export default function TabLayout() {
         name="index"
         options={{
           title: '首页',
-          tabBarIcon: ({ color }) => <MusesIcon name="home_3_line" color={color} />,
+          tabBarIcon: ({ color }) => <HouseIcon color={color} />,
         }}
       />
       <Tabs.Screen
         name="music"
         options={{
           title: '音乐',
-          tabBarIcon: ({ color }) => <MusesIcon name="music_line" color={color} />,
+          tabBarIcon: ({ color }) => <MusicIcon color={color} />,
         }}
       />
       <Tabs.Screen
         name="my"
         options={{
           title: '我的',
-          tabBarIcon: ({ color }) => <MusesIcon name="user_2_line" color={color} />,
+          tabBarIcon: ({ color }) => <MyIcon color={color} />,
         }}
       />
     </Tabs>

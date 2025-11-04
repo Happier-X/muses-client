@@ -1,40 +1,48 @@
-import { View } from 'react-native'
 import MusesCell from '@/components/shared/MusesCell'
 import MusesCellGroup from '@/components/shared/MusesCellGroup'
+import {
+  Disc3 as AlbumIcon,
+  MicVocal as ArtistIcon,
+  Heart as LikeIcon,
+  ListMusic as PlaylistIcon,
+  History as RecentPlayIcon,
+  Music2 as SongIcon,
+} from 'lucide-react-native'
+import { View } from 'react-native'
 
 export default function Music() {
   const musicLibraryMenuList = [
     {
       id: 1,
       title: '歌曲',
-      icon: 'music_2_line',
+      leftIcon: <SongIcon size={16} />,
     },
     {
       id: 2,
       title: '专辑',
-      icon: 'album_line',
+      leftIcon: <AlbumIcon size={16} />,
     },
     {
       id: 3,
       title: '艺术家',
-      icon: 'microphone_line',
+      leftIcon: <ArtistIcon size={16} />,
     },
   ]
   const myMenuList = [
     {
       id: 1,
       title: '歌单',
-      icon: 'playlist_line',
+      leftIcon: <PlaylistIcon size={16} />,
     },
     {
       id: 2,
       title: '喜欢',
-      icon: 'heart_line',
+      leftIcon: <LikeIcon size={16} />,
     },
     {
       id: 3,
       title: '最近播放',
-      icon: 'history_line',
+      leftIcon: <RecentPlayIcon size={16} />,
     },
   ]
   return (
@@ -44,7 +52,7 @@ export default function Music() {
           <MusesCell
             key={item.id}
             title={item.title}
-            icon={item.icon}
+            leftIcon={item.leftIcon}
             arrow
             isFirst={index === 0}
             isLast={index === musicLibraryMenuList.length - 1}
@@ -56,7 +64,7 @@ export default function Music() {
           <MusesCell
             key={item.id}
             title={item.title}
-            icon={item.icon}
+            leftIcon={item.leftIcon}
             arrow
             isFirst={index === 0}
             isLast={index === myMenuList.length - 1}

@@ -1,8 +1,8 @@
-import MusesIcon from '@/components/shared/MusesIcon'
+import { ChevronRight as ArrowRightIcon } from 'lucide-react-native'
 import { Text, View } from 'react-native'
 
 type MusesCellProps = {
-  icon?: string
+  leftIcon?: React.ReactNode
   title: string
   value?: string
   arrow?: boolean
@@ -10,18 +10,25 @@ type MusesCellProps = {
   isLast?: boolean
 }
 
-const MusesCell: React.FC<MusesCellProps> = ({ icon, title, value, arrow, isFirst, isLast }) => {
+const MusesCell: React.FC<MusesCellProps> = ({
+  leftIcon,
+  title,
+  value,
+  arrow,
+  isFirst,
+  isLast,
+}) => {
   return (
     <View
       className={`flex-row items-center justify-between bg-white p-4 ${isFirst ? 'rounded-t-lg' : ''} ${isLast ? 'rounded-b-lg' : ''}`}
     >
       <View className="flex-row items-center justify-center gap-4">
-        {icon && <MusesIcon name={icon} />}
+        {leftIcon && leftIcon}
         <Text>{title}</Text>
       </View>
       <View className="flex-row items-center justify-center gap-4">
         {value && <Text className="ml-auto text-right text-gray-500">{value}</Text>}
-        {arrow && <MusesIcon name="right_line" color="gray" />}
+        {arrow && <ArrowRightIcon color="gray" size={16} />}
       </View>
     </View>
   )
