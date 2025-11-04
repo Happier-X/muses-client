@@ -2,8 +2,8 @@ import { View } from 'react-native'
 import MusesCell from '@/components/shared/MusesCell'
 import MusesCellGroup from '@/components/shared/MusesCellGroup'
 
-export default function MusicLibrary() {
-  const musicMenuList = [
+export default function Music() {
+  const musicLibraryMenuList = [
     {
       id: 1,
       title: '歌曲',
@@ -39,15 +39,15 @@ export default function MusicLibrary() {
   ]
   return (
     <View className="flex-1">
-      <MusesCellGroup title="音乐">
-        {musicMenuList.map((item, index) => (
+      <MusesCellGroup title="音乐库">
+        {musicLibraryMenuList.map((item, index) => (
           <MusesCell
             key={item.id}
             title={item.title}
             icon={item.icon}
             arrow
             isFirst={index === 0}
-            isLast={index === musicMenuList.length - 1}
+            isLast={index === musicLibraryMenuList.length - 1}
           />
         ))}
       </MusesCellGroup>

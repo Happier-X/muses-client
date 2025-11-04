@@ -16,9 +16,9 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="musicLibrary"
+        name="music"
         options={{
-          title: '音乐库',
+          title: '音乐',
           tabBarIcon: ({ color }) => <MusesIcon name="music_line" color={color} />,
         }}
       />
