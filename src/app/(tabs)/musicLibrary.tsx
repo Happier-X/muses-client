@@ -7,24 +7,21 @@ export default function MusicLibrary() {
     {
       id: 1,
       title: '歌曲',
-      value: '123',
     },
     {
       id: 2,
       title: '专辑',
-      value: '456',
     },
     {
       id: 3,
       title: '艺术家',
-      value: '789',
     },
   ]
   return (
     <View className="flex-1">
       <MusesCellGroup title="音乐库">
-        {menuList.map((item) => (
-          <MusesCell key={item.id} title={item.title} value={item.value} />
+        {menuList.map((item, index) => (
+          <MusesCell key={item.id} title={item.title} arrow isFirst={index === 0} isLast={index === menuList.length - 1} />
         ))}
       </MusesCellGroup>
     </View>

@@ -8,9 +8,9 @@ type MusesCellGroupProps = {
 
 const MusesCellGroup: React.FC<MusesCellGroupProps> = ({ title, children }) => {
   return (
-    <View className="p-4">
-      <Text>{title}</Text>
-      {children}
+    <View className="p-4 gap-4">
+      <Text className="text-xl font-bold text-black">{title}</Text>
+      <View>{children}</View>
     </View>
   )
 }
