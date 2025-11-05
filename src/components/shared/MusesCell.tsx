@@ -1,5 +1,5 @@
 import { ChevronRight as ArrowRightIcon } from 'lucide-react-native'
-import { Text, View } from 'react-native'
+import { PressableProps, Text, View, Pressable } from 'react-native'
 
 type MusesCellProps = {
   leftIcon?: React.ReactNode
@@ -8,6 +8,7 @@ type MusesCellProps = {
   arrow?: boolean
   isFirst?: boolean
   isLast?: boolean
+  onPress?: PressableProps['onPress']
 }
 
 const MusesCell: React.FC<MusesCellProps> = ({
@@ -17,10 +18,12 @@ const MusesCell: React.FC<MusesCellProps> = ({
   arrow,
   isFirst,
   isLast,
+  onPress,
 }) => {
   return (
-    <View
-      className={`flex-row items-center justify-between bg-white p-4 ${isFirst ? 'rounded-t-lg' : ''} ${isLast ? 'rounded-b-lg' : ''}`}
+    <Pressable
+      onPress={onPress}
+      className={`flex-row items-center bg-white active:bg-gray-200 justify-between p-4 ${isFirst ? 'rounded-t-lg' : ''} ${isLast ? 'rounded-b-lg' : ''} will-change-pressable`}
     >
       <View className="flex-row items-center justify-center gap-4">
         {leftIcon && leftIcon}
@@ -30,7 +33,7 @@ const MusesCell: React.FC<MusesCellProps> = ({
         {value && <Text className="ml-auto text-right text-gray-500">{value}</Text>}
         {arrow && <ArrowRightIcon color="gray" size={16} />}
       </View>
-    </View>
+    </Pressable>
   )
 }
 
