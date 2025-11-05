@@ -18,6 +18,7 @@ export default function Layout() {
     >
       <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
       <Stack.Screen name="music/song" options={{ title: '歌曲' }} />
+      <Stack.Screen name="auth" options={{ headerShown: false }} />
     </Stack>
   )
 }

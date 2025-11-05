@@ -54,7 +54,7 @@ export default function Music() {
     },
   ]
   return (
-    <View className="flex-1">
+    <View className="flex-1 min-h-0">
       <MusesCellGroup title="音乐库">
         {musicLibraryMenuList.map((item, index) => (
           <MusesCell
