@@ -17,8 +17,8 @@ export default function Auth() {
   return (
     <SafeAreaProvider>
       <SafeAreaView style={styles.container}>
-        <View className="w-[80%] gap-4 border-gray-300 rounded-md p-4">
-          <Text className="text-3xl font-bold text-center leading-8">Muses</Text>
+        <View style={styles.formContainer}>
+          <Text style={styles.title}>Muses</Text>
           <form.Field
             name="serverAddress"
             validators={{
@@ -29,14 +29,11 @@ export default function Auth() {
               <>
                 <Text>服务器地址</Text>
                 <TextInput
-                  className="border-2"
                   placeholder="请输入服务器地址"
                   value={field.state.value}
                   onChangeText={field.handleChange}
                 />
-                {!field.state.meta.isValid && (
-                  <Text className="text-red-400">{field.state.meta.errors.join(', ')}</Text>
-                )}
+                {!field.state.meta.isValid && <Text>{field.state.meta.errors.join(', ')}</Text>}
               </>
             )}
           </form.Field>
@@ -50,9 +47,7 @@ export default function Auth() {
               <>
                 <Text>用户名</Text>
                 <TextInput value={field.state.value} onChangeText={field.handleChange} />
-                {!field.state.meta.isValid && (
-                  <Text className="text-red-400">{field.state.meta.errors.join(', ')}</Text>
-                )}
+                {!field.state.meta.isValid && <Text>{field.state.meta.errors.join(', ')}</Text>}
               </>
             )}
           </form.Field>
@@ -66,9 +61,7 @@ export default function Auth() {
               <>
                 <Text>密码</Text>
                 <TextInput value={field.state.value} onChangeText={field.handleChange} />
-                {!field.state.meta.isValid && (
-                  <Text className="text-red-400">{field.state.meta.errors.join(', ')}</Text>
-                )}
+                {!field.state.meta.isValid && <Text>{field.state.meta.errors.join(', ')}</Text>}
               </>
             )}
           </form.Field>
@@ -84,7 +77,17 @@ export default function Auth() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    minHeight: 0,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  formContainer: {
+    width: '80%',
+    gap: 4,
+  },
+  title: {
+    fontSize: 32,
+    fontWeight: 'bold',
+    color: '#4f9df7',
   },
 })

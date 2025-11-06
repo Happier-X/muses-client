@@ -1,5 +1,5 @@
 import { ChevronRight as ArrowRightIcon } from 'lucide-react-native'
-import { PressableProps, Text, View, Pressable } from 'react-native'
+import { PressableProps, Text, View, Pressable, StyleSheet } from 'react-native'
 
 type MusesCellProps = {
   leftIcon?: React.ReactNode
@@ -23,14 +23,14 @@ const MusesCell: React.FC<MusesCellProps> = ({
   return (
     <Pressable
       onPress={onPress}
-      className={`flex-row items-center bg-white active:bg-gray-200 justify-between p-4 ${isFirst ? 'rounded-t-lg' : ''} ${isLast ? 'rounded-b-lg' : ''} will-change-pressable`}
+      style={[styles.cell, isFirst && styles.firstCell, isLast && styles.lastCell]}
     >
-      <View className="flex-row items-center justify-center gap-4">
+      <View style={styles.content}>
         {leftIcon && leftIcon}
         <Text>{title}</Text>
       </View>
-      <View className="flex-row items-center justify-center gap-4">
-        {value && <Text className="ml-auto text-right text-gray-500">{value}</Text>}
+      <View style={styles.content}>
+        {value && <Text style={styles.value}>{value}</Text>}
         {arrow && <ArrowRightIcon color="gray" size={16} />}
       </View>
     </Pressable>
@@ -38,3 +38,31 @@ const MusesCell: React.FC<MusesCellProps> = ({
 }
 
 export default MusesCell
+
+const styles = StyleSheet.create({
+  cell: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    padding: 12,
+    backgroundColor: 'white',
+  },
+  firstCell: {
+    borderTopLeftRadius: 12,
+    borderTopRightRadius: 12,
+  },
+  lastCell: {
+    borderBottomLeftRadius: 12,
+    borderBottomRightRadius: 12,
+  },
+  content: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 4,
+  },
+  value: {
+    color: 'gray',
+    textAlign: 'right',
+  },
+})

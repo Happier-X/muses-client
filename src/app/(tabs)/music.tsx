@@ -8,7 +8,7 @@ import {
   History as RecentPlayIcon,
   Music2 as SongIcon,
 } from 'lucide-react-native'
-import { View } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 import { useRouter } from 'expo-router'
 
 export default function Music() {
@@ -54,7 +54,7 @@ export default function Music() {
     },
   ]
   return (
-    <View className="flex-1 min-h-0">
+    <View style={styles.container}>
       <MusesCellGroup title="音乐库">
         {musicLibraryMenuList.map((item, index) => (
           <MusesCell
@@ -84,3 +84,10 @@ export default function Music() {
     </View>
   )
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    minHeight: 0,
+  },
+})

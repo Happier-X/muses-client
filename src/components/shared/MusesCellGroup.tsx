@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text } from 'react-native'
+import { View, Text, StyleSheet } from 'react-native'
 
 type MusesCellGroupProps = {
   title: string
@@ -8,11 +8,23 @@ type MusesCellGroupProps = {
 
 const MusesCellGroup: React.FC<MusesCellGroupProps> = ({ title, children }) => {
   return (
-    <View className="p-4 gap-4">
-      <Text className="text-xl font-bold text-black">{title}</Text>
+    <View style={styles.cellGroup}>
+      <Text style={styles.title}>{title}</Text>
       <View>{children}</View>
     </View>
   )
 }
 
 export default MusesCellGroup
+
+const styles = StyleSheet.create({
+  cellGroup: {
+    padding: 12,
+    gap: 4,
+  },
+  title: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: 'black',
+  },
+})

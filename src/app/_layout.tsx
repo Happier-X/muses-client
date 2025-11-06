@@ -1,4 +1,3 @@
-import '@/assets/global.css'
 import MusesIconButton from '@/components/shared/MusesIconButton'
 import { Stack, useRouter } from 'expo-router'
 import { ChevronLeft as ArrowLeftIcon } from 'lucide-react-native'
