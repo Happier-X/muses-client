@@ -1,5 +1,5 @@
 import { ChevronRight as ArrowRightIcon } from 'lucide-react-native'
-import { PressableProps, Text, View, Pressable, StyleSheet } from 'react-native'
+import { GestureResponderEvent, Text, View, Pressable, StyleSheet } from 'react-native'
 
 type MusesCellProps = {
   leftIcon?: React.ReactNode
@@ -8,7 +8,7 @@ type MusesCellProps = {
   arrow?: boolean
   isFirst?: boolean
   isLast?: boolean
-  onPress?: PressableProps['onPress']
+  onPress?: (event: GestureResponderEvent) => void
 }
 
 const MusesCell: React.FC<MusesCellProps> = ({

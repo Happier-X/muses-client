@@ -1,8 +1,8 @@
-import { Pressable, PressableProps } from 'react-native'
+import { Pressable, GestureResponderEvent } from 'react-native'
 
 type MusesIconButtonProps = {
   icon?: React.ReactNode
-  onPress?: PressableProps['onPress']
+  onPress?: (event: GestureResponderEvent) => void
 }
 
 const MusesIconButton: React.FC<MusesIconButtonProps> = ({ icon, onPress }) => {
