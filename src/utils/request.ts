@@ -64,65 +64,65 @@ const request = async (url, { method = 'GET', params, body } = {}) => {
 
 export default request
 
-/**
- * GET 请求
- * @param {string} url - 请求地址
- * @param {object} [params] - 查询参数
- * @returns {Promise<any>} 返回解析后的JSON数据
- *
- * @example
- * // 基本 GET 请求
- * get('/articles').then(data => console.log(data))
- *
- * @example
- * // 带查询参数的 GET 请求
- * get('/articles', { page: 1, limit: 10 })
- */
-export const get = (url, params) => request(url, { method: 'GET', params })
+// /**
+//  * GET 请求
+//  * @param {string} url - 请求地址
+//  * @param {object} [params] - 查询参数
+//  * @returns {Promise<any>} 返回解析后的JSON数据
+//  *
+//  * @example
+//  * // 基本 GET 请求
+//  * get('/articles').then(data => console.log(data))
+//  *
+//  * @example
+//  * // 带查询参数的 GET 请求
+//  * get('/articles', { page: 1, limit: 10 })
+//  */
+// export const get = (url, params) => request(url, { method: 'GET', params })
 
-/**
- * POST 请求
- * @param {string} url - 请求地址
- * @param {object} body - 请求体数据
- * @returns {Promise<any>} 返回解析后的 JSON 数据
- *
- * @example
- * // 提交表单数据
- * post('/auth/sign_in', { login: 'user', password: '123123' })
- */
-export const post = (url, body) => request(url, { method: 'POST', body })
+// /**
+//  * POST 请求
+//  * @param {string} url - 请求地址
+//  * @param {object} body - 请求体数据
+//  * @returns {Promise<any>} 返回解析后的 JSON 数据
+//  *
+//  * @example
+//  * // 提交表单数据
+//  * post('/auth/sign_in', { login: 'user', password: '123123' })
+//  */
+// export const post = (url, body) => request(url, { method: 'POST', body })
 
-/**
- * PUT 请求
- * @param {string} url - 请求地址
- * @param {object} body - 请求体数据
- * @returns {Promise<any>} 返回解析后的 JSON 数据
- *
- * @example
- * // 更新数据
- * put('/users/info', { nickname: 'clwy', company: '长乐未央公司' })
- */
-export const put = (url, body) => request(url, { method: 'PUT', body })
+// /**
+//  * PUT 请求
+//  * @param {string} url - 请求地址
+//  * @param {object} body - 请求体数据
+//  * @returns {Promise<any>} 返回解析后的 JSON 数据
+//  *
+//  * @example
+//  * // 更新数据
+//  * put('/users/info', { nickname: 'clwy', company: '长乐未央公司' })
+//  */
+// export const put = (url, body) => request(url, { method: 'PUT', body })
 
-/**
- * PATCH 请求
- * @param {string} url - 请求地址
- * @param {object} body - 请求体数据
- * @returns {Promise<any>} 返回解析后的 JSON 数据
- *
- * @example
- * // 部分更新数据
- * 注意：本项目无任何接口使用 PATCH
- */
-export const patch = (url, body) => request(url, { method: 'PATCH', body })
+// /**
+//  * PATCH 请求
+//  * @param {string} url - 请求地址
+//  * @param {object} body - 请求体数据
+//  * @returns {Promise<any>} 返回解析后的 JSON 数据
+//  *
+//  * @example
+//  * // 部分更新数据
+//  * 注意：本项目无任何接口使用 PATCH
+//  */
+// export const patch = (url, body) => request(url, { method: 'PATCH', body })
 
-/**
- * DELETE 请求
- * @param {string} url - 请求地址
- * @returns {Promise<any>} 返回解析后的 JSON 数据
- *
- * @example
- * // 注销用户
- * del('/users/me')
- */
-export const del = (url) => request(url, { method: 'DELETE' })
+// /**
+//  * DELETE 请求
+//  * @param {string} url - 请求地址
+//  * @returns {Promise<any>} 返回解析后的 JSON 数据
+//  *
+//  * @example
+//  * // 注销用户
+//  * del('/users/me')
+//  */
+// export const del = (url) => request(url, { method: 'DELETE' })
