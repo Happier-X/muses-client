@@ -1,5 +1,5 @@
 import { useForm } from '@tanstack/react-form'
-import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native'
+import { Button, StyleSheet, Text, TextInput, View } from 'react-native'
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context'
 import { z } from 'zod'
 
@@ -65,9 +65,7 @@ export default function Auth() {
               </>
             )}
           </form.Field>
-          <Pressable onPress={form.handleSubmit}>
-            <Text>提交</Text>
-          </Pressable>
+          <Button title="提交" onPress={form.handleSubmit} />
         </View>
       </SafeAreaView>
     </SafeAreaProvider>
