@@ -1,11 +1,11 @@
+import authApi from '@/api/auth'
 import { useForm } from '@tanstack/react-form'
-import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useMutation } from '@tanstack/react-query'
+import { useRouter } from 'expo-router'
+import 'expo-sqlite/localStorage/install'
 import { Button, StyleSheet, Text, TextInput, View } from 'react-native'
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context'
 import { z } from 'zod'
-import authApi from '@/api/auth'
-import 'expo-sqlite/localStorage/install'
-import { useRouter } from 'expo-router'
 
 export default function Auth() {
   const router = useRouter()
