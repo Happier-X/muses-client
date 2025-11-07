@@ -1,17 +1,40 @@
 import { useForm } from '@tanstack/react-form'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { Button, StyleSheet, Text, TextInput, View } from 'react-native'
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context'
 import { z } from 'zod'
+import authApi from '@/api/auth'
+import 'expo-sqlite/localStorage/install'
+import { useRouter } from 'expo-router'
 
 export default function Auth() {
+  const router = useRouter()
   const form = useForm({
     defaultValues: {
-      serverAddress: '',
-      username: '',
+      serverAddress: globalThis.localStorage.getItem('serverAddress') || '',
+      username: globalThis.localStorage.getItem('username') || '',
       password: '',
     },
     onSubmit: ({ value }) => {
-      alert(JSON.stringify(value, null, 2))
+      globalThis.localStorage.setItem('serverAddress', value.serverAddress)
+      globalThis.localStorage.setItem('username', value.username)
+      loginMutation.mutate({
+        username: value.username,
+        password: value.password,
+      })
+    },
+  })
+  const loginMutation = useMutation({
+    mutationFn: (body: LoginBody) => authApi.login(body),
+    onSuccess: (res) => {
+      if (res.code == 200) {
+        globalThis.localStorage.setItem('accessToken', res.data.accessToken)
+        globalThis.localStorage.setItem('refreshToken', res.data.refreshToken)
+        router.replace('(tabs)')
+      }
+    },
+    onError: (err) => {
+      console.error('登录失败', err)
     },
   })
   return (
