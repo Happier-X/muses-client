@@ -39,12 +39,11 @@ const request = async (url: string, { method = 'GET', params, body }: RequestOpt
   // 完整的接口地址
   const apiUrl = globalThis.localStorage.getItem('serverAddress')
   const requestUrl = urlcat(apiUrl, url, params)
-  let token = null
+  let token = globalThis.localStorage.getItem('accessToken') || ''
   // 请求头
   const headers = {
     Accept: 'application/json',
     'Content-Type': 'application/json',
-    // 待完成：传递 token
     Authorization: `Bearer ${token}`,
   }
 
