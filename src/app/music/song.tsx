@@ -1,14 +1,17 @@
-import { StyleSheet, Text, View } from 'react-native'
-import { Link } from 'expo-router'
+import { FlatList, StyleSheet, Text, View } from 'react-native'
 
 export default function Song() {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>这里是歌曲页</Text>
-
-      <Link href="../" style={styles.backText}>
-        返回
-      </Link>
+      <View style={styles.header}></View>
+      <FlatList
+        data={[]}
+        renderItem={({ item }) => (
+          <View style={styles.item}>
+            <Text>{item.title}</Text>
+          </View>
+        )}
+      ></FlatList>
     </View>
   )
 }
@@ -16,18 +19,9 @@ export default function Song() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    minHeight: 0,
   },
-  title: {
-    fontSize: 40,
-    fontWeight: 'bold',
-    color: '#4f9df7',
+  header: {
+    height: 200,
   },
-  backText: {
-    marginTop: 20,
-    fontSize: 20,
-    color: '#67c1b5',
-  },
-})                             
+})

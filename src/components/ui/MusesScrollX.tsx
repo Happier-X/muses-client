@@ -1,4 +1,4 @@
-import MusesIconButton from '@/components/shared/MusesIconButton'
+import MusesIconButton from '@/components/ui/MusesIconButton'
 import { ChevronRight as ArrowRightIcon } from 'lucide-react-native'
 import React from 'react'
 import {

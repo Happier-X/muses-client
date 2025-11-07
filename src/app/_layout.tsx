@@ -1,4 +1,4 @@
-import MusesIconButton from '@/components/shared/MusesIconButton'
+import MusesIconButton from '@/components/ui/MusesIconButton'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { Stack, useRouter } from 'expo-router'
 import { ChevronLeft as ArrowLeftIcon } from 'lucide-react-native'

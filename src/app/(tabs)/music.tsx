@@ -1,5 +1,5 @@
-import MusesCell from '@/components/shared/MusesCell'
-import MusesCellGroup from '@/components/shared/MusesCellGroup'
+import MusesCell from '@/components/ui/MusesCell'
+import MusesCellGroup from '@/components/ui/MusesCellGroup'
 import {
   Disc3 as AlbumIcon,
   MicVocal as ArtistIcon,

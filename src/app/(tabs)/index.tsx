@@ -1,5 +1,5 @@
 import { StyleSheet, Text, ScrollView } from 'react-native'
-import MusesScrollX from '@/components/shared/MusesScrollX'
+import MusesScrollX from '@/components/ui/MusesScrollX'
 
 export default function Index() {
   return (
