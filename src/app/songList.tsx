@@ -5,6 +5,7 @@ import { Image } from 'expo-image'
 import { useLocalSearchParams } from 'expo-router'
 import { EllipsisVertical as MoreIcon } from 'lucide-react-native'
 import { FlatList, StyleSheet, Text, View, Pressable, GestureResponderEvent } from 'react-native'
+import { usePlayerStore } from '@/stores/playerStore'
 
 type SongListItemProps = {
   cover: string
@@ -15,6 +16,8 @@ type SongListItemProps = {
 }
 
 const serverAddress = globalThis.localStorage.getItem('serverAddress') ?? ''
+const loadSong = usePlayerStore((state) => state.loadSong)
+const play = usePlayerStore((state) => state.play)
 
 const SongListItem: React.FC<SongListItemProps> = ({ cover, title, album, artist, onPress }) => {
   return (
@@ -51,7 +54,10 @@ export default function SongList() {
           title={item.title}
           artist={item.artist}
           album={item.album}
-          onPress={() => console.log('press')}
+          onPress={() => {
+            loadSong(item.id)
+            play()
+          }}
         />
       )}
       keyExtractor={(item) => item.id.toString()}
