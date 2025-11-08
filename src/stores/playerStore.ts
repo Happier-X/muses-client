@@ -15,11 +15,22 @@ export const usePlayerStore = create((set) => {
       } else {
         player = createAudioPlayer(streamUrl)
       }
+      player.addListener('playbackStatusUpdate', (status) => {
+        if (status.playbackState === 'ended' && status.didJustFinish === true) {
+          set({ isPlaying: false })
+        }
+      })
     },
     play: () => {
       if (player) {
         set({ isPlaying: true })
         player.play()
+      }
+    },
+    pause: () => {
+      if (player) {
+        set({ isPlaying: false })
+        player.pause()
       }
     },
   }

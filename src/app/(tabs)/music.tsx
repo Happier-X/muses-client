@@ -10,6 +10,7 @@ import {
   Music2 as SongIcon,
 } from 'lucide-react-native'
 import { StyleSheet, View } from 'react-native'
+import PlayBar from '@/components/feature/PlayBar'
 
 export default function Music() {
   const router = useRouter()
@@ -62,32 +63,35 @@ export default function Music() {
   ]
   return (
     <View style={styles.container}>
-      <MusesCellGroup title="音乐库">
-        {musicLibraryMenuList.map((item, index) => (
-          <MusesCell
-            key={item.id}
-            title={item.title}
-            leftIcon={item.leftIcon}
-            arrow
-            isFirst={index === 0}
-            isLast={index === musicLibraryMenuList.length - 1}
-            onPress={item.onPress}
-          />
-        ))}
-      </MusesCellGroup>
-      <MusesCellGroup title="我的">
-        {myMenuList.map((item, index) => (
-          <MusesCell
-            key={item.id}
-            title={item.title}
-            leftIcon={item.leftIcon}
-            arrow
-            isFirst={index === 0}
-            isLast={index === myMenuList.length - 1}
-            onPress={item.onPress}
-          />
-        ))}
-      </MusesCellGroup>
+      <View style={styles.container}>
+        <MusesCellGroup title="音乐库">
+          {musicLibraryMenuList.map((item, index) => (
+            <MusesCell
+              key={item.id}
+              title={item.title}
+              leftIcon={item.leftIcon}
+              arrow
+              isFirst={index === 0}
+              isLast={index === musicLibraryMenuList.length - 1}
+              onPress={item.onPress}
+            />
+          ))}
+        </MusesCellGroup>
+        <MusesCellGroup title="我的">
+          {myMenuList.map((item, index) => (
+            <MusesCell
+              key={item.id}
+              title={item.title}
+              leftIcon={item.leftIcon}
+              arrow
+              isFirst={index === 0}
+              isLast={index === myMenuList.length - 1}
+              onPress={item.onPress}
+            />
+          ))}
+        </MusesCellGroup>
+      </View>
+      <PlayBar></PlayBar>
     </View>
   )
 }
