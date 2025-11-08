@@ -11,20 +11,20 @@ export default function Auth() {
   const router = useRouter()
   const form = useForm({
     defaultValues: {
-      serverAddress: globalThis.localStorage.getItem('serverAddress') || '',
-      username: globalThis.localStorage.getItem('username') || '',
+      serverAddress: globalThis.localStorage.getItem('serverAddress') ?? '',
+      username: globalThis.localStorage.getItem('username') ?? '',
       password: '',
     },
     onSubmit: ({ value }) => {
       globalThis.localStorage.setItem('serverAddress', value.serverAddress)
       globalThis.localStorage.setItem('username', value.username)
-      loginMutation.mutate({
+      loginMutate({
         username: value.username,
         password: value.password,
       })
     },
   })
-  const loginMutation = useMutation({
+  const { mutate: loginMutate } = useMutation({
     mutationFn: (body: LoginBody) => authApi.login(body),
     onSuccess: (res) => {
       if (res.code == 200) {

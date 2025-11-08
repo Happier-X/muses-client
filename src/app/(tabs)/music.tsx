@@ -1,5 +1,6 @@
 import MusesCell from '@/components/ui/MusesCell'
 import MusesCellGroup from '@/components/ui/MusesCellGroup'
+import { useRouter } from 'expo-router'
 import {
   Disc3 as AlbumIcon,
   MicVocal as ArtistIcon,
@@ -9,7 +10,6 @@ import {
   Music2 as SongIcon,
 } from 'lucide-react-native'
 import { StyleSheet, View } from 'react-native'
-import { useRouter } from 'expo-router'
 
 export default function Music() {
   const router = useRouter()
@@ -18,7 +18,14 @@ export default function Music() {
       id: 1,
       title: '歌曲',
       leftIcon: <SongIcon size={16} />,
-      onPress: () => router.navigate('/music/song'),
+      onPress: () =>
+        router.navigate({
+          pathname: '/songList',
+          params: {
+            from: 'music',
+            title: '歌曲',
+          },
+        }),
     },
     {
       id: 2,

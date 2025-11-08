@@ -37,9 +37,9 @@ type RequestOptions = {
 
 const request = async (url: string, { method = 'GET', params, body }: RequestOptions = {}) => {
   // 完整的接口地址
-  const apiUrl = globalThis.localStorage.getItem('serverAddress')
+  const apiUrl = globalThis.localStorage.getItem('serverAddress') ?? ''
   const requestUrl = urlcat(apiUrl, url, params)
-  let token = globalThis.localStorage.getItem('accessToken') || ''
+  let token = globalThis.localStorage.getItem('accessToken') ?? ''
   // 请求头
   const headers = {
     Accept: 'application/json',
