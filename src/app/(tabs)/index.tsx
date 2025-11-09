@@ -4,7 +4,7 @@ import PlayBar from '@/components/feature/PlayBar'
 
 export default function Index() {
   return (
-    <View style={styles.container}>
+    <View style={{ flex: 1 }}>
       <ScrollView style={styles.container}>
         <MusesScrollX title="推荐" onPress={() => console.log('推荐')}>
           <Text>测试</Text>

@@ -62,7 +62,7 @@ export default function Music() {
     },
   ]
   return (
-    <View style={styles.container}>
+    <View style={{ flex: 1 }}>
       <View style={styles.container}>
         <MusesCellGroup title="音乐库">
           {musicLibraryMenuList.map((item, index) => (

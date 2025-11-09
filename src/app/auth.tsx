@@ -38,7 +38,7 @@ export default function Auth() {
   })
   return (
     <SafeAreaProvider>
-      <SafeAreaView style={styles.container}>
+      <SafeAreaView style={{ flex: 1 }}>
         <View style={styles.formContainer}>
           <Text style={styles.title}>Muses</Text>
           <form.Field

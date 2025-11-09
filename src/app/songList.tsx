@@ -22,7 +22,7 @@ const play = usePlayerStore((state) => state.play)
 const SongListItem: React.FC<SongListItemProps> = ({ cover, title, album, artist, onPress }) => {
   return (
     <Pressable onPress={onPress} style={styles.songListItem}>
-      <Image source={`${serverAddress}${cover}`} style={styles.songListItemCover} />
+      <Image source={{ uri: `${serverAddress}${cover}` }} style={styles.songListItemCover} />
       <View style={styles.songListItemInfo}>
         <Text style={styles.songListItemTitle}>{title}</Text>
         <Text style={styles.songListItemArtistAlbum}>
@@ -46,7 +46,7 @@ export default function SongList() {
   })
   return (
     <FlatList
-      style={styles.container}
+      style={{ flex: 1 }}
       data={songsData?.data.items ?? []}
       renderItem={({ item }) => (
         <SongListItem

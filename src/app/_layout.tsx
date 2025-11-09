@@ -2,7 +2,7 @@ import MusesIconButton from '@/components/ui/MusesIconButton'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { Stack, usePathname, useRouter } from 'expo-router'
 import { ChevronLeft as ArrowLeftIcon } from 'lucide-react-native'
-import { View } from 'react-native'
+import { View, Text } from 'react-native'
 import PlayBar from '@/components/feature/PlayBar'
 
 type SongListRouteParams = {
@@ -35,7 +35,12 @@ export default function Layout() {
             options={({ route }) => ({ title: (route.params as SongListRouteParams).title })}
           />
         </Stack>
-        {!pathname.startsWith('/auth') && <PlayBar />}
+        {!(
+          pathname === '/' ||
+          pathname === '/music' ||
+          pathname === '/my' ||
+          pathname.startsWith('/auth')
+        ) && <PlayBar />}
       </View>
     </QueryClientProvider>
   )
