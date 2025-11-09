@@ -1,8 +1,8 @@
 import MusesIconButton from '@/components/ui/MusesIconButton'
 import { usePlayerStore } from '@/stores/playerStore'
 import {
-  Play as PlayIcon,
   Pause as PauseIcon,
+  Play as PlayIcon,
   ListVideo as PlayQueueIcon,
 } from 'lucide-react-native'
 import { Image, Pressable, StyleSheet, Text, View } from 'react-native'
@@ -34,7 +34,7 @@ const PlayBar = () => {
       ></MusesIconButton>
       <MusesIconButton
         icon={<PlayQueueIcon fill="black" size={20} />}
-        onPress={() => console.log('play queue')}
+        onPress={() => console.log('queue')}
       ></MusesIconButton>
     </Pressable>
   )
