@@ -1,3 +1,4 @@
+import Immersion, { ImmersionType } from '@/components/feature/Immersion'
 import MusesIconButton from '@/components/ui/MusesIconButton'
 import { usePlayerStore } from '@/stores/playerStore'
 import {
@@ -5,10 +6,8 @@ import {
   Play as PlayIcon,
   ListVideo as PlayQueueIcon,
 } from 'lucide-react-native'
-import { Image, Pressable, StyleSheet, Text, View } from 'react-native'
-import { useRouter } from 'expo-router'
-import { Immersion } from '@/components/feature/immersion'
 import { useRef } from 'react'
+import { Image, Pressable, StyleSheet, Text, View } from 'react-native'
 
 const PlayBar = () => {
   const serverAddress = globalThis.localStorage.getItem('serverAddress') ?? ''
@@ -16,10 +15,9 @@ const PlayBar = () => {
   const play = usePlayerStore((state) => state.play)
   const pause = usePlayerStore((state) => state.pause)
   const isPlaying = usePlayerStore((state) => state.isPlaying)
-  const router = useRouter()
-  const immersionRef = useRef(null)
+  const immersionRef = useRef<ImmersionType>(null)
   return (
-    <Pressable style={styles.container}>
+    <Pressable style={styles.container} onPress={() => immersionRef.current?.open()}>
       <Image
         source={{ uri: `${serverAddress}${currentSongDetail?.cover}` }}
         style={styles.songListItemCover}
@@ -38,8 +36,9 @@ const PlayBar = () => {
       ></MusesIconButton>
       <MusesIconButton
         icon={<PlayQueueIcon fill="black" size={20} />}
-        onPress={() => immersionRef.current?.open()}
+        onPress={() => console.log('play queue')}
       ></MusesIconButton>
+      <Immersion ref={immersionRef} />
     </Pressable>
   )
 }
