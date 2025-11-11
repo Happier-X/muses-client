@@ -3,6 +3,7 @@ import { useBottomSheetBackHandler } from '@/hooks/useBottomSheetBackHandler'
 import { usePlayerStore } from '@/stores/playerStore'
 import { BottomSheetModal, BottomSheetView } from '@gorhom/bottom-sheet'
 import Slider from '@react-native-community/slider'
+import { BlurView } from 'expo-blur'
 import { Image } from 'expo-image'
 import {
   Repeat as ListLoopIcon,
@@ -12,20 +13,18 @@ import {
   Play as PlayIcon,
   SkipForward as PlayNextIcon,
   SkipBack as PlayPreviousIcon,
+  ListVideo as PlayQueueIcon,
   Shuffle as RandomPlayIcon,
   Repeat1 as SingleLoopIcon,
-  ListVideo as PlayQueueIcon,
 } from 'lucide-react-native'
 import React, { forwardRef, useImperativeHandle, useRef } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
-import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 export type ImmersionType = {
   open: () => void
 }
 
 const Immersion = forwardRef<ImmersionType>((props, ref) => {
-  const { top } = useSafeAreaInsets()
   const bottomSheetModalRef = useRef<BottomSheetModal>(null)
   useImperativeHandle(ref, () => ({
     open: () => bottomSheetModalRef.current?.present(),
@@ -56,10 +55,19 @@ const Immersion = forwardRef<ImmersionType>((props, ref) => {
       enablePanDownToClose={true}
       enableHandlePanningGesture={false}
       handleComponent={null}
-      topInset={top}
       onChange={handleSheetPositionChange}
     >
       <BottomSheetView style={styles.container}>
+        <Image
+          source={{ uri: `${serverAddress}${currentSongDetail?.cover}` }}
+          style={styles.background}
+        ></Image>
+        <BlurView
+          style={styles.background}
+          intensity={80}
+          tint="light"
+          experimentalBlurMethod="dimezisBlurView"
+        ></BlurView>
         <View style={styles.info}>
           <Text style={styles.title}>{currentSongDetail?.title}</Text>
           <Text style={styles.artist}>{currentSongDetail?.artist}</Text>
@@ -130,6 +138,13 @@ const styles = StyleSheet.create({
     paddingHorizontal: '8%',
     alignItems: 'center',
     justifyContent: 'space-evenly',
+  },
+  background: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    bottom: 0,
+    right: 0,
   },
   info: {
     alignSelf: 'flex-start',
