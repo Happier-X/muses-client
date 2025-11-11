@@ -2,6 +2,7 @@ import songApi from '@/api/song'
 import { AudioPlayer, createAudioPlayer } from 'expo-audio'
 import { create } from 'zustand'
 import queueApi from '@/api/queue'
+import { setAudioModeAsync } from 'expo-audio'
 
 export const usePlayerStore = create((set, get) => {
   let player: AudioPlayer | null = null
@@ -20,9 +21,16 @@ export const usePlayerStore = create((set, get) => {
       } else {
         player = createAudioPlayer(streamUrl)
       }
+      await setAudioModeAsync({
+        playsInSilentMode: true,
+        shouldPlayInBackground: true,
+        interruptionModeAndroid: 'duckOthers',
+        interruptionMode: 'mixWithOthers',
+      })
       try {
         const res = await songApi.getSongDetail(songId)
         set({ currentSongDetail: res.data })
+        // player.setActiveForLockScreen(true)
       } catch (error) {
         console.error('加载歌曲详情失败', error)
       }
@@ -32,6 +40,7 @@ export const usePlayerStore = create((set, get) => {
           if (get().loopMode === 'listLoop') {
             get().playNext()
           } else if (get().loopMode === 'singleLoop') {
+            get().seekTo(0)
             get().play()
           }
         }
