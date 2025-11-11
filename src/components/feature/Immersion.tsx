@@ -1,7 +1,23 @@
+import MusesIconButton from '@/components/ui/MusesIconButton'
 import { useBottomSheetBackHandler } from '@/hooks/useBottomSheetBackHandler'
+import { usePlayerStore } from '@/stores/playerStore'
 import { BottomSheetModal, BottomSheetView } from '@gorhom/bottom-sheet'
+import Slider from '@react-native-community/slider'
+import { Image } from 'expo-image'
+import {
+  Repeat as ListLoopIcon,
+  Ellipsis as MoreIcon,
+  ListOrdered as OrderPlayIcon,
+  Pause as PauseIcon,
+  Play as PlayIcon,
+  SkipForward as PlayNextIcon,
+  SkipBack as PlayPreviousIcon,
+  Shuffle as RandomPlayIcon,
+  Repeat1 as SingleLoopIcon,
+  ListVideo as PlayQueueIcon,
+} from 'lucide-react-native'
 import React, { forwardRef, useImperativeHandle, useRef } from 'react'
-import { Text } from 'react-native'
+import { StyleSheet, Text, View } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 export type ImmersionType = {
@@ -15,30 +31,128 @@ const Immersion = forwardRef<ImmersionType>((props, ref) => {
     open: () => bottomSheetModalRef.current?.present(),
   }))
   const { handleSheetPositionChange } = useBottomSheetBackHandler(bottomSheetModalRef)
+  const serverAddress = globalThis.localStorage.getItem('serverAddress') ?? ''
+  const currentSongDetail = usePlayerStore((state) => state.currentSongDetail)
+  const play = usePlayerStore((state) => state.play)
+  const pause = usePlayerStore((state) => state.pause)
+  const isPlaying = usePlayerStore((state) => state.isPlaying)
+  const playNext = usePlayerStore((state) => state.playNext)
+  const playPrevious = usePlayerStore((state) => state.playPrevious)
+  const loopMode = usePlayerStore((state) => state.loopMode)
+  const playMode = usePlayerStore((state) => state.playMode)
+  const changeLoopMode = usePlayerStore((state) => state.changeLoopMode)
+  const changePlayMode = usePlayerStore((state) => state.changePlayMode)
   return (
     <BottomSheetModal
       ref={bottomSheetModalRef}
       enableDynamicSizing
       snapPoints={['100%']}
+      activeOffsetY={[-1, 1]}
+      failOffsetX={[-5, 5]}
       enablePanDownToClose={true}
       enableHandlePanningGesture={false}
       handleComponent={null}
       topInset={top}
       onChange={handleSheetPositionChange}
     >
-      <BottomSheetView style={{ height: '100%' }}>
-        <Text>测试</Text>
-        <Text>测试</Text>
-        <Text>测试</Text>
-        <Text>测试</Text>
-        <Text>测试</Text>
-        <Text>测试</Text>
-        <Text>测试</Text>
-        <Text>测试</Text>
-        <Text>测试</Text>
+      <BottomSheetView style={styles.container}>
+        <View style={styles.info}>
+          <Text style={styles.title}>{currentSongDetail?.title}</Text>
+          <Text style={styles.artist}>{currentSongDetail?.artist}</Text>
+        </View>
+        <Image
+          source={{ uri: `${serverAddress}${currentSongDetail?.cover}` }}
+          style={styles.cover}
+        />
+        <View style={styles.lyric}>
+          <Text>lyric</Text>
+        </View>
+        <Slider
+          style={styles.slider}
+          minimumValue={0}
+          maximumValue={1}
+          minimumTrackTintColor="#FFFFFF"
+          maximumTrackTintColor="#000000"
+        />
+        <View style={styles.playControls}>
+          <MusesIconButton
+            icon={<PlayPreviousIcon fill="black" size={20} />}
+            onPress={() => playPrevious()}
+          ></MusesIconButton>
+          <MusesIconButton
+            icon={
+              isPlaying ? <PauseIcon fill="black" size={20} /> : <PlayIcon fill="black" size={20} />
+            }
+            onPress={() => (isPlaying ? pause() : play())}
+          ></MusesIconButton>
+          <MusesIconButton
+            icon={<PlayNextIcon fill="black" size={20} />}
+            onPress={() => playNext()}
+          ></MusesIconButton>
+        </View>
+        <View style={styles.otherControls}>
+          <MusesIconButton
+            icon={
+              loopMode === 'listLoop' ? <ListLoopIcon size={20} /> : <SingleLoopIcon size={20} />
+            }
+            onPress={() => changeLoopMode()}
+          ></MusesIconButton>
+          <MusesIconButton
+            icon={
+              playMode === 'orderPlay' ? <OrderPlayIcon size={20} /> : <RandomPlayIcon size={20} />
+            }
+            onPress={() => changePlayMode()}
+          ></MusesIconButton>
+          <MusesIconButton
+            icon={<PlayQueueIcon size={20} />}
+            onPress={() => console.log('play queue')}
+          ></MusesIconButton>
+          <MusesIconButton
+            icon={<MoreIcon size={20} />}
+            onPress={() => console.log('more')}
+          ></MusesIconButton>
+        </View>
       </BottomSheetView>
     </BottomSheetModal>
   )
 })
 
 export default Immersion
+
+const styles = StyleSheet.create({
+  container: {
+    height: '100%',
+    paddingHorizontal: '8%',
+    alignItems: 'center',
+    justifyContent: 'space-evenly',
+  },
+  info: {
+    alignSelf: 'flex-start',
+  },
+  title: {
+    fontWeight: 'bold',
+  },
+  artist: {},
+  cover: {
+    width: '100%',
+    aspectRatio: 1,
+    borderRadius: 12,
+  },
+  lyric: {},
+  slider: {
+    width: '100%',
+    height: 40,
+  },
+  playControls: {
+    width: '100%',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-around',
+  },
+  otherControls: {
+    width: '100%',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+})

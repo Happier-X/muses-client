@@ -79,5 +79,15 @@ export const usePlayerStore = create((set, get) => {
         }
       }
     },
+    changeLoopMode: () => {
+      set((state) => ({
+        loopMode: state.loopMode === 'listLoop' ? 'singleLoop' : 'listLoop',
+      }))
+    },
+    changePlayMode: () => {
+      set((state) => ({
+        playMode: state.playMode === 'orderPlay' ? 'randomPlay' : 'orderPlay',
+      }))
+    },
   }
 })
