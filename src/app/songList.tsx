@@ -15,11 +15,8 @@ type SongListItemProps = {
   onPress?: (event: GestureResponderEvent) => void
 }
 
-const serverAddress = globalThis.localStorage.getItem('serverAddress') ?? ''
-const loadSong = usePlayerStore((state) => state.loadSong)
-const play = usePlayerStore((state) => state.play)
-
 const SongListItem: React.FC<SongListItemProps> = ({ cover, title, album, artist, onPress }) => {
+  const serverAddress = globalThis.localStorage.getItem('serverAddress') ?? ''
   return (
     <Pressable onPress={onPress} style={styles.songListItem}>
       <Image source={{ uri: `${serverAddress}${cover}` }} style={styles.songListItemCover} />
@@ -35,6 +32,8 @@ const SongListItem: React.FC<SongListItemProps> = ({ cover, title, album, artist
 }
 
 export default function SongList() {
+  const loadSong = usePlayerStore((state) => state.loadSong)
+  const play = usePlayerStore((state) => state.play)
   const params = useLocalSearchParams()
   const {
     data: songsData,
@@ -44,6 +43,8 @@ export default function SongList() {
     queryKey: ['songs'],
     queryFn: () => songApi.songs(),
   })
+  if (isLoading) return <Text>Loading...</Text>
+  if (error) return <Text>Error: {error.message}</Text>
   return (
     <FlatList
       style={{ flex: 1 }}
