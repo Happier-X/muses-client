@@ -42,6 +42,10 @@ const Immersion = forwardRef<ImmersionType>((props, ref) => {
   const playMode = usePlayerStore((state) => state.playMode)
   const changeLoopMode = usePlayerStore((state) => state.changeLoopMode)
   const changePlayMode = usePlayerStore((state) => state.changePlayMode)
+  const currentTime = usePlayerStore((state) => state.currentTime)
+  const duration = usePlayerStore((state) => state.duration)
+  const seekTo = usePlayerStore((state) => state.seekTo)
+
   return (
     <BottomSheetModal
       ref={bottomSheetModalRef}
@@ -70,9 +74,10 @@ const Immersion = forwardRef<ImmersionType>((props, ref) => {
         <Slider
           style={styles.slider}
           minimumValue={0}
-          maximumValue={1}
-          minimumTrackTintColor="#FFFFFF"
-          maximumTrackTintColor="#000000"
+          maximumValue={duration}
+          value={currentTime}
+          step={0.01}
+          onSlidingComplete={(value) => seekTo(value)}
         />
         <View style={styles.playControls}>
           <MusesIconButton
