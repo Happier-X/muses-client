@@ -34,13 +34,15 @@ export const usePlayerStore = create((set, get) => {
         interruptionModeAndroid: 'duckOthers',
         interruptionMode: 'mixWithOthers',
       })
-      try {
-        const res = await songApi.getSongDetail(songId)
-        set({ currentSongDetail: res.data })
-        // player.setActiveForLockScreen(true)
-      } catch (error) {
-        console.error('加载歌曲详情失败', error)
-      }
+      // player.setActiveForLockScreen(true)
+      songApi
+        .getSongDetail(songId)
+        .then((res) => {
+          set({ currentSongDetail: res.data })
+        })
+        .catch((error) => {
+          console.error('加载歌曲详情失败', error)
+        })
       player.addListener('playbackStatusUpdate', (status) => {
         if (status.isLoaded) {
           set({ currentTime: status.currentTime, duration: status.duration })
