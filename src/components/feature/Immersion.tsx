@@ -1,6 +1,7 @@
 import MusesIconButton from '@/components/ui/MusesIconButton'
 import { useBottomSheetBackHandler } from '@/hooks/useBottomSheetBackHandler'
 import { usePlayerStore } from '@/stores/playerStore'
+import parseTime from '@/utils/parseTime'
 import { BottomSheetModal, BottomSheetView } from '@gorhom/bottom-sheet'
 import Slider from '@react-native-community/slider'
 import { BlurView } from 'expo-blur'
@@ -17,7 +18,7 @@ import {
   Shuffle as RandomPlayIcon,
   Repeat1 as SingleLoopIcon,
 } from 'lucide-react-native'
-import React, { forwardRef, useImperativeHandle, useRef } from 'react'
+import React, { forwardRef, useImperativeHandle, useRef, useState } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 
 export type ImmersionType = {
@@ -44,6 +45,8 @@ const Immersion = forwardRef<ImmersionType>((props, ref) => {
   const currentTime = usePlayerStore((state) => state.currentTime)
   const duration = usePlayerStore((state) => state.duration)
   const seekTo = usePlayerStore((state) => state.seekTo)
+  const [tempCurrentTime, setTempCurrentTime] = useState(0)
+  const [isDragging, setIsDragging] = useState(false)
 
   return (
     <BottomSheetModal
@@ -79,14 +82,30 @@ const Immersion = forwardRef<ImmersionType>((props, ref) => {
         <View style={styles.lyric}>
           <Text>lyric</Text>
         </View>
-        <Slider
-          style={styles.slider}
-          minimumValue={0}
-          maximumValue={duration}
-          value={currentTime}
-          step={0.01}
-          onSlidingComplete={(value) => seekTo(value)}
-        />
+        <View style={styles.progress}>
+          <Slider
+            style={styles.slider}
+            minimumValue={0}
+            maximumValue={duration}
+            value={currentTime}
+            step={0.01}
+            onSlidingStart={() => setIsDragging(true)}
+            onSlidingComplete={(value) => {
+              setIsDragging(false)
+              seekTo(value)
+            }}
+            onValueChange={(value) => setTempCurrentTime(value)}
+          />
+          <View style={styles.progressText}>
+            <View style={styles.leftText}>
+              <Text>{parseTime(currentTime)}</Text>
+              {isDragging && (
+                <Text style={styles.tempCurrentTime}>{parseTime(tempCurrentTime)}</Text>
+              )}
+            </View>
+            <Text>{parseTime(duration)}</Text>
+          </View>
+        </View>
         <View style={styles.playControls}>
           <MusesIconButton
             icon={<PlayPreviousIcon fill="black" size={20} />}
@@ -159,9 +178,24 @@ const styles = StyleSheet.create({
     borderRadius: 12,
   },
   lyric: {},
-  slider: {
+  progress: {
     width: '100%',
+  },
+  slider: {
     height: 40,
+  },
+  progressText: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  leftText: {
+    flexDirection: 'row',
+    gap: 8,
+  },
+  tempCurrentTime: {
+    backgroundColor: 'gray',
+    paddingHorizontal: 4,
+    borderRadius: 4,
   },
   playControls: {
     width: '100%',
