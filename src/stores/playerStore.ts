@@ -13,6 +13,7 @@ export const usePlayerStore = create((set, get) => {
     playMode: 'orderPlay',
     currentTime: 0,
     duration: 0,
+    playQueue: [],
     seekTo: (time: number) => {
       if (player) {
         player.seekTo(time)
@@ -73,31 +74,35 @@ export const usePlayerStore = create((set, get) => {
     playNext: async () => {
       if (player) {
         set({ isPlaying: false })
-        try {
-          const res = await queueApi.getNextQueueItem(
-            get().currentSongDetail?.id ?? '',
-            get().playMode,
-          )
-          get().loadSong(res.data.songId)
-          get().play()
-        } catch (error) {
-          console.error('加载歌曲详情失败', error)
+        if (get().playMode === 'orderPlay') {
+          const nextIndex = get().playQueue.indexOf(get().currentSongDetail?.id ?? '') + 1
+          if (nextIndex < get().playQueue.length) {
+            get().loadSong(get().playQueue[nextIndex])
+          } else {
+            get().loadSong(get().playQueue[0])
+          }
+        } else if (get().playMode === 'randomPlay') {
+          const randomIndex = Math.floor(Math.random() * get().playQueue.length)
+          get().loadSong(get().playQueue[randomIndex])
         }
+        get().play()
       }
     },
     playPrevious: async () => {
       if (player) {
         set({ isPlaying: false })
-        try {
-          const res = await queueApi.getPreviousQueueItem(
-            get().currentSongDetail?.id ?? '',
-            get().playMode,
-          )
-          get().loadSong(res.data.songId)
-          get().play()
-        } catch (error) {
-          console.error('加载歌曲详情失败', error)
+        if (get().playMode === 'orderPlay') {
+          const previousIndex = get().playQueue.indexOf(get().currentSongDetail?.id ?? '') - 1
+          if (previousIndex >= 0) {
+            get().loadSong(get().playQueue[previousIndex])
+          } else {
+            get().loadSong(get().playQueue[get().playQueue.length - 1])
+          }
+        } else if (get().playMode === 'randomPlay') {
+          const randomIndex = Math.floor(Math.random() * get().playQueue.length)
+          get().loadSong(get().playQueue[randomIndex])
         }
+        get().play()
       }
     },
     changeLoopMode: () => {
@@ -109,6 +114,9 @@ export const usePlayerStore = create((set, get) => {
       set((state) => ({
         playMode: state.playMode === 'orderPlay' ? 'randomPlay' : 'orderPlay',
       }))
+    },
+    setPlayQueue: (queue) => {
+      set({ playQueue: queue })
     },
   }
 })

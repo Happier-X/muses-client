@@ -34,6 +34,7 @@ const SongListItem: React.FC<SongListItemProps> = ({ cover, title, album, artist
 export default function SongList() {
   const loadSong = usePlayerStore((state) => state.loadSong)
   const play = usePlayerStore((state) => state.play)
+  const setPlayQueue = usePlayerStore((state) => state.setPlayQueue)
   const params = useLocalSearchParams()
   const {
     data: songsData,
@@ -41,14 +42,14 @@ export default function SongList() {
     error,
   } = useQuery({
     queryKey: ['songs'],
-    queryFn: () => songApi.songs(),
+    queryFn: () => songApi.songs({ page: 1, size: 100 }),
   })
   if (isLoading) return <Text>Loading...</Text>
   if (error) return <Text>Error: {error.message}</Text>
   return (
     <FlatList
       style={{ flex: 1 }}
-      data={songsData?.data.items ?? []}
+      data={songsData?.data?.items ?? []}
       renderItem={({ item }) => (
         <SongListItem
           cover={item.cover}
@@ -58,6 +59,7 @@ export default function SongList() {
           onPress={() => {
             loadSong(item.id)
             play()
+            setPlayQueue([...(songsData?.data?.items.map((item) => item.id) ?? [])])
           }}
         />
       )}

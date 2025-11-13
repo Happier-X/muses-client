@@ -1,7 +1,8 @@
 import request from '@/utils/request'
 
 const songApi = {
-  songs: () => request('/songs', { method: 'GET' }),
+  songs: (params: { page: number; size: number }) =>
+    request('/songs', { method: 'GET', params }),
   getSongDetail: (songId: string) =>
     request('/songs/detail', { method: 'GET', params: { songId } }),
 }
