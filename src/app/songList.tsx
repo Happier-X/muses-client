@@ -1,11 +1,12 @@
-import songApi from '@/api/song'
+﻿import songApi from '@/api/song'
 import MusesIconButton from '@/components/ui/MusesIconButton'
-import { useQuery } from '@tanstack/react-query'
+import { usePlayerStore } from '@/stores/playerStore'
+import { LegendList } from '@legendapp/list'
+import { useInfiniteQuery } from '@tanstack/react-query'
 import { Image } from 'expo-image'
 import { useLocalSearchParams } from 'expo-router'
 import { EllipsisVertical as MoreIcon } from 'lucide-react-native'
-import { FlatList, StyleSheet, Text, View, Pressable, GestureResponderEvent } from 'react-native'
-import { usePlayerStore } from '@/stores/playerStore'
+import { GestureResponderEvent, Pressable, StyleSheet, Text, View } from 'react-native'
 
 type SongListItemProps = {
   cover: string
@@ -31,6 +32,18 @@ const SongListItem: React.FC<SongListItemProps> = ({ cover, title, album, artist
   )
 }
 
+const LoadingIndicator = () => (
+  <View style={styles.loadingIndicator}>
+    <Text style={styles.loadingText}>加载中...</Text>
+  </View>
+)
+
+const NoMoreData = () => (
+  <View style={styles.noMoreData}>
+    <Text style={styles.noMoreText}>没有更多数据了</Text>
+  </View>
+)
+
 export default function SongList() {
   const loadSong = usePlayerStore((state) => state.loadSong)
   const play = usePlayerStore((state) => state.play)
@@ -40,16 +53,45 @@ export default function SongList() {
     data: songsData,
     isLoading,
     error,
-  } = useQuery({
+    isFetchingNextPage,
+    fetchNextPage,
+    hasNextPage,
+  } = useInfiniteQuery({
     queryKey: ['songs'],
-    queryFn: () => songApi.songs({ page: 1, size: 100 }),
+    queryFn: ({ pageParam = 1 }) => songApi.songs({ page: pageParam, size: 30 }),
+    initialPageParam: 1,
+    getNextPageParam: (lastPage, allPages) => {
+      // 从正确的路径获取分页信息
+      const currentPage = lastPage.data.pagination.page
+      const totalItems = lastPage.data.pagination.total
+      const pageSize = lastPage.data.pagination.size
+
+      // 计算已加载的项目数量
+      const loadedItems = allPages.flatMap((p) => p.data.items).length
+
+      // 如果已加载数量少于总数，返回下一页页码
+      return loadedItems < totalItems ? currentPage + 1 : undefined
+    },
+    staleTime: 1000 * 60 * 5,
   })
+
+  // 合并所有页面的数据
+  const allSongs = songsData?.pages.flatMap((page) => page.data.items) ?? []
+  const allSongIds = allSongs.map((item) => item.id)
+
+  const onEndReached = () => {
+    if (hasNextPage && !isFetchingNextPage) {
+      fetchNextPage()
+    }
+  }
+
   if (isLoading) return <Text>Loading...</Text>
   if (error) return <Text>Error: {error.message}</Text>
+
   return (
-    <FlatList
+    <LegendList
       style={{ flex: 1 }}
-      data={songsData?.data?.items ?? []}
+      data={allSongs}
       renderItem={({ item }) => (
         <SongListItem
           cover={item.cover}
@@ -59,12 +101,24 @@ export default function SongList() {
           onPress={() => {
             loadSong(item.id)
             play()
-            setPlayQueue([...(songsData?.data?.items.map((item) => item.id) ?? [])])
+            setPlayQueue(allSongIds)
           }}
         />
       )}
       keyExtractor={(item) => item.id.toString()}
       showsVerticalScrollIndicator={false}
+      recycleItems
+      onEndReached={onEndReached}
+      onEndReachedThreshold={0.1}
+      ListFooterComponent={() => {
+        if (isFetchingNextPage) {
+          return <LoadingIndicator />
+        }
+        if (!hasNextPage && allSongs.length > 0) {
+          return <NoMoreData />
+        }
+        return null
+      }}
     />
   )
 }
@@ -96,5 +150,21 @@ const styles = StyleSheet.create({
   },
   songListItemArtistAlbum: {
     color: 'gray',
+  },
+  loadingIndicator: {
+    padding: 20,
+    alignItems: 'center',
+  },
+  loadingText: {
+    color: 'gray',
+    fontSize: 14,
+  },
+  noMoreData: {
+    padding: 20,
+    alignItems: 'center',
+  },
+  noMoreText: {
+    color: 'gray',
+    fontSize: 14,
   },
 })

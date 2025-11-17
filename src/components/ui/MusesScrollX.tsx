@@ -1,13 +1,13 @@
 import MusesIconButton from '@/components/ui/MusesIconButton'
+import { LegendList } from '@legendapp/list'
 import { ChevronRight as ArrowRightIcon } from 'lucide-react-native'
 import React from 'react'
 import {
-  FlatList,
-  ListRenderItem,
   GestureResponderEvent,
+  ListRenderItem,
   StyleSheet,
   Text,
-  View,
+  View
 } from 'react-native'
 
 type MusesScrollXProps = {
@@ -34,13 +34,13 @@ const MusesScrollX: React.FC<MusesScrollXProps> = ({
           onPress={onPressMore && onPressMore}
         ></MusesIconButton>
       </View>
-      <FlatList
+      <LegendList
         horizontal
         data={data}
         renderItem={renderItem}
         keyExtractor={keyExtractor}
         showsHorizontalScrollIndicator={false}
-      ></FlatList>
+      />
     </>
   )
 }

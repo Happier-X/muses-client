@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@gorhom/bottom-sheet": "^5.2.6",
+    "@legendapp/list": "^2.0.15",
     "@lucide/lab": "^0.1.2",
     "@react-native-community/slider": "5.0.1",
     "@tanstack/react-form": "^1.25.0",
