@@ -19,11 +19,14 @@ import {
   Repeat1 as SingleLoopIcon,
 } from 'lucide-react-native'
 import React, { forwardRef, useImperativeHandle, useRef, useState } from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { Text, View } from 'react-native'
+import { withUniwind } from 'uniwind'
 
 export type ImmersionType = {
   open: () => void
 }
+
+const StyledImage = withUniwind(Image)
 
 const Immersion = forwardRef<ImmersionType>((props, ref) => {
   const bottomSheetModalRef = useRef<BottomSheetModal>(null)
@@ -60,31 +63,31 @@ const Immersion = forwardRef<ImmersionType>((props, ref) => {
       handleComponent={null}
       onChange={handleSheetPositionChange}
     >
-      <BottomSheetView style={styles.container}>
-        <Image
+      <BottomSheetView className="h-full px-[8%] items-center justify-evenly">
+        <StyledImage
           source={{ uri: `${serverAddress}${currentSongDetail?.cover}` }}
-          style={styles.background}
-        ></Image>
+          className="absolute top-0 left-0 bottom-0 right-0"
+        ></StyledImage>
         <BlurView
-          style={styles.background}
+          className="absolute top-0 left-0 bottom-0 right-0"
           intensity={80}
           tint="light"
           experimentalBlurMethod="dimezisBlurView"
         ></BlurView>
-        <View style={styles.info}>
-          <Text style={styles.title}>{currentSongDetail?.title}</Text>
-          <Text style={styles.artist}>{currentSongDetail?.artist}</Text>
+        <View className="self-start">
+          <Text>{currentSongDetail?.title}</Text>
+          <Text>{currentSongDetail?.artist}</Text>
         </View>
-        <Image
+        <StyledImage
           source={{ uri: `${serverAddress}${currentSongDetail?.cover}` }}
-          style={styles.cover}
+          className="w-full aspect-square rounded-xl"
         />
-        <View style={styles.lyric}>
+        <View>
           <Text>lyric</Text>
         </View>
-        <View style={styles.progress}>
+        <View className="w-full">
           <Slider
-            style={styles.slider}
+            className="h-10"
             minimumValue={0}
             maximumValue={duration}
             value={currentTime}
@@ -96,17 +99,17 @@ const Immersion = forwardRef<ImmersionType>((props, ref) => {
             }}
             onValueChange={(value) => setTempCurrentTime(value)}
           />
-          <View style={styles.progressText}>
-            <View style={styles.leftText}>
+          <View className="flex-row justify-between">
+            <View className="flex-row gap-2">
               <Text>{parseTime(currentTime)}</Text>
               {isDragging && (
-                <Text style={styles.tempCurrentTime}>{parseTime(tempCurrentTime)}</Text>
+                <Text className="bg-gray p-1 rounded-md">{parseTime(tempCurrentTime)}</Text>
               )}
             </View>
             <Text>{parseTime(duration)}</Text>
           </View>
         </View>
-        <View style={styles.playControls}>
+        <View className="w-full flex-row items-center justify-around">
           <MusesIconButton
             icon={<PlayPreviousIcon fill="black" size={20} />}
             onPress={() => playPrevious()}
@@ -122,7 +125,7 @@ const Immersion = forwardRef<ImmersionType>((props, ref) => {
             onPress={() => playNext()}
           ></MusesIconButton>
         </View>
-        <View style={styles.otherControls}>
+        <View className="w-full flex-row items-center justify-between">
           <MusesIconButton
             icon={
               loopMode === 'listLoop' ? <ListLoopIcon size={20} /> : <SingleLoopIcon size={20} />
@@ -150,63 +153,3 @@ const Immersion = forwardRef<ImmersionType>((props, ref) => {
 })
 
 export default Immersion
-
-const styles = StyleSheet.create({
-  container: {
-    height: '100%',
-    paddingHorizontal: '8%',
-    alignItems: 'center',
-    justifyContent: 'space-evenly',
-  },
-  background: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    bottom: 0,
-    right: 0,
-  },
-  info: {
-    alignSelf: 'flex-start',
-  },
-  title: {
-    fontWeight: 'bold',
-  },
-  artist: {},
-  cover: {
-    width: '100%',
-    aspectRatio: 1,
-    borderRadius: 12,
-  },
-  lyric: {},
-  progress: {
-    width: '100%',
-  },
-  slider: {
-    height: 40,
-  },
-  progressText: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  leftText: {
-    flexDirection: 'row',
-    gap: 8,
-  },
-  tempCurrentTime: {
-    backgroundColor: 'gray',
-    paddingHorizontal: 4,
-    borderRadius: 4,
-  },
-  playControls: {
-    width: '100%',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-around',
-  },
-  otherControls: {
-    width: '100%',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-})

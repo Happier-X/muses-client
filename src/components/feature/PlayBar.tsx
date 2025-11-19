@@ -7,7 +7,8 @@ import {
   ListVideo as PlayQueueIcon,
 } from 'lucide-react-native'
 import { useRef } from 'react'
-import { Image, Pressable, StyleSheet, Text, View } from 'react-native'
+import { Image, Pressable, Text, View } from 'react-native'
+import { withUniwind } from 'uniwind'
 
 const PlayBar = () => {
   const serverAddress = globalThis.localStorage.getItem('serverAddress') ?? ''
@@ -16,15 +17,21 @@ const PlayBar = () => {
   const pause = usePlayerStore((state) => state.pause)
   const isPlaying = usePlayerStore((state) => state.isPlaying)
   const immersionRef = useRef<ImmersionType>(null)
+  const StyledImage = withUniwind(Image)
   return (
-    <Pressable style={styles.container} onPress={() => immersionRef.current?.open()}>
-      <Image
+    <Pressable
+      className="h-18 flex-row items-center justify-between p-3 gap-3"
+      onPress={() => immersionRef.current?.open()}
+    >
+      <StyledImage
         source={{ uri: `${serverAddress}${currentSongDetail?.cover}` }}
-        style={styles.songListItemCover}
+        className="w-18 h-18 rounded-md"
       />
-      <View style={styles.songListItemInfo}>
-        <Text style={styles.songListItemTitle}>{currentSongDetail?.title}</Text>
-        <Text style={styles.songListItemArtistAlbum}>
+      <View className="flex-1 min-w-0 min-h-0">
+        <Text className="text-lg font-bold text-ellipsis overflow-hidden whitespace-nowrap">
+          {currentSongDetail?.title}
+        </Text>
+        <Text className="text-sm text-ellipsis overflow-hidden whitespace-nowrap text-muted">
           {currentSongDetail?.artist}-{currentSongDetail?.album}
         </Text>
       </View>
@@ -44,37 +51,3 @@ const PlayBar = () => {
 }
 
 export default PlayBar
-
-const styles = StyleSheet.create({
-  container: {
-    height: 72,
-    flexDirection: 'row',
-    padding: 12,
-    alignItems: 'center',
-    gap: 12,
-    backgroundColor: 'white',
-  },
-  songListItem: {
-    flexDirection: 'row',
-    padding: 12,
-    alignItems: 'center',
-    gap: 12,
-    backgroundColor: 'white',
-  },
-  songListItemCover: {
-    width: 48,
-    height: 48,
-    borderRadius: 8,
-  },
-  songListItemInfo: {
-    flex: 1,
-    minWidth: 0,
-    minHeight: 0,
-  },
-  songListItemTitle: {
-    fontWeight: 'bold',
-  },
-  songListItemArtistAlbum: {
-    color: 'gray',
-  },
-})
