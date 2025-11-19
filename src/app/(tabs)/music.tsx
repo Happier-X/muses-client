@@ -1,24 +1,24 @@
-import MusesCell from '@/components/ui/MusesCell'
-import MusesCellGroup from '@/components/ui/MusesCellGroup'
+import PlayBar from '@/components/feature/PlayBar'
 import { useRouter } from 'expo-router'
+import { Accordion } from 'heroui-native'
 import {
   Disc3 as AlbumIcon,
+  ChevronRight as ArrowRightIcon,
   MicVocal as ArtistIcon,
   Heart as LikeIcon,
   ListMusic as PlaylistIcon,
   History as RecentPlayIcon,
   Music2 as SongIcon,
 } from 'lucide-react-native'
-import { StyleSheet, View } from 'react-native'
-import PlayBar from '@/components/feature/PlayBar'
+import { ScrollView, Text, View } from 'react-native'
+import { withUniwind } from 'uniwind'
 
 export default function Music() {
   const router = useRouter()
   const musicLibraryMenuList = [
     {
-      id: 1,
       title: '歌曲',
-      leftIcon: <SongIcon size={16} />,
+      icon: <SongIcon size={16} />,
       onPress: () =>
         router.navigate({
           pathname: '/songList',
@@ -29,76 +29,71 @@ export default function Music() {
         }),
     },
     {
-      id: 2,
       title: '专辑',
-      leftIcon: <AlbumIcon size={16} />,
+      icon: <AlbumIcon size={16} />,
       onPress: () => alert('开发中'),
     },
     {
-      id: 3,
       title: '艺术家',
-      leftIcon: <ArtistIcon size={16} />,
+      icon: <ArtistIcon size={16} />,
       onPress: () => alert('开发中'),
     },
   ]
   const myMenuList = [
     {
-      id: 1,
       title: '歌单',
-      leftIcon: <PlaylistIcon size={16} />,
+      icon: <PlaylistIcon size={16} />,
       onPress: () => alert('开发中'),
     },
     {
-      id: 2,
       title: '喜欢',
-      leftIcon: <LikeIcon size={16} />,
+      icon: <LikeIcon size={16} />,
       onPress: () => alert('开发中'),
     },
     {
-      id: 3,
       title: '最近播放',
-      leftIcon: <RecentPlayIcon size={16} />,
+      icon: <RecentPlayIcon size={16} />,
       onPress: () => alert('开发中'),
     },
   ]
+  const StyledArrowRightIcon = withUniwind(ArrowRightIcon)
   return (
-    <View style={{ flex: 1 }}>
-      <View style={styles.container}>
-        <MusesCellGroup title="音乐库">
-          {musicLibraryMenuList.map((item, index) => (
-            <MusesCell
-              key={item.id}
-              title={item.title}
-              leftIcon={item.leftIcon}
-              arrow
-              isFirst={index === 0}
-              isLast={index === musicLibraryMenuList.length - 1}
-              onPress={item.onPress}
-            />
+    <View className="flex-1">
+      <ScrollView className="flex-1 bg-background px-4">
+        <Text className="font-bold py-2 align-middle">音乐库</Text>
+        <Accordion isCollapsible={false} variant="surface" isDividerVisible={false}>
+          {musicLibraryMenuList.map((item) => (
+            <Accordion.Item key={item.title} value={item.title}>
+              <Accordion.Trigger onPress={item.onPress}>
+                <View className="flex-row items-center gap-2">
+                  {item.icon}
+                  <Text>{item.title}</Text>
+                </View>
+                <Accordion.Indicator>
+                  <StyledArrowRightIcon size={16} className="text-muted" />
+                </Accordion.Indicator>
+              </Accordion.Trigger>
+            </Accordion.Item>
           ))}
-        </MusesCellGroup>
-        <MusesCellGroup title="我的">
-          {myMenuList.map((item, index) => (
-            <MusesCell
-              key={item.id}
-              title={item.title}
-              leftIcon={item.leftIcon}
-              arrow
-              isFirst={index === 0}
-              isLast={index === myMenuList.length - 1}
-              onPress={item.onPress}
-            />
+        </Accordion>
+        <Text className="font-bold py-2 align-middle">我的</Text>
+        <Accordion isCollapsible={false} variant="surface" isDividerVisible={false}>
+          {myMenuList.map((item) => (
+            <Accordion.Item key={item.title} value={item.title}>
+              <Accordion.Trigger onPress={item.onPress}>
+                <View className="flex-row items-center gap-2">
+                  {item.icon}
+                  <Text>{item.title}</Text>
+                </View>
+                <Accordion.Indicator>
+                  <StyledArrowRightIcon size={16} className="text-muted" />
+                </Accordion.Indicator>
+              </Accordion.Trigger>
+            </Accordion.Item>
           ))}
-        </MusesCellGroup>
-      </View>
+        </Accordion>
+      </ScrollView>
       <PlayBar></PlayBar>
     </View>
   )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    minHeight: 0,
-  },
-})

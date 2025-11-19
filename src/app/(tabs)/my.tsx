@@ -1,79 +1,73 @@
-import { Text, View, StyleSheet } from 'react-native'
-import { Link } from 'expo-router'
 import PlayBar from '@/components/feature/PlayBar'
-import { Image } from 'expo-image'
-import MusesCell from '@/components/ui/MusesCell'
+import { useRouter } from 'expo-router'
+import { Accordion, Avatar, Chip, Surface } from 'heroui-native'
 import {
+  ChevronRight as ArrowRightIcon,
+  LogIn as LoginIcon,
   FolderSearch as ScanSongIcon,
-  UserCog as UserManageIcon,
   Settings as SettingsIcon,
+  UserCog as UserManageIcon,
 } from 'lucide-react-native'
+import { ScrollView, Text, View } from 'react-native'
+import { withUniwind } from 'uniwind'
 
 export default function My() {
+  const router = useRouter()
   const menuList = [
     {
-      id: 1,
       title: '扫描歌曲',
-      leftIcon: <ScanSongIcon size={16} />,
+      icon: <ScanSongIcon size={16} />,
+      onPress: () => alert('开发中'),
     },
     {
-      id: 2,
       title: '用户管理',
-      leftIcon: <UserManageIcon size={16} />,
+      icon: <UserManageIcon size={16} />,
+      onPress: () => alert('开发中'),
     },
     {
-      id: 3,
       title: '设置',
-      leftIcon: <SettingsIcon size={16} />,
+      icon: <SettingsIcon size={16} />,
+      onPress: () => alert('开发中'),
+    },
+    {
+      title: '登录',
+      icon: <LoginIcon size={16} />,
+      onPress: () =>
+        router.navigate({
+          pathname: '/auth',
+        }),
     },
   ]
+  const StyledArrowRightIcon = withUniwind(ArrowRightIcon)
   return (
-    <View style={{ flex: 1 }}>
-      <View style={styles.container}>
-        <View style={styles.userInfo}>
-          <Image
-            style={styles.userAvatar}
-            source={`https://ui-avatars.com/api/?name=admin&length=1&bold=true&background=random`}
-          ></Image>
-          <View style={styles.userInfoText}>
+    <View className="flex-1">
+      <ScrollView className="flex-1 bg-background px-4" contentContainerClassName="gap-4">
+        <Surface className="flex-row gap-4 items-center mt-4">
+          <Avatar size="lg" alt="avatar">
+            <Avatar.Fallback>admin</Avatar.Fallback>
+          </Avatar>
+          <View className="gap-2">
             <Text>admin</Text>
-            <Text>管理员</Text>
+            <Chip size="sm">管理员</Chip>
           </View>
-        </View>
-        {menuList.map((item, index) => (
-          <MusesCell
-            key={item.id}
-            title={item.title}
-            leftIcon={item.leftIcon}
-            arrow
-            isFirst={index === 0}
-            isLast={index === menuList.length - 1}
-            // onPress={item.onPress}
-          />
-        ))}
-        <Link href="../auth">登录</Link>
-      </View>
+        </Surface>
+        <Accordion isCollapsible={false} variant="surface" isDividerVisible={false}>
+          {menuList.map((item) => (
+            <Accordion.Item key={item.title} value={item.title}>
+              <Accordion.Trigger onPress={item.onPress}>
+                <View className="flex-row items-center gap-2">
+                  {item.icon}
+                  <Text>{item.title}</Text>
+                </View>
+                <Accordion.Indicator>
+                  <StyledArrowRightIcon size={16} className="text-muted" />
+                </Accordion.Indicator>
+              </Accordion.Trigger>
+            </Accordion.Item>
+          ))}
+        </Accordion>
+      </ScrollView>
       <PlayBar></PlayBar>
     </View>
   )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    minHeight: 0,
-  },
-  userInfo: {
-    width: '100%',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: 10,
-  },
-  userAvatar: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
-  },
-  userInfoText: {},
-})

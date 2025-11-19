@@ -1,23 +1,13 @@
-import { StyleSheet, Text, ScrollView, View } from 'react-native'
-import MusesScrollX from '@/components/ui/MusesScrollX'
 import PlayBar from '@/components/feature/PlayBar'
+import { ScrollView, Text, View } from 'react-native'
 
 export default function Index() {
   return (
-    <View style={{ flex: 1 }}>
-      <ScrollView style={styles.container}>
-        <MusesScrollX title="推荐" onPress={() => console.log('推荐')}>
-          <Text>测试</Text>
-        </MusesScrollX>
+    <View className="flex-1">
+      <ScrollView className="flex-1 bg-background">
+        <Text>开发中</Text>
       </ScrollView>
       <PlayBar></PlayBar>
     </View>
   )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    minHeight: 0,
-  },
-})
