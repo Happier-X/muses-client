@@ -2,9 +2,10 @@ import authApi from '@/api/auth'
 import { useForm } from '@tanstack/react-form'
 import { useMutation } from '@tanstack/react-query'
 import { useRouter } from 'expo-router'
-import { Button, StyleSheet, Text, TextInput, View } from 'react-native'
+import {  StyleSheet, Text, TextInput, View } from 'react-native'
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context'
 import { z } from 'zod'
+import { Button } from 'heroui-native';
 
 export default function Auth() {
   const router = useRouter()
