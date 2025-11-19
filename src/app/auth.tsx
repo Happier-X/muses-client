@@ -1,13 +1,23 @@
 import authApi from '@/api/auth'
+import MusesIconButton from '@/components/ui/MusesIconButton'
 import { useForm } from '@tanstack/react-form'
 import { useMutation } from '@tanstack/react-query'
 import { useRouter } from 'expo-router'
-import {  StyleSheet, Text, TextInput, View } from 'react-native'
-import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context'
+import { Button, Surface, TextField } from 'heroui-native'
+import {
+  Eye as EyeIcon,
+  EyeOff as EyeOffIcon,
+  Lock as PasswordIcon,
+  Server as ServerAddressIcon,
+  User as UsernameIcon,
+} from 'lucide-react-native'
+import { useState } from 'react'
+import { Text, View } from 'react-native'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { z } from 'zod'
-import { Button } from 'heroui-native';
 
 export default function Auth() {
+  const insets = useSafeAreaInsets()
   const router = useRouter()
   const form = useForm({
     defaultValues: {
@@ -37,78 +47,101 @@ export default function Auth() {
       console.error('登录失败', err)
     },
   })
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false)
   return (
-    <SafeAreaProvider>
-      <SafeAreaView style={{ flex: 1 }}>
-        <View style={styles.formContainer}>
-          <Text style={styles.title}>Muses</Text>
-          <form.Field
-            name="serverAddress"
-            validators={{
-              onChange: z.string().url('请输入正确的服务器地址'),
-            }}
-          >
-            {(field) => (
-              <>
-                <Text>服务器地址</Text>
-                <TextInput
+    <View
+      className="flex-1 bg-background px-8 items-center justify-center"
+      style={{ paddingTop: insets.top }}
+    >
+      <Surface className="w-full gap-4">
+        <Text className="text-3xl font-bold text-center">Muses</Text>
+        <form.Field
+          name="serverAddress"
+          validators={{
+            onChange: z.string().url('请输入正确的服务器地址'),
+          }}
+        >
+          {(field) => (
+            <>
+              <TextField isInvalid={!field.state.meta.isValid}>
+                <TextField.Label>服务器地址</TextField.Label>
+                <TextField.Input
                   placeholder="请输入服务器地址"
                   value={field.state.value}
                   onChangeText={field.handleChange}
-                />
-                {!field.state.meta.isValid && <Text>{field.state.meta.errors.join(', ')}</Text>}
-              </>
-            )}
-          </form.Field>
-          <form.Field
-            name="username"
-            validators={{
-              onChange: z.string().min(3, '用户名不能少于3个字符'),
-            }}
-          >
-            {(field) => (
-              <>
-                <Text>用户名</Text>
-                <TextInput value={field.state.value} onChangeText={field.handleChange} />
-                {!field.state.meta.isValid && <Text>{field.state.meta.errors.join(', ')}</Text>}
-              </>
-            )}
-          </form.Field>
-          <form.Field
-            name="password"
-            validators={{
-              onChange: z.string().min(6, '密码不能少于6个字符'),
-            }}
-          >
-            {(field) => (
-              <>
-                <Text>密码</Text>
-                <TextInput value={field.state.value} onChangeText={field.handleChange} />
-                {!field.state.meta.isValid && <Text>{field.state.meta.errors.join(', ')}</Text>}
-              </>
-            )}
-          </form.Field>
-          <Button title="提交" onPress={form.handleSubmit} />
-        </View>
-      </SafeAreaView>
-    </SafeAreaProvider>
+                >
+                  <TextField.InputStartContent>
+                    <ServerAddressIcon size={16} />
+                  </TextField.InputStartContent>
+                </TextField.Input>
+                <TextField.ErrorMessage>
+                  {field.state.meta.errors.join(', ')}
+                </TextField.ErrorMessage>
+              </TextField>
+            </>
+          )}
+        </form.Field>
+        <form.Field
+          name="username"
+          validators={{
+            onChange: z.string().min(3, '用户名不能少于3个字符'),
+          }}
+        >
+          {(field) => (
+            <>
+              <TextField isInvalid={!field.state.meta.isValid}>
+                <TextField.Label>用户名</TextField.Label>
+                <TextField.Input
+                  placeholder="请输入用户名"
+                  value={field.state.value}
+                  onChangeText={field.handleChange}
+                >
+                  <TextField.InputStartContent>
+                    <UsernameIcon size={16} />
+                  </TextField.InputStartContent>
+                </TextField.Input>
+                <TextField.ErrorMessage>
+                  {field.state.meta.errors.join(', ')}
+                </TextField.ErrorMessage>
+              </TextField>
+            </>
+          )}
+        </form.Field>
+        <form.Field
+          name="password"
+          validators={{
+            onChange: z.string().min(6, '密码不能少于6个字符'),
+          }}
+        >
+          {(field) => (
+            <>
+              <TextField isInvalid={!field.state.meta.isValid}>
+                <TextField.Label>密码</TextField.Label>
+                <TextField.Input
+                  placeholder="请输入密码"
+                  value={field.state.value}
+                  onChangeText={field.handleChange}
+                  secureTextEntry={!isPasswordVisible}
+                >
+                  <TextField.InputStartContent className="pointer-events-none">
+                    <PasswordIcon size={16} />
+                  </TextField.InputStartContent>
+                  <TextField.InputEndContent>
+                    <MusesIconButton
+                      icon={isPasswordVisible ? <EyeOffIcon size={16} /> : <EyeIcon size={16} />}
+                      onPress={() => setIsPasswordVisible(!isPasswordVisible)}
+                    ></MusesIconButton>
+                  </TextField.InputEndContent>
+                </TextField.Input>
+                <TextField.ErrorMessage>
+                  {field.state.meta.errors.join(', ')}
+                </TextField.ErrorMessage>
+              </TextField>
+            </>
+          )}
+        </form.Field>
+        <Button onPress={form.handleSubmit}>登录</Button>
+      </Surface>
+    </View>
   )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    minHeight: 0,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  formContainer: {
-    width: '80%',
-    gap: 4,
-  },
-  title: {
-    fontSize: 32,
-    fontWeight: 'bold',
-    color: '#4f9df7',
-  },
-})
