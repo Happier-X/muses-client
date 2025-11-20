@@ -15,10 +15,9 @@ type SongListItemProps = {
   artist: string
   onPress?: (event: GestureResponderEvent) => void
 }
-
+const StyledImage = withUniwind(Image)
 const SongListItem: React.FC<SongListItemProps> = ({ cover, title, album, artist, onPress }) => {
   const serverAddress = globalThis.localStorage.getItem('serverAddress') ?? ''
-  const StyledImage = withUniwind(Image)
   return (
     <Pressable onPress={onPress} className="flex-row items-center justify-between p-3 gap-3">
       <StyledImage source={{ uri: `${serverAddress}${cover}` }} className="size-12 rounded-md" />

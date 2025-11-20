@@ -10,6 +10,8 @@ import { useRef } from 'react'
 import { Image, Pressable, Text, View } from 'react-native'
 import { withUniwind } from 'uniwind'
 
+const StyledImage = withUniwind(Image)
+
 const PlayBar = () => {
   const serverAddress = globalThis.localStorage.getItem('serverAddress') ?? ''
   const currentSongDetail = usePlayerStore((state) => state.currentSongDetail)
@@ -17,10 +19,9 @@ const PlayBar = () => {
   const pause = usePlayerStore((state) => state.pause)
   const isPlaying = usePlayerStore((state) => state.isPlaying)
   const immersionRef = useRef<ImmersionType>(null)
-  const StyledImage = withUniwind(Image)
   return (
     <Pressable
-      className="h-18 flex-row items-center justify-between p-3 gap-3"
+      className="h-18 flex-row items-center justify-between p-3 gap-3 bg-white"
       onPress={() => immersionRef.current?.open()}
     >
       <StyledImage

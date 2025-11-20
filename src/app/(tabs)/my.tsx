@@ -11,6 +11,8 @@ import {
 import { ScrollView, Text, View } from 'react-native'
 import { withUniwind } from 'uniwind'
 
+const StyledArrowRightIcon = withUniwind(ArrowRightIcon)
+
 export default function My() {
   const router = useRouter()
   const menuList = [
@@ -38,7 +40,6 @@ export default function My() {
         }),
     },
   ]
-  const StyledArrowRightIcon = withUniwind(ArrowRightIcon)
   return (
     <View className="flex-1">
       <ScrollView className="flex-1 bg-background px-4" contentContainerClassName="gap-4">
