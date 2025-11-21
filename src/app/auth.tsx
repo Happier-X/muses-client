@@ -58,7 +58,7 @@ export default function Auth() {
         <form.Field
           name="serverAddress"
           validators={{
-            onChange: z.string().url('请输入正确的服务器地址'),
+            onBlur: z.url('请输入正确的服务器地址').nonempty('服务器地址不能为空'),
           }}
         >
           {(field) => (
@@ -84,7 +84,7 @@ export default function Auth() {
         <form.Field
           name="username"
           validators={{
-            onChange: z.string().min(3, '用户名不能少于3个字符'),
+            onBlur: z.string().trim().nonempty('用户名不能为空'),
           }}
         >
           {(field) => (
@@ -110,7 +110,7 @@ export default function Auth() {
         <form.Field
           name="password"
           validators={{
-            onChange: z.string().min(6, '密码不能少于6个字符'),
+            onBlur: z.string().trim().nonempty('密码不能为空'),
           }}
         >
           {(field) => (
