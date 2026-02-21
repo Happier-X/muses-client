@@ -39,8 +39,12 @@
 <style lang="scss">
 	@import "@/uni_modules/rice-ui/libs/style/index.css";
 	
+	@font-face {
+	    font-family: "muses-icon";
+	    src: url("/static/fonts/MingCute.ttf");
+	}
+	
 	.m-page{
 		flex: 1;
-		background-color: var(--rice-primary-color);
 	}
 </style>

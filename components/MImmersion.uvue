@@ -27,13 +27,13 @@
 				<slider :block-size="12" @touchmove.stop.prevent></slider>
 			</view>
 			<view class="play-control-bar" :style="`padding-top: ${windowWidth * 0.08}px;`">
-				<m-icon :size="32" name="f2cc" @tap.stop="playerPlayPrevious()"></m-icon>
-				<m-icon
+				<rice-icon font-family="muses-icon" :size="32" name="f2cc" @tap.stop="playerPlayPrevious()"></rice-icon>
+				<rice-icon font-family="muses-icon"
 					:size="40"
 					:name="playerIsPlaying ? 'f0f6' : 'f148'"
 					@tap.stop="playerIsPlaying ? playerPause() : playerPlay()"
-				></m-icon>
-				<m-icon :size="32" name="f2ca" @tap.stop="playerPlayNext()"></m-icon>
+				></rice-icon>
+				<rice-icon font-family="muses-icon" :size="32" name="f2ca" @tap.stop="playerPlayNext()"></rice-icon>
 			</view>
 			<view
 				class="other-control-bar"
@@ -41,25 +41,24 @@
 					windowWidth * 0.08
 				}px;`"
 			>
-				<m-icon
+				<rice-icon font-family="muses-icon"
 					:size="24"
 					:name="playerPlayMode === 'orderPlay' ? 'efbb' : 'f2b9'"
 					@tap.stop="playerChangePlayMode()"
-				></m-icon>
-				<m-icon
+				></rice-icon>
+				<rice-icon font-family="muses-icon"
 					:size="24"
 					:name="playerLoopMode === 'listLoop' ? 'f1cb' : 'f1cd'"
 					@tap.stop="playerChangeLoopMode()"
-				></m-icon>
-				<m-icon :size="24" name="efb5" @tap.stop="handleShowPlayQueue()"></m-icon>
-				<m-icon :size="24" name="f065"></m-icon>
+				></rice-icon>
+				<rice-icon font-family="muses-icon" :size="24" name="efb5" @tap.stop="handleShowPlayQueue()"></rice-icon>
+				<rice-icon font-family="muses-icon" :size="24" name="f065"></rice-icon>
 			</view>
 		</view>
 	</m-popup>
 </template>
 <script setup lang="uts">
 import MPopup from '@/components/ui/MPopup.uvue'
-import MIcon from '@/components/ui/MIcon.uvue'
 import { playerCurrentSongDetail, playerIsPlaying, playerPause, playerPlay, playerPlayNext, playerPlayPrevious, playerChangePlayMode, playerChangeLoopMode ,playerPlayMode,playerLoopMode} from '@/stores/player'
 import MPlayQueue from '@/components/MPlayQueue.uvue'
 

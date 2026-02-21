@@ -16,7 +16,7 @@
                         <text>{{ item.title }}</text>
                         <text>{{ item.artist }}</text>
                     </view>
-                    <m-icon name="f066" @tap.stop="handleShowAction(item)"></m-icon>
+                    <rice-icon font-family="muses-icon" name="f066" @tap.stop="handleShowAction(item)"></rice-icon>
                 </list-item>
             </z-paging-x>
         </view>
@@ -27,7 +27,6 @@
     </view>
 </template>
 <script setup lang="uts">
-import MIcon from '@/components/ui/MIcon.uvue'
 import MPlayBar from '@/components/MPlayBar.uvue'
 import { getSongs } from '@/api/songs';
 import { parseToObject } from '@/utils/parse';

@@ -5,15 +5,14 @@
             <text>{{ playerCurrentSongDetail?.title }}</text>
             <text>{{ playerCurrentSongDetail?.artist }}</text>
         </view>
-        <m-icon :size="24" :name="playerIsPlaying ? 'f0f6' : 'f148'" class="play-pause-icon" @tap.stop="playerIsPlaying ? playerPause() : playerPlay()"></m-icon>
-        <m-icon :size="24" name="efb4" @tap.stop="handleShowPlayQueue()"></m-icon>
+        <rice-icon font-family="muses-icon" size="24px" :name="playerIsPlaying ? 'f0f6' : 'f148'" class="play-pause-icon" @tap.stop="playerIsPlaying ? playerPause() : playerPlay()"></rice-icon>
+        <rice-icon font-family="muses-icon" size="24px" name="efb4" @tap.stop="handleShowPlayQueue()"></rice-icon>
     </view>
-    <!-- <m-immersion ref="immersionRef"></m-immersion> -->
-    <!-- <m-play-queue ref="playQueueRef"></m-play-queue> -->
+    <m-immersion ref="immersionRef"></m-immersion>
+    <m-play-queue ref="playQueueRef"></m-play-queue>
 </template>
 
 <script setup lang="uts">
-import MIcon from '@/components/ui/MIcon.uvue'
 import MImmersion from '@/components/MImmersion.uvue'
 import MPlayQueue from '@/components/MPlayQueue.uvue'
 import { playerCurrentSongDetail, playerIsPlaying, playerPause, playerPlay } from '@/stores/player'
