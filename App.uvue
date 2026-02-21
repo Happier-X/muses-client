@@ -1,19 +1,19 @@
 <script lang="uts">
-  // #ifdef APP-ANDROID || APP-HARMONY
+	// #ifdef APP-ANDROID || APP-HARMONY
 	let firstBackTime = 0
-  // #endif
+	// #endif
 	export default {
-		onLaunch: function () {
+		onLaunch() {
 			console.log('App Launch')
 		},
-		onShow: function () {
+		onShow() {
 			console.log('App Show')
 		},
-		onHide: function () {
+		onHide() {
 			console.log('App Hide')
 		},
 		// #ifdef APP-ANDROID || APP-HARMONY
-		onLastPageBackPress: function () {
+		onLastPageBackPress() {
 			console.log('App LastPageBackPress')
 			if (firstBackTime == 0) {
 				uni.showToast({
@@ -30,17 +30,17 @@
 			}
 		},
 		// #endif
-		onExit: function () {
+		onExit() {
 			console.log('App Exit')
 		},
 	}
 </script>
 
-<style>
-	.m-page {
+<style lang="scss">
+	@import "@/uni_modules/rice-ui/libs/style/index.css";
+	
+	.m-page{
 		flex: 1;
-	}
-	.m-font-bold {
-		font-weight: bold;
+		background-color: var(--rice-primary-color);
 	}
 </style>

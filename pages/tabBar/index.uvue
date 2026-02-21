@@ -1,6 +1,6 @@
 <template>
   <view class="m-page">
-    <m-navbar :title="tabList[selectedIndex].title" :left-arrow="false"></m-navbar>
+	<rice-navbar :title="tabList[selectedIndex].title" :left-arrow="false"></rice-navbar>
     <view class="index-container">
       <home ref="homeRef" class="index-content" v-if="tabList[0].init"  :style="{visibility:(selectedIndex==0?'visible':'hidden')}"></home>
       <music ref="musicRef" class="index-content" v-if="tabList[1].init" :style="{visibility:(selectedIndex==1?'visible':'hidden')}"></music>
@@ -28,7 +28,6 @@
 </template>
 
 <script setup lang="uts">
-import MNavbar from '@/components/ui/MNavbar.uvue'
 import MPlayBar from '@/components/MPlayBar.uvue'
 import MIcon from '@/components/ui/MIcon.uvue'
 import Home from './home.uvue'

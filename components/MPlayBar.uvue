@@ -8,8 +8,8 @@
         <m-icon :size="24" :name="playerIsPlaying ? 'f0f6' : 'f148'" class="play-pause-icon" @tap.stop="playerIsPlaying ? playerPause() : playerPlay()"></m-icon>
         <m-icon :size="24" name="efb4" @tap.stop="handleShowPlayQueue()"></m-icon>
     </view>
-    <m-immersion ref="immersionRef"></m-immersion>
-    <m-play-queue ref="playQueueRef"></m-play-queue>
+    <!-- <m-immersion ref="immersionRef"></m-immersion> -->
+    <!-- <m-play-queue ref="playQueueRef"></m-play-queue> -->
 </template>
 
 <script setup lang="uts">

@@ -1,6 +1,6 @@
 <template>
     <view class="m-page">
-        <m-navbar title="歌曲"></m-navbar>
+        <rice-navbar title="歌曲"></rice-navbar>
         <view class="song-container">
             <!-- <view class="flex-row p-[16px]">
                 <image class="size-[120px] rounded-[8px]" src="https://cdn.pixabay.com/photo/2019/11/07/13/45/meditation-4608914_1280.jpg"></image>
@@ -28,7 +28,6 @@
 </template>
 <script setup lang="uts">
 import MIcon from '@/components/ui/MIcon.uvue'
-import MNavbar from '@/components/ui/MNavbar.uvue'
 import MPlayBar from '@/components/MPlayBar.uvue'
 import { getSongs } from '@/api/songs';
 import { parseToObject } from '@/utils/parse';
